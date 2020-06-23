@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         雨课堂题目提醒，腾讯课堂签到提醒
 // @namespace    http://tampermonkey.net/
-// @version      0.6.4
+// @version      0.6.5
 // @description  雨课堂题目检测，答题后返回正确答案，腾讯课堂检测签到，弹窗提醒（所有提醒浏览器最小化也会生效）。禁止网页通知的刷新页面会重新要求权限，还不行可以自行百度“网页通知权限”。
 // @author       anjude
 // @match        *://www.yuketang.cn/*
@@ -11,14 +11,14 @@
 // @grant	       GM_registerMenuCommand
 // @grant	       GM_addStyle
 // @grant	       GM.setClipboard
-// @require      file://E:\study\tampermonkey\test.js(脚本的地址)
+// @require      https://github.com/Anjude/tampermonkey/blob/master/rain_tencent_class.js
+// @updateURL		 https://github.com/Anjude/tampermonkey/blob/master/rain_tencent_class.js
 // ==/UserScript==
 (function () {
 	'use strict';
 	GM_registerMenuCommand("查看已提醒次数", function () {
 		alert("已提醒次数：" + (GM_getValue("remind_times") || 0))
 	});
-	对的
 	// let tag = document.createElement('div');
 	// tag.id = "myDiv";
 	// tag.innerHTML = `<div style="height: 100px; width: 100px;background: blue;top: 0px;"><p>test</p></div>`;
