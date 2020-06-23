@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         rain
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  give back the answer
 // @author       ddl
 // @match        *://www.yuketang.cn/*
@@ -30,9 +30,6 @@
       }
     } else {
       alert('你的浏览器不支持此消息提示功能，请使用chrome内核的浏览器！')
-    }
-    if (location.href.match(/ke.qq.com/)) {
-      tencent_course();
     }
     if (location.href.match(/yuketang.cn/)) {
       rainingRoom();
