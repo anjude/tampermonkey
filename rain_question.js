@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         rain
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  give back the answer
 // @author       ddl
 // @match        *://www.yuketang.cn/*
