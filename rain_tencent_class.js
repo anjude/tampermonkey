@@ -11,7 +11,6 @@
 // @grant	       GM_registerMenuCommand
 // @grant	       GM_addStyle
 // @grant	       GM.setClipboard
-// @require      https://raw.githubusercontent.com/Anjude/tampermonkey/master/rain_tencent_class.js
 // @updateURL		 https://raw.githubusercontent.com/Anjude/tampermonkey/master/rain_tencent_class.js
 // ==/UserScript==
 (function () {
