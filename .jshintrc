@@ -1,0 +1,11 @@
+{
+  "curly": false,
+  "eqeqeq": false,
+  "immed": false,
+  "noarg": false,
+  "noempty": false,
+  "quotmark": "false",
+  "undef": false,
+  "unused": false,
+  "node": false
+}
