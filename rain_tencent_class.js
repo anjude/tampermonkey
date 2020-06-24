@@ -4,7 +4,7 @@
 // @version      0.6.7
 // @description  雨课堂题目检测，课堂答题后返回正确答案，腾讯课堂检测签到，弹窗提醒（所有提醒浏览器最小化也会生效）。禁止网页通知的刷新页面会重新要求权限，还不行可以自行百度“网页通知权限”。
 // @author       anjude
-// @match        *://*.yuketang.cn/*
+// @match          *://*.yuketang.cn/*
 // @match	       *://ke.qq.com/webcourse*
 // @grant	       GM_getValue
 // @grant	       GM_setValue
