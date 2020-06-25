@@ -16,8 +16,9 @@
   'use strict';
   console.log(document.location.href)
   console.log(GM_getValue('schedule_chart'))
+  var bv_id = -1
   if(/bv(.*)\?/i.exec(document.location.href)){
-    var bv_id = /bv(.*)\?/i.exec(document.location.href)[1]
+    bv_id = /bv(.*)\?/i.exec(document.location.href)[1]
   }
   var schedule_chart = GM_getValue('schedule_chart') || []
 
@@ -33,6 +34,7 @@
         break;
       }
     }
+    console.log()
     var tip = cur_dic.bv_id ? `您已观看到${cur_dic.part}：${cur_dic.title}` : '本片暂无记录~'
     alert(tip)
   });
@@ -56,7 +58,7 @@
     var regx = /class="s1">(.*)<\/span>(.*)/i
     var part = regx.exec(e.target.innerHTML)
     var dic = {
-      bv_id,
+      bv_id: bv_id,
       part: part[1],
       title: part[2]
     }
