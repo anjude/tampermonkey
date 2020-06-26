@@ -2,7 +2,7 @@
 // @name         B站（bilibili）小功能汇总，视频进度记录，弹幕快捷键等
 // @namespace    http://tampermonkey.net/
 // @version      0.3
-// @description  目前提供记录集数观看进度、弹幕开关等功能，更多请参考详细，有空就会更新~
+// @description  目前提供记录集数观看进度、弹幕开关等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
 // @match        https://*.bilibili.com/*
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
@@ -25,7 +25,7 @@
     console.log('page_info')
     return;
   }
-  var bv_id = /video\/bv([0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1]
+  var bv_id = /video\/.v([0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1]
   // console.log(bv_id)
   var schedule_chart = GM_getValue('schedule_chart') || []
 
