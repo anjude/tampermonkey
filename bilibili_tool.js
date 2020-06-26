@@ -1,30 +1,33 @@
 // ==UserScript==
-// @name         B站（bilibili）小功能汇总，视频进度记录
+// @name         B站（bilibili）小功能汇总，视频进度记录，键盘 B 开关弹幕
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  目前提供记录集数观看进度功能，注意：目前还有少部分视频不支持记录，目前只有点击pxx切换p的时候才会记录进度，有时间就会更新~
 // @author       anjude
 // @match        https://*.bilibili.com/*
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
+// @require      https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_deleteValue
 // @grant        GM_registerMenuCommand
+// @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
 (function() {
   'use strict';
-  console.log(window)
-  console.log(window.location.href)
-  console.log(GM_getValue('schedule_chart'))
+  // console.log(window)
+  // console.log(window.location.href)
+  // console.log(GM_getValue('schedule_chart'))
+  var is_barrage = 66   // 键盘b，开关弹幕
+  // 键盘编码：https://blog.csdn.net/zhaozhbcn/article/details/38852583
   if(/message\.bilibili\.com/.test(document.location.href)){
     console.log('page_info')
     return;
   }
   var bv_id = /video\/bv([0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1]
-  console.log(/video\/bv([0-9|a-z|A-Z]*)\??/i.exec(document.location.href))
+  // console.log(bv_id)
   var schedule_chart = GM_getValue('schedule_chart') || []
-  /////////////////////// 以上为预处理 ////////////////////////////////
 
   // 查询功能入口
   GM_registerMenuCommand("查看当前视频记录", function () {
@@ -55,6 +58,27 @@
     listen_attr.addEventListener('click', listener, false)
   }
 
+  // 自动完成每日分享，目前为测试阶段
+  var bili_jct = Cookies.get('bili_jct');
+  var share_date = GM_getValue('share_date')
+  var cur_date = new Date().getDate();
+  console.log('data：',bv_id,bili_jct,share_date);
+  if(share_date != cur_date){
+
+    // GM_xmlhttpRequest({
+    //     method: 'POST',
+    //     credentials: 'include',
+    //     url: 'https://api.bilibili.com/x/web-interface/share/add',
+    //     headers: {
+    //       'Content-type': 'application/x-www-form-urlencoded'
+    //     },
+    //     data: `aid=${bv_id}&csrf=${bili_jct}`,
+    //     onload: function(e) {
+    //       console.log(e.responseText)  
+    //     }
+    // })
+  }
+
   // 监听函数,添加观看记录
   function listener(e){
     schedule_chart = GM_getValue('schedule_chart') || []
@@ -82,4 +106,18 @@
     // console.log(schedule_chart)
     GM_setValue('schedule_chart', schedule_chart)
   }
+
+  // 键盘菜单
+  function isBarrage(){
+    $('.bui-switch-input')[0].click();
+  }
+  $(document).ready(()=> {
+    $(document).keydown((e)=>{
+      // console.log('键盘：',e)
+      switch(e.keyCode){
+        case is_barrage:
+          isBarrage();
+          break;
+      }
+    })});
 })();

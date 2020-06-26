@@ -12,6 +12,7 @@
 // @match        *://*.dashengpan.com/*
 // @match        *://*.jb51.net/
 // @match        *://*.jb51.net/*
+// @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
 // @grant        GM_addStyle
 // @grant        none
 // ==/UserScript==
