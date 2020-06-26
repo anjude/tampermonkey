@@ -14,12 +14,14 @@
 
 (function() {
   'use strict';
-  console.log(document.location.href)
+  console.log(window)
+  console.log(window.location.href)
   console.log(GM_getValue('schedule_chart'))
-  var bv_id = -1
-  if(/bv(.*)\?/i.exec(document.location.href)){
-    bv_id = /bv(.*)\?/i.exec(document.location.href)[1]
+  if(/message\.bilibili\.com/.test(document.location.href)){
+    console.log('page_info')
+    return;
   }
+  var bv_id = bv_id = /bv(.*)\?/i.exec(document.location.href)[1]
   var schedule_chart = GM_getValue('schedule_chart') || []
 
   // 查询功能入口
@@ -34,7 +36,7 @@
         break;
       }
     }
-    console.log()
+    console.log(cur_dic)
     var tip = cur_dic.bv_id ? `您已观看到${cur_dic.part}：${cur_dic.title}` : '本片暂无记录~'
     alert(tip)
   });
@@ -52,7 +54,7 @@
     listen_attr.addEventListener('click', listener, false)
   }
 
-  // 监听函数
+  // 监听函数,添加观看记录
   function listener(e){
     schedule_chart = GM_getValue('schedule_chart') || []
     var regx = /class="s1">(.*)<\/span>(.*)/i
