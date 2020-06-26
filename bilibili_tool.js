@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站（bilibili）小功能汇总，视频进度记录，弹幕快捷键等
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.5
 // @description  目前提供记录集数观看进度、弹幕开关等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
 // @match        https://*.bilibili.com/*
