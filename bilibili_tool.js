@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         B站（bilibili）小功能汇总，视频进度记录，弹幕快捷键等
+// @name         B站（bilibili）小功能汇总，视频进度记录，弹幕快捷键（M）等
 // @namespace    http://tampermonkey.net/
 // @version      0.3
 // @description  目前提供记录集数观看进度、弹幕开关等功能，更多请参考详细描述，有空就会更新~
@@ -19,8 +19,12 @@
   // console.log(window)
   // console.log(window.location.href)
   // console.log(GM_getValue('schedule_chart'))
-  var is_barrage = 66   // 键盘b，开关弹幕
-  // 键盘编码：https://blog.csdn.net/zhaozhbcn/article/details/38852583
+  /**
+    * 键盘编码：https://blog.csdn.net/zhaozhbcn/article/details/38852583
+    * 对应编码数值填至相应设置中就可以
+    * 例子： var is_barrage = 66 为键盘 B ，把原本77改为66即可
+    */
+  var is_barrage = 77   // 键盘m，开关弹幕
   if(/message\.bilibili\.com/.test(document.location.href)){
     console.log('page_info')
     return;
