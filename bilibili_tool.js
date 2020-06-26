@@ -21,8 +21,10 @@
     console.log('page_info')
     return;
   }
-  var bv_id = bv_id = /bv(.*)\??/i.exec(document.location.href)[1]
+  var bv_id = /video\/bv([0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1]
+  console.log(/video\/bv([0-9|a-z|A-Z]*)\??/i.exec(document.location.href))
   var schedule_chart = GM_getValue('schedule_chart') || []
+  /////////////////////// 以上为预处理 ////////////////////////////////
 
   // 查询功能入口
   GM_registerMenuCommand("查看当前视频记录", function () {
@@ -37,7 +39,7 @@
       }
     }
     console.log(cur_dic)
-    var tip = cur_dic.bv_id ? `您已观看到${cur_dic.part}：${cur_dic.title}` : '本片暂无记录~'
+    var tip = cur_dic.bv_id ? `您已观看到 ${cur_dic.part}：${cur_dic.title}` : '本片暂无记录~'
     alert(tip)
   });
   GM_registerMenuCommand("删除所有记录", function () {
@@ -45,7 +47,6 @@
     schedule_chart = []
     GM_deleteValue('schedule_chart')
     alert('成功删除！')
-    console.log(GM_getValue('schedule_chart'))
   });
 
   // 监听切换集数事件
@@ -78,7 +79,7 @@
       schedule_chart.push(dic)
       alert('首个视频观看集数进度已经记录啦，点开油猴可以查看菜单~')
     }
-    console.log(schedule_chart)
+    // console.log(schedule_chart)
     GM_setValue('schedule_chart', schedule_chart)
   }
 })();
