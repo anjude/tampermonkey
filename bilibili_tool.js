@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站（bilibili）小功能汇总，视频进度记录
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  目前提供记录集数观看进度功能，注意：目前还有少部分视频不支持记录，目前只有点击pxx切换p的时候才会记录进度，有时间就会更新~
 // @author       anjude
 // @match        https://*.bilibili.com/*
