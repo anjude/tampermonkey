@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.5
 // @icon         https://i2.hdslb.com/bfs/face/341b86ec2328a6dd7988be125d062942a8fb2682.png
-// @description  目前提供记录集数观看进度、弹幕开关等功能，更多请参考详细描述，有空就会更新~
+// @description  目前提供记录集数观看进度、弹幕开关、标记已看视频等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
 // @match        https://*.bilibili.com/*
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
@@ -28,10 +28,15 @@
     */
   var is_barrage = 66   // 键盘b，开关弹幕
   if(/message\.bilibili\.com/.test(document.location.href)){
-    console.log('page_info')
+    console.log('page_info:', document.location.href)
     return;
-  } else if(/video\/.v([0-9|a-z|A-Z]*)\??/i.test(document.location.href)){
+  }
+  if(/video\/.v([0-9|a-z|A-Z]*)\??/i.test(document.location.href)){
     videoPage();
+  }
+  if(/search.bilibili.com/i.test(document.location.href)){
+    searchPage();
+    // video-list clearfix https://search.bilibili.com/all
   }
   $(document).ready(()=> {
   $(document).keydown((e)=>{
@@ -56,18 +61,61 @@
     //     headers: {
     //       'Content-type': 'application/x-www-form-urlencoded'
     //     },
-    //     data: `aid=${bv_id}&csrf=${bili_jct}`,
+    //     body: `aid=${bv_id}&csrf=${bili_jct}`,
     //     onload: function(e) {
     //       console.log(e.responseText)  
     //     }
     // })
   // }
 
+  // 搜索页面逻辑
+  function searchPage(){
+    if(!$('.video-list').length){
+      return;
+    }
+    var node = $('.video-list')[0].childNodes
+    var bili_alist = GM_getValue('bili_alist') || 'no_bv_id'
+    // console.log(node, bili_alist)
+    for(var i = 0,len = node.length; i < len; i++){
+      var regx = new RegExp(/video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(node[i].innerHTML)[1], 'i')
+      if(regx.test(bili_alist)){
+        var add_viewed = document.createElement("div");
+        add_viewed.innerHTML="看过";
+        add_viewed.className = 'video-view';
+        add_viewed.style.opacity = 1;
+        add_viewed.style.color = 'red';
+        node[i].prepend(add_viewed);
+      }else{
+        var add_unview = document.createElement("div");
+        add_unview.innerHTML="未看";
+        add_unview.className = 'video-view';
+        node[i].prepend(add_unview);
+      }
+    }
+    console.log($('.pages'))
+    $('.pages')[0].addEventListener('click', listenerPages, false)
+    return 1;
+  }
+  // 监听函数,添加观看记录
+  function listenerPages(e){
+    // console.log(e.target)
+    var listenerPages = setInterval(()=>{
+      if(searchPage()){
+        clearInterval(listenerPages)
+      };
+    }, 500)
+  }
+
   // 视频页面逻辑
   function videoPage(){
-    var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1]
+    var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1], match_reg = new RegExp(bv_id, 'i')
     var schedule_chart = GM_getValue('schedule_chart') || []
     // 查询功能入口
+    // GM_deleteValue('bili_alist')
+    if(!match_reg.test(GM_getValue('bili_alist'))){
+      GM_setValue('bili_alist', (GM_getValue('bili_alist') || '') + bv_id)
+      console.log('record new bv_id')
+    }
     GM_registerMenuCommand("查看当前视频记录", function () {
       schedule_chart = GM_getValue('schedule_chart') || []
       // bv_id part title
@@ -136,4 +184,17 @@
       }
     }
   }
+  GM_addStyle(`
+    .video-view{
+      display:inline-block;
+      position:absolute;
+      left:0px;
+      top:0px;
+      background:#FFF;
+      color:#666;
+      opacity: 0.8;
+      padding:1px 5px;
+      z-index:999;
+    }`
+  )
 })();
