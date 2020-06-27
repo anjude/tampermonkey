@@ -99,7 +99,8 @@
 
   // 监听函数,添加观看记录
   function listener(e){
-    schedule_chart = GM_getValue('schedule_chart') || []
+    var schedule_chart = GM_getValue('schedule_chart') || []
+    var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1]
     var regx = /class="s1">(.*)<\/span>(.*)/i
     var part = regx.exec(e.target.innerHTML)
     var dic = {
