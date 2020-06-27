@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站（bilibili）小功能汇总，视频进度记录，弹幕快捷键等
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @icon         https://i2.hdslb.com/bfs/face/341b86ec2328a6dd7988be125d062942a8fb2682.png
 // @description  目前提供记录集数观看进度、弹幕开关、标记已看视频等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
@@ -75,9 +75,10 @@
     }
     var node = $('.video-list')[0].childNodes
     var bili_alist = GM_getValue('bili_alist') || 'no_bv_id'
-    // console.log(node, bili_alist)
+    console.log(node, bili_alist)
     for(var i = 0,len = node.length; i < len; i++){
-      var regx = new RegExp(/video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(node[i].innerHTML)[1], 'i')
+      var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(node[i].innerHTML)[1]
+      var regx = new RegExp(`&${bv_id}` , 'i')
       if(regx.test(bili_alist)){
         var add_viewed = document.createElement("div");
         add_viewed.innerHTML="看过";
@@ -108,12 +109,12 @@
 
   // 视频页面逻辑
   function videoPage(){
-    var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1], match_reg = new RegExp(bv_id, 'i')
+    var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1], match_reg = new RegExp(`&${bv_id}`, 'i')
     var schedule_chart = GM_getValue('schedule_chart') || []
     // 查询功能入口
     // GM_deleteValue('bili_alist')
     if(!match_reg.test(GM_getValue('bili_alist'))){
-      GM_setValue('bili_alist', (GM_getValue('bili_alist') || '') + bv_id)
+      GM_setValue('bili_alist', (GM_getValue('bili_alist') || '') + '&' + bv_id)
       console.log('record new bv_id')
     }
     GM_registerMenuCommand("查看当前视频记录", function () {
