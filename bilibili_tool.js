@@ -93,16 +93,24 @@
         node[i].prepend(add_unview);
       }
     }
-    console.log($('.pages'))
-    $('.pages')[0].addEventListener('click', listenerPages, false)
+    // console.log($('.bili-search'))
+    $('.bili-search')[0].addEventListener('click', listenerPages, false)
+    GM_registerMenuCommand("重置视频看过记录", function () {
+      // bv_id part title
+      bili_alist = ''
+      GM_deleteValue('bili_alist')
+      alert('成功删除！')
+    });
     return 1;
   }
   // 监听函数,添加观看记录
   function listenerPages(e){
     // console.log(e.target)
+    var i = 0
     var listenerPages = setInterval(()=>{
-      if(searchPage()){
+      if(searchPage() || i >= 66){
         clearInterval(listenerPages)
+        i++
       };
     }, 500)
   }
@@ -112,7 +120,6 @@
     var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1], match_reg = new RegExp(`&${bv_id}`, 'i')
     var schedule_chart = GM_getValue('schedule_chart') || []
     // 查询功能入口
-    // GM_deleteValue('bili_alist')
     if(!match_reg.test(GM_getValue('bili_alist'))){
       GM_setValue('bili_alist', (GM_getValue('bili_alist') || '') + '&' + bv_id)
       console.log('record new bv_id')
@@ -132,7 +139,7 @@
       alert(tip)
     });
 
-    GM_registerMenuCommand("删除所有记录", function () {
+    GM_registerMenuCommand("删除所有视频集数记录", function () {
       // bv_id part title
       schedule_chart = []
       GM_deleteValue('schedule_chart')
