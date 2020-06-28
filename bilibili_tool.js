@@ -50,12 +50,14 @@
   })});
   // 自动完成每日分享，目前为测试阶段
   function doShare(){
+    var i = 0
     var shareListener = setInterval(()=>{
       var node = $('.van-icon-share_news_default')
-      if(node.length){
+      if(node.length || i >= 60){
+        i++;
+        clearInterval(shareListener)
         node[0].click()
         document.body.lastChild.remove()
-        clearInterval(shareListener)
       }
     },1000)
   }
