@@ -2,7 +2,7 @@
 // @name         B站（bilibili）小功能汇总，视频进度记录，弹幕快捷键等
 // @namespace    http://tampermonkey.net/
 // @version      0.6
-// @icon         https://i2.hdslb.com/bfs/face/341b86ec2328a6dd7988be125d062942a8fb2682.png
+// @icon         http://pic2.orsoon.com/2017/0118/20170118014446594.png
 // @description  目前提供记录集数观看进度、弹幕开关、标记已看视频等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
 // @match        https://*.bilibili.com/*
@@ -31,8 +31,9 @@
     console.log('page_info:', document.location.href)
     return;
   }
-  if(/video\/.v([0-9|a-z|A-Z]*)\??/i.test(document.location.href)){
+  if(/video\/.v([0-9a-zA-Z]*)\??/i.test(document.location.href)){
     videoPage();
+    doShare();
   }
   if(/search.bilibili.com/i.test(document.location.href)){
     searchPage();
@@ -48,25 +49,16 @@
     }
   })});
   // 自动完成每日分享，目前为测试阶段
-  // var bili_jct = Cookies.get('bili_jct');
-  // var share_date = GM_getValue('share_date')
-  // var cur_date = new Date().getDate();
-  // console.log('data：',bv_id,bili_jct,share_date);
-  // if(share_date != cur_date){
-
-    // GM_xmlhttpRequest({
-    //     method: 'POST',
-    //     credentials: 'include',
-    //     url: 'https://api.bilibili.com/x/web-interface/share/add',
-    //     headers: {
-    //       'Content-type': 'application/x-www-form-urlencoded'
-    //     },
-    //     body: `aid=${bv_id}&csrf=${bili_jct}`,
-    //     onload: function(e) {
-    //       console.log(e.responseText)  
-    //     }
-    // })
-  // }
+  function doShare(){
+    var shareListener = setInterval(()=>{
+      var node = $('.van-icon-share_news_default')
+      if(node.length){
+        node[0].click()
+        document.body.lastChild.remove()
+        clearInterval(shareListener)
+      }
+    },1000)
+  }
 
   // 搜索页面逻辑
   function searchPage(){
@@ -118,6 +110,7 @@
   // 视频页面逻辑
   function videoPage(){
     var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1], match_reg = new RegExp(`&${bv_id}`, 'i')
+    console.log('bv_id', bv_id)
     var schedule_chart = GM_getValue('schedule_chart') || []
     // 查询功能入口
     if(!match_reg.test(GM_getValue('bili_alist'))){
