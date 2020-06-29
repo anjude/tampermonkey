@@ -27,6 +27,10 @@
     * 例子： var is_barrage = 77 为键盘 M ，把原本66改为77即可
     */
   var is_barrage = 66   // 键盘b，开关弹幕
+  var search_page = {
+    listener: -1,
+    last_bv_id: -1
+  }
 
   if(/message\.bilibili\.com/.test(document.location.href)){
     // console.log('page_info:', document.location.href)
@@ -73,23 +77,25 @@
     }
     var node = $('.video-list')[0].childNodes
     var bili_alist = GM_getValue('bili_alist') || 'no_bv_id'
-    console.log(node, bili_alist)
+    var reg = /video\/(.v[0-9|a-z|A-Z]*)\??/i
+    if(reg.exec(node[node.length - 1].innerHTML)[1] == search_page.last_bv_id){
+      return 0;
+    }
+    search_page.last_bv_id = reg.exec(node[node.length - 1].innerHTML)[1]
+    // console.log(node, bili_alist)
     for(var i = 0,len = node.length; i < len; i++){
-      var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(node[i].innerHTML)[1]
+      var bv_id = reg.exec(node[i].innerHTML)[1]
       var regx = new RegExp(`&${bv_id}` , 'i')
+      var add_div = document.createElement("div");
+      add_div.className = 'video-view';
       if(regx.test(bili_alist)){
-        var add_viewed = document.createElement("div");
-        add_viewed.innerHTML="看过";
-        add_viewed.className = 'video-view';
-        add_viewed.style.opacity = 1;
-        add_viewed.style.color = 'red';
-        node[i].prepend(add_viewed);
+        add_div.innerHTML="看过";
+        add_div.style.opacity = 1;
+        add_div.style.color = 'red';
       }else{
-        var add_unview = document.createElement("div");
-        add_unview.innerHTML="未看";
-        add_unview.className = 'video-view';
-        node[i].prepend(add_unview);
+        add_div.innerHTML="未看";
       }
+      node[i].prepend(add_div);
     }
     // console.log($('.bili-search'))
     $('.bili-search')[0].addEventListener('click', listenerPages, false)
@@ -101,16 +107,17 @@
     });
     return 1;
   }
-  // 监听函数,添加观看记录
+  // 监听函数,监听切换下一页更新数据
   function listenerPages(e){
-    // console.log(e.target)
-    var i = 0
-    var listenerPages = setInterval(()=>{
+    // console.log(e.target, search_page.listener)
+    var i = 0;
+    search_page.listener = setInterval(()=>{
       if(searchPage() || i >= 66){
-        clearInterval(listenerPages)
-        i++
+        console.log('[B站（bilibili）小功能汇总]: 开始匹配已看')
+        clearInterval(search_page.listener)
+        i++;
       };
-    }, 500)
+    }, 1000)
   }
 
   // 视频页面逻辑
