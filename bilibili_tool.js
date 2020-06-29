@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.6
 // @icon         http://pic2.orsoon.com/2017/0118/20170118014446594.png
-// @description  目前提供记录集数观看进度、弹幕开关、标记已看视频等功能，更多请参考详细描述，有空就会更新~
+// @description  目前提供记录集数观看进度、弹幕开关、标记已看视频、完成分享任务等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
 // @match        https://*.bilibili.com/*
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
@@ -27,13 +27,14 @@
     * 例子： var is_barrage = 77 为键盘 M ，把原本66改为77即可
     */
   var is_barrage = 66   // 键盘b，开关弹幕
+
   if(/message\.bilibili\.com/.test(document.location.href)){
-    console.log('page_info:', document.location.href)
+    // console.log('page_info:', document.location.href)
     return;
   }
   if(/video\/.v([0-9a-zA-Z]*)\??/i.test(document.location.href)){
     videoPage();
-    doShare();
+    new Date().getDate() == GM_getValue('share_date') ? console.log('[B站（bilibili）小功能汇总]: 已完成分享') : doShare();
   }
   if(/search.bilibili.com/i.test(document.location.href)){
     searchPage();
@@ -50,15 +51,18 @@
   })});
   // 自动完成每日分享，目前为测试阶段
   function doShare(){
+    console.log('[B站（bilibili）小功能汇总]: 开始分享')
     var i = 0
     var shareListener = setInterval(()=>{
       var node = $('.van-icon-share_news_default')
       if(node.length || i >= 60){
-        i++;
         clearInterval(shareListener)
         node[0].click()
         document.body.lastChild.remove()
+        GM_setValue('share_date', new Date().getDate())
+        console.log('[B站（bilibili）小功能汇总]: 分享完成，个人页面查看有延迟')
       }
+      i++;
     },1000)
   }
 
@@ -112,7 +116,7 @@
   // 视频页面逻辑
   function videoPage(){
     var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1], match_reg = new RegExp(`&${bv_id}`, 'i')
-    console.log('bv_id', bv_id)
+    console.log('[B站（bilibili）小功能汇总]:', bv_id)
     var schedule_chart = GM_getValue('schedule_chart') || []
     // 查询功能入口
     if(!match_reg.test(GM_getValue('bili_alist'))){
