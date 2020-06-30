@@ -53,7 +53,7 @@
         break;
     }
   })});
-  // 自动完成每日分享，目前为测试阶段
+  // 自动完成每日分享，亲测可用
   function doShare(){
     console.log('[B站（bilibili）小功能汇总]: 开始分享')
     var i = 0
@@ -64,7 +64,7 @@
         node[0].click()
         document.body.lastChild.remove()
         GM_setValue('share_date', new Date().getDate())
-        console.log('[B站（bilibili）小功能汇总]: 分享完成，个人页面查看有延迟')
+        console.log('[B站（bilibili）小功能汇总]: 分享完成，个人页面查看可能有延迟')
       }
       i++;
     },1000)
@@ -123,12 +123,12 @@
   // 视频页面逻辑
   function videoPage(){
     var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1], match_reg = new RegExp(`&${bv_id}`, 'i')
-    console.log('[B站（bilibili）小功能汇总]:', bv_id)
+    // console.log('[B站（bilibili）小功能汇总]:', bv_id)
     var schedule_chart = GM_getValue('schedule_chart') || []
     // 查询功能入口
     if(!match_reg.test(GM_getValue('bili_alist'))){
       GM_setValue('bili_alist', (GM_getValue('bili_alist') || '') + '&' + bv_id)
-      console.log('record new bv_id')
+      // console.log('record new bv_id')
     }
     GM_registerMenuCommand("查看当前视频记录", function () {
       schedule_chart = GM_getValue('schedule_chart') || []
