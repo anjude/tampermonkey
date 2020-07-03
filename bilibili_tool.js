@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.6
 // @icon         http://pic2.orsoon.com/2017/0118/20170118014446594.png
-// @description  目前提供记录集数观看进度、弹幕开关、标记已看视频、完成分享任务等功能，更多请参考详细描述，有空就会更新~
+// @description  目前提供记录集数观看进度、弹幕开关、标记已看视频、完成每日任务（除投币任务）等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
 // @match        https://*.bilibili.com/*
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
@@ -60,11 +60,19 @@
     var shareListener = setInterval(()=>{
       var node = $('.van-icon-share_news_default')
       if(node.length || i >= 60){
-        clearInterval(shareListener)
         node[0].click()
         document.body.lastChild.remove()
-        GM_setValue('share_date', new Date().getDate())
-        console.log('[B站（bilibili）小功能汇总]: 分享完成，个人页面查看可能有延迟')
+        clearInterval(shareListener)
+        if(i < 60){
+          GM_setValue('share_date', new Date().getDate())
+          console.log('[B站（bilibili）小功能汇总]: 分享完成')
+          toast({
+            message:"分享完成",
+            time:2000
+          })
+        }else{
+          console.log('[B站（bilibili）小功能汇总]: 分享失败，换个视频试试呢~')
+        }
       }
       i++;
     },1000)
@@ -198,6 +206,29 @@
       }
     }
   }
+  function toast(params) {
+    /*设置信息框停留的默认时间*/
+    var time = params.time;
+    if(time == undefined || time == ''){
+        time = 1500;
+    }
+    var el = document.createElement("div");
+    el.setAttribute("class", "web-toast");
+    el.innerHTML = params.message;
+    document.body.appendChild(el);
+    el.classList.add("fadeIn");
+    setTimeout(function () {
+      el.classList.remove("fadeIn");
+      el.classList.add("fadeOut");
+      /*监听动画结束，移除提示信息元素*/
+      el.addEventListener("animationend", function () {
+          document.body.removeChild(el);
+      });
+      el.addEventListener("webkitAnimationEnd", function () {
+          document.body.removeChild(el);
+      });
+    }, time);
+  }
   GM_addStyle(`
     .video-view{
       display:inline-block;
@@ -209,6 +240,71 @@
       opacity: 0.8;
       padding:1px 5px;
       z-index:999;
-    }`
+    }
+    @keyframes fadeIn {
+    0%    {opacity: 0}
+    100%  {opacity: 1}
+}
+@-webkit-keyframes fadeIn {
+    0%    {opacity: 0}
+    100%  {opacity: 1}
+}
+@-moz-keyframes fadeIn {
+    0%    {opacity: 0}
+    100%  {opacity: 1}
+}
+@-o-keyframes fadeIn {
+    0%    {opacity: 0}
+    100%  {opacity: 1}
+}
+@-ms-keyframes fadeIn {
+    0%    {opacity: 0}
+    100%  {opacity: 1}
+}
+@keyframes fadeOut {
+    0%    {opacity: 1}
+    100%  {opacity: 0}
+}
+@-webkit-keyframes fadeOut {
+    0%    {opacity: 1}
+    100%  {opacity: 0}
+}
+@-moz-keyframes fadeOut {
+    0%    {opacity: 1}
+    100%  {opacity: 0}
+}
+@-o-keyframes fadeOut {
+    0%    {opacity: 1}
+    100%  {opacity: 0}
+}
+@-ms-keyframes fadeOut {
+    0%    {opacity: 1}
+    100%  {opacity: 0}
+}
+.web-toast{
+    position: fixed;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 14px;
+    line-height: 1;
+    padding:10px;
+    border-radius: 3px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    z-index: 9999;
+    white-space: nowrap;
+}
+.fadeOut{
+    animation: fadeOut .5s;
+}
+.fadeIn{
+    animation:fadeIn .5s;
+}
+`
   )
 })();
