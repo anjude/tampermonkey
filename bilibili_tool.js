@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站（bilibili）小功能汇总，视频集数进度记录，弹幕快捷键等
 // @namespace    http://tampermonkey.net/
-// @version      0.6.1
+// @version      0.6.3
 // @icon         http://pic2.orsoon.com/2017/0118/20170118014446594.png
 // @description  目前提供记录集数观看进度（看UP上传的网课必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
@@ -26,19 +26,19 @@
     * 对应编码数值填至相应设置中就可以
     * 例子： var is_barrage = 77 为键盘 M ，把原本66改为77即可
     */
-  var is_barrage = 66   // 键盘b，开关弹幕
+  var is_barrage = 66   // 键盘B，开关弹幕
+  var is_fullscreen = 70   // 键盘F，开关全屏
   var search_page = {
     listener: -1,
     last_bv_id: -1
   }
-
   if(/message\.bilibili\.com/.test(document.location.href)){
     // console.log('page_info:', document.location.href)
     return;
   }
   if(/video\/.v([0-9a-zA-Z]*)\??/i.test(document.location.href)){
     videoPage();
-    new Date().getDate() == GM_getValue('share_date') ? console.log('[B站（bilibili）小功能汇总]: 已完成分享') : doShare();
+    new Date().getDate() == GM_getValue('share_date') ? console.log('[B站（bilibili）小功能汇总]: 今日已完成分享') : doShare();
   }
   if(/search.bilibili.com/i.test(document.location.href)){
     searchPage();
@@ -51,6 +51,9 @@
       case is_barrage:
         isBarrage();
         break;
+      case is_fullscreen:
+      	isFullscreen();
+      	break;
     }
   })});
   // 自动完成每日分享，亲测可用
@@ -197,6 +200,7 @@
   }
 
   // 键盘菜单
+  // 开关弹幕
   function isBarrage(){
     var node = $('.bui-switch-input')
     for(var i = 0, len = node.length; i < len; i++){
@@ -205,6 +209,15 @@
         break;
       }
     }
+  }
+  // 开关全屏
+  function isFullscreen(){
+  	console.log(document.getElementsByClassName('video-state-fullscreen-off'))
+  	if(document.getElementsByClassName('video-state-fullscreen-off').length){
+  		document.getElementsByClassName('bilibili-player-iconfont-fullscreen-off')[0].click()
+  	}else{
+  		document.getElementsByClassName('bilibili-player-iconfont-fullscreen-on')[0].click()
+  	}
   }
   function toast(params) {
     /*设置信息框停留的默认时间*/
