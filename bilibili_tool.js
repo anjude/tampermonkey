@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站（bilibili）小功能汇总，视频集数进度记录，弹幕快捷键等
 // @namespace    http://tampermonkey.net/
-// @version      0.6.3
+// @version      0.6.6
 // @icon         http://pic2.orsoon.com/2017/0118/20170118014446594.png
 // @description  目前提供记录集数观看进度（看UP上传的网课必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）、视频全屏等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
@@ -28,7 +28,6 @@
 	 */
 
 
-
 	var is_barrage = 66 // 键盘B，开关弹幕
 	var is_fullscreen = 70 // 键盘F，开关全屏
 	var his_chap = 72 // 键盘H，查看历史观看集数
@@ -36,6 +35,7 @@
 		listener: -1,
 		last_bv_id: -1
 	}
+	var focus = false
 	if (/message\.bilibili\.com/.test(document.location.href)) {
 		// console.log('page_info:', document.location.href)
 		return;
@@ -49,7 +49,22 @@
 		// video-list clearfix https://search.bilibili.com/all
 	}
 	$(document).ready(() => {
+		$("div").delegate(".bilibili-player-video-danmaku-input, .ipt-txt",
+			"focus",
+			function() {
+				focus = true
+				// console.log('onfocus')
+			});
+		$("div").delegate(".bilibili-player-video-danmaku-input, .ipt-txt",
+			"blur",
+			function() {
+				// console.log('onblur')
+				focus = false
+			});
 		$(document).keydown((e) => {
+			if (focus) {
+				return;
+			}
 			// console.log('键盘：',e)
 			switch (e.keyCode) {
 				case is_barrage:
@@ -161,8 +176,8 @@
 			alert('成功删除！')
 		});
 		// <a href="/video/BV1pt41147eM?p=1" class="" title="01"><i class="van-icon-
-		console.log('监测当前集数', $('.on'))
-		console.log('监测当前集数', document.getElementsByClassName('on'))
+		// console.log('监测当前集数', $('.on'))
+		// console.log('监测当前集数', document.getElementsByClassName('on'))
 		// 监听切换集数事件
 		if (document.getElementsByClassName('list-box').length) {
 			// var listen_chap = document.getElementsByClassName('on')
