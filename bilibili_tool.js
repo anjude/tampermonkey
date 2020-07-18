@@ -270,9 +270,14 @@
 		var schedule_chart = GM_getValue('schedule_chart') || []
 		var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1]
 		// bv_id part title
+		console.log(schedule_chart)
 		var cur_dic = {}
 		for (var i = 0, len = schedule_chart.length; i < len; i++) {
+			if(!schedule_chart[i].bv_id){
+				continue;
+			}
 			var regx = new RegExp(schedule_chart[i].bv_id, "i");
+			console.log(regx, regx.test(bv_id))
 			if (regx.test(bv_id)) {
 				cur_dic = schedule_chart[i]
 				break;
