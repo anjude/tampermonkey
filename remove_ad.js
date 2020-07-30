@@ -50,7 +50,7 @@
 			// .pt10 clearfix
 		}
 	}
-	// 为每个网站去广告单列一个方法，解耦
+	// 为每个网站去广告单列一个方法
 	function tencentCourse() {
 		var minitor = setInterval(function() {
 			// 腾讯课堂xxx正在观看 marquee
