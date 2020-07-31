@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站（bilibili）小功能汇总，视频集数进度记录，弹幕快捷键等
 // @namespace    http://tampermonkey.net/
-// @version      0.6.8
+// @version      0.6.9
 // @icon         http://pic2.orsoon.com/2017/0118/20170118014446594.png
 // @description  目前提供记录集数观看进度（看UP上传的网课必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）、视频全屏等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
@@ -27,10 +27,11 @@
 	 * 例子： var is_barrage = 77 为键盘 M ，把原本66改为77即可
 	 */
 
-
 	var is_barrage = 66 // 键盘B，开关弹幕
 	var is_fullscreen = 70 // 键盘F，开关全屏
 	var his_chap = 72 // 键盘H，查看历史观看集数
+	var jump_chap = 74 // 键盘J，跳转上次观看集数
+
 	var search_page = {
 		listener: -1,
 		last_bv_id: -1
@@ -76,6 +77,9 @@
 				case his_chap:
 					hisChap();
 					break;
+				case jump_chap:
+					jumpChap();
+					break;
 			}
 		})
 	});
@@ -92,7 +96,7 @@
 				if (i < 60) {
 					GM_setValue('share_date', new Date().getDate())
 					console.log('[B站（bilibili）小功能汇总]: 分享完成')
-					toast({
+					_toast({
 						message: "分享完成",
 						time: 2000
 					})
@@ -226,7 +230,7 @@
 			part: `P${info[2]}`,
 			title: info[3]
 		}
-		console.log(schedule_chart)
+		// console.log(schedule_chart)
 		if (schedule_chart.length) {
 			for (var i = 0, len = schedule_chart.length; i < len; i++) {
 				// console.log(schedule_chart, schedule_chart[i])
@@ -267,35 +271,47 @@
 	}
 
 	function hisChap() {
+		var cur_dic = _getChapDic()
+		var tip = cur_dic.bv_id ? `您已观看到 ${cur_dic.part}：${cur_dic.title}` : '本片暂无记录~'
+		alert(tip)
+	}
+
+	function jumpChap() {
+		var dic = _getChapDic()
+		var part = /P(\d+)/.exec(dic.part)[1]
+		$('.list-box')[0].children[part - 1].getElementsByTagName('i')[0].click()
+		_toast({
+			message: "跳转上次播放集数",
+			time: 2000
+		})
+	}
+
+	function _getChapDic() {
+		var cur_dic = {}
 		var schedule_chart = GM_getValue('schedule_chart') || []
 		var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1]
 		// bv_id part title
-		console.log(schedule_chart)
-		var cur_dic = {}
+		// console.log(schedule_chart)
 		for (var i = 0, len = schedule_chart.length; i < len; i++) {
-			if(!schedule_chart[i].bv_id){
+			if (!schedule_chart[i].bv_id) {
 				continue;
 			}
 			var regx = new RegExp(schedule_chart[i].bv_id, "i");
-			console.log(regx, regx.test(bv_id))
+			// console.log(regx, regx.test(bv_id))
 			if (regx.test(bv_id)) {
 				cur_dic = schedule_chart[i]
 				break;
 			}
 		}
-		var tip = cur_dic.bv_id ? `您已观看到 ${cur_dic.part}：${cur_dic.title}` : '本片暂无记录~'
-		alert(tip)
+		return cur_dic
 	}
 
-	function toast(params) {
+	function _toast(params = { message: "已完成", time: 2000}) {
 		/*设置信息框停留的默认时间*/
-		var time = params.time;
-		if (time == undefined || time == '') {
-			time = 1500;
-		}
+		var time = params.time || 2000;
 		var el = document.createElement("div");
 		el.setAttribute("class", "web-toast");
-		el.innerHTML = params.message;
+		el.innerHTML = params.message || "已完成";
 		document.body.appendChild(el);
 		el.classList.add("fadeIn");
 		setTimeout(function() {
