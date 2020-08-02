@@ -49,6 +49,10 @@
 		searchPage();
 		// video-list clearfix https://search.bilibili.com/all
 	}
+	if (/space.bilibili.com/i.test(document.location.href)) {
+		// spacePage();
+		// fav-video-list clearfix content https://space.bilibili.com/416030291/favlist
+	}
 	$(document).ready(() => {
 		$("div").delegate("input, textarea",
 			"focus",
@@ -83,6 +87,7 @@
 			}
 		})
 	});
+	// 个人空间页面
 	// 自动完成每日分享，亲测可用
 	function doShare() {
 		console.log('[B站（bilibili）小功能汇总]: 开始分享')
