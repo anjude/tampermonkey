@@ -261,6 +261,10 @@
 		for (var i = 0, len = node.length; i < len; i++) {
 			if ($('.bui-switch-input')[i].offsetParent) {
 				$('.bui-switch-input')[i].click();
+				_toast({
+					message: '切换',
+					time: 100
+				})
 				break;
 			}
 		}
@@ -276,13 +280,20 @@
 	}
 
 	function hisChap() {
-		var cur_dic = _getChapDic()
+		var cur_dic = _getChapDic() || {}
 		var tip = cur_dic.bv_id ? `您已观看到 ${cur_dic.part}：${cur_dic.title}` : '本片暂无记录~'
 		alert(tip)
 	}
 
 	function jumpChap() {
 		var dic = _getChapDic()
+		if(!dic){
+			_toast({
+				message: '本片暂无记录',
+				time: 2000
+			})
+			return;
+		}
 		var part = /P(\d+)/.exec(dic.part)[1]
 		$('.list-box')[0].children[part - 1].getElementsByTagName('i')[0].click()
 		_toast({
@@ -292,6 +303,9 @@
 	}
 
 	function _getChapDic() {
+		if(!/video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)){
+			return 0;
+		}
 		var cur_dic = {}
 		var schedule_chart = GM_getValue('schedule_chart') || []
 		var bv_id = /video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)[1]
