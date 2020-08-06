@@ -1,3 +1,21 @@
+// ==UserScript==
+// @name         B站（bilibili）小功能汇总，视频集数进度记录，弹幕快捷键等
+// @namespace    http://tampermonkey.net/
+// @version      0.6.9
+// @icon         http://pic2.orsoon.com/2017/0118/20170118014446594.png
+// @description  目前提供记录集数观看进度（看UP上传的网课必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）、视频全屏等功能，更多请参考详细描述，有空就会更新~
+// @author       anjude
+// @match        https://*.bilibili.com/*
+// @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
+// @require      https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js
+// @grant        GM_setValue
+// @grant        GM_getValue
+// @grant        GM_deleteValue
+// @grant        GM_addStyle
+// @grant        GM_registerMenuCommand
+// @grant        GM_xmlhttpRequest
+// ==/UserScript==
+
 (function() {
 	'use strict';
 	// console.log(window)
