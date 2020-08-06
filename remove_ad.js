@@ -19,8 +19,8 @@
 
 (function() {
 	'use strict';
-	console.log("url:", location.href)
-	console.log(document)
+	// console.log("url:", location.href)
+	// console.log(document)
 	// console.log(window)
 	window.onload = function() {
 		// 爱文库广告（无奈之举，广告遮盖了下载按钮~）
