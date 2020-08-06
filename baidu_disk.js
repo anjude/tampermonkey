@@ -7,6 +7,7 @@
 // @match        *://*.pan.baidu.com/*
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
 // @grant        none
+// ==/UserScript==
 
 (function() {
 	'use strict';
