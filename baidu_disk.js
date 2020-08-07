@@ -2,7 +2,7 @@
 // @name         网盘视频倍速
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  增加当前倍速按钮
+// @description  增加当前倍速按钮，最新版
 // @author       anjude
 // @match        *://*.pan.baidu.com/*
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
