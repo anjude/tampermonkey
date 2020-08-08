@@ -207,7 +207,7 @@
 								}
 								// console.log("this:", result)
 								listener();
-							} catch {
+							} catch(err){
 
 							}
 						})
@@ -225,7 +225,7 @@
 		for (var i = 0, len = node.length; i < len; i++) {
 			if (/video\/(.v[0-9|a-z|A-Z]*)\??/i.test(node[i].innerHTML)) {
 				var regx = /video\/(.V[0-9a-zA-Z]*)\?p=(\d+).*title="(.*)"><i/i
-				var info = regx.exec(node[i].innerHTML)
+				info = regx.exec(node[i].innerHTML)
 				break;
 			}
 		}
@@ -237,7 +237,7 @@
 		}
 		// console.log(schedule_chart)
 		if (schedule_chart.length) {
-			for (var i = 0, len = schedule_chart.length; i < len; i++) {
+			for (i = 0, len = schedule_chart.length; i < len; i++) {
 				// console.log(schedule_chart, schedule_chart[i])
 				if (schedule_chart[i].bv_id == info[1]) {
 					schedule_chart[i] = dic

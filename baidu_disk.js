@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         网盘视频倍速
+// @name         百度网盘视频倍速
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  增加当前倍速按钮，最新版
