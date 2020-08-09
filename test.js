@@ -44,12 +44,13 @@
 
       let iframe = document.createElement("iframe")
       iframe.id = 'anjude-iframe'
-      iframe.src = `https://z1.m1907.cn?jx=${title}`
+      // iframe.src = `https:`
+      iframe.src = `https://z1.m1907.cn?jx=夏洛特烦恼`
       console.log('cid:', cid, 'title:', title, 'title.slice', title.slice(0, 13), 'window', unsafeWindow.__INITIAL_STATE__.epInfo.i + 1, 'src', iframe.src)
 
       // iframe.src = `https://z1.m1907.cn?jx=${cid}&wd=${title.slice(0,13)}&ep=${unsafeWindow.__INITIAL_STATE__.epInfo.i + 1}`
       // <iframe src="https://z1.m1907.cn?jx=灵笼" width="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
+      
       if (document.body.className.includes('player-mode-widescreen')) {
         iframe.style.position = 'absolute'
         iframe.style.top = '0'
@@ -77,6 +78,27 @@
     }
     ele.appendChild(jump)
     parent.appendChild(ele)
+    var dp = new DPlayer({
+        element: document.getElementById('anjude-iframe'), // 可选，player元素
+        autoplay: false, // 可选，自动播放视频，不支持移动浏览器
+        theme: '#FADFA3', // 可选，主题颜色，默认: #b7daff
+        loop: true, // 可选，循环播放音乐，默认：true
+        lang: 'zh', // 可选，语言，`zh'用于中文，`en'用于英语，默认：Navigator 
+        language
+        screenshot: true, // 可选，启用截图功能，默认值：false，注意：如果设置为true， 视频和视频截图必须启用跨域
+        hotkey: true, // 可选，绑定热键，包括左右键和空格，默认值：true
+        preload: 'auto', // 可选，预加载的方式可以是'none''metadata''auto'，默认值： 'auto'
+        video: { // 必需，视频信息
+          url: 'https://shuixian.nihaozuida.com/share/4b2ae7d938d2edc52ee760535f0003e2', // 必填，视频网址
+        },
+        danmaku: { // 可选，显示弹幕，忽略此选项以隐藏弹幕
+          id: '9E2E3368B56CDBB4', // 必需，弹幕 id，注意：它必须是唯一的，不能在你的新播放器中使用这些： `https://api.prprpr.me/dplayer/list`
+          api: 'https://api.bilibili.com/x/v1/dm/list.so?oid=' + cid, // 必需，弹幕 apihttps://api.bilibili.com/x/v1/dm/list.so?oid=
+          token: 'tokendemo', // 可选，api 的弹幕令牌
+          maximum: 1000, // 可选，最大数量的弹幕
+          addition: ['https://api.prprpr.me/dplayer/bilibili?aid=4157142'] // 可选的，额外的弹幕，参见：`Bilibili弹幕支持`
+        }
+      });
   }
   //添加换p事件
   let href = window.location.href
