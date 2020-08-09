@@ -12,6 +12,8 @@
 // ==/UserScript==
 (function() {
   'use strict';
+  // 播放器原因，打开开发者调试窗口（审查元素）时会卡死，请谨慎使用
+  // 此脚本由其他脚本演变而来，仅为学习之用，请使用者24小时内删除脚本，且不要传播
   let dloading = false
   let bangumi = /bilibili.com\/bangumi\/play\//g.test(window.location.href)
   let parentId = bangumi ? 'toolbar_module' : 'arc_toolbar_report'
@@ -47,6 +49,7 @@
       iframe.src = `https://z1.m1907.cn?jx=${title}`
       console.log('cid:', cid, 'title:', title, 'title.slice', title.slice(0, 13), 'window', unsafeWindow.__INITIAL_STATE__.epInfo.i + 1, 'src', iframe.src)
 
+      // iframe.src = `https://open.kkvod.aoliooo.com?title=${title}&src=`
       // iframe.src = `https://z1.m1907.cn?jx=${cid}&wd=${title.slice(0,13)}&ep=${unsafeWindow.__INITIAL_STATE__.epInfo.i + 1}`
       // <iframe src="https://z1.m1907.cn?jx=灵笼" width="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
