@@ -9,8 +9,10 @@
 // @include      *.mgtv.com/b/*
 // @include      *.iqiyi.com/v_*
 // @include      *v.qq.com/x/*
+// @grant        GM_addStyle
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
 // ==/UserScript==
+// <p draggable="true">这是一个可拖动的段落。</p>
 (function() {
   'use strict';
   // 播放器原因，打开开发者调试窗口（审查元素）时会卡死，请谨慎使用
@@ -49,6 +51,11 @@
 
   // data init
   window.onload = function() {
+    init()
+  }
+
+
+  function init() {
     if (/bilibili.com\/bangumi\/play/.test(herf)) {
       title = unsafeWindow.__INITIAL_STATE__.mediaInfo.title
       video_box = document.getElementById('player_module')
@@ -79,14 +86,34 @@
     }
     // iframe init
     iframeInit(title);
+
+    // add button
+    var buttonTmp = document.querySelector('.anjude-btn')
+    if (buttonTmp) {
+      document.body.removeChild(buttonTmp)
+    }
+    var replace_btn = document.createElement("div")
+    replace_btn.className = 'anjude-btn'
+    replace_btn.textContent = "R"
+    replace_btn.innerHTML = "R"
+    document.body.appendChild(replace_btn)
+    $('.anjude-btn').on("click", function() {
+      replaceVideo()
+    });
   }
 
-
-
   function replaceVideo() {
+    var iframeTmp = document.querySelector('#anjude-iframe')
+    if (iframeTmp) {
+      box_parent.removeChild(iframeTmp)
+      init()
+    }
+    if (!iframe.src) {
+      init()
+    }
     if (unsafeWindow.player) unsafeWindow.player.pause()
     if (video_box == 'none') return
-    console.log('iframe.src:', iframe.src, box_parent)
+    console.log('iframe.src:', iframe.src, 'box_parent:', box_parent)
     box_parent.insertBefore(iframe, video_box)
     iframe.height = video_height
     window.onresize = () => {
@@ -128,4 +155,23 @@
     iframe.setAttribute('allowfullscreen', 'allowfullscreen')
     iframe.setAttribute('webkitallowfullscreen', 'webkitallowfullscreen')
   }
+
+
+  GM_addStyle(`
+    .anjude-btn{
+      width: 30px;
+      height: 56px;
+      position: fixed;
+      top: 36%;
+      opacity: 0.6;
+      z-index: 999;
+      text-align: center;
+      line-height: 56px;
+      overflow: hidden;
+      border-radius: 5px;
+      background: #DFB360;
+      color: black;
+      opacity: 0.6;
+      z-index:9999999999999;
+    }`)
 })();
