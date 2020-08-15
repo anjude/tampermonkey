@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  This script was deleted from Greasy Fork, and due to its negative effects, it has been automatically removed from your browser.
-// @author       none
+// @author       anjude
 // @grant        unsafeWindow
 // @include      *://www.bilibili.com/bangumi/play/*
 // @include      *.mgtv.com/b/*
@@ -12,7 +12,6 @@
 // @grant        GM_addStyle
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
 // ==/UserScript==
-// <p draggable="true">这是一个可拖动的段落。</p>
 (function() {
   'use strict';
   // 播放器原因，打开开发者调试窗口（审查元素）时会卡死，请谨慎使用
@@ -58,9 +57,12 @@
   function init() {
     if (/bilibili.com\/bangumi\/play/.test(herf)) {
       title = unsafeWindow.__INITIAL_STATE__.mediaInfo.title
-      video_box = document.getElementById('player_module')
-      box_parent = document.querySelectorAll('.plp-l')[0]
-      video_height = video_box.style.height
+      video_box = document.getElementsByTagName('video')[0]
+      box_parent = document.querySelectorAll('.bilibili-player-video')[0]
+      video_height = $('#player_module').clientHeight
+      // video_box = document.getElementById('player_module')
+      // box_parent = document.querySelectorAll('.plp-l')[0]
+      // video_height = video_box.style.height
       if (document.body.className.includes('player-mode-widescreen')) {
         iframe.style.position = 'absolute'
         iframe.style.top = '0'
@@ -96,6 +98,7 @@
     replace_btn.className = 'anjude-btn'
     replace_btn.textContent = "R"
     replace_btn.innerHTML = "R"
+    replace_btn.setAttribute('draggable', 'true')
     document.body.appendChild(replace_btn)
     $('.anjude-btn').on("click", function() {
       replaceVideo()
@@ -108,40 +111,36 @@
       box_parent.removeChild(iframeTmp)
       init()
     }
-    if (!iframe.src) {
+    if (!iframe.src || !video_box) {
       init()
     }
-    if (unsafeWindow.player) unsafeWindow.player.pause()
-    if (video_box == 'none') return
-    console.log('iframe.src:', iframe.src, 'box_parent:', box_parent)
+    // if (unsafeWindow.player) unsafeWindow.player.pause()
+    // if (video_box == 'none') return
+    console.log('iframe.src:', iframe.src, 'box_parent:', box_parent, 'video_box', video_box)
     box_parent.insertBefore(iframe, video_box)
     iframe.height = video_height
     window.onresize = () => {
       iframe.style.height = video_height
     }
     if ($('mango-control').length != 0) {
-      video_box.pause()
       $('mango-control')[0].remove()
     }
     if ($('.iqp-bottom').length) {
-      video_box.pause()
       $('.iqp-bottom')[0].remove()
     }
     if ($('.black-screen').length) {
-      video_box.pause()
-      video_box.volume = 0
       $('.black-screen')[0].remove()
     }
     if ($('.txp_bottom').length) {
-      video_box.pause()
-      video_box.volume = 0
       $('.txp_bottom')[0].remove()
       $('.txp_gradient_bottom')[0].remove()
       $('.txp_shadow')[0].remove()
     }
+    video_box.pause()
+    video_box.volume = 0
     video_box.style.display = 'none'
     // video_box.remove()
-    video_box = 'none'
+    // video_box = 'none'
   }
 
   function iframeInit(title = '1917') {
