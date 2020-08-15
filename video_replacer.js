@@ -121,7 +121,7 @@
     window.onresize = () => {
       iframe.style.height = video_height
     }
-    if ($('mango-control').length != 0) {
+    if ($('mango-control').length) {
       $('mango-control')[0].remove()
     }
     if ($('.iqp-bottom').length) {
