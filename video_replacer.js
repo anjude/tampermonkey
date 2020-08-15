@@ -53,7 +53,6 @@
     init()
   }
 
-
   function init() {
     if (/bilibili.com\/bangumi\/play/.test(herf)) {
       title = unsafeWindow.__INITIAL_STATE__.mediaInfo.title
@@ -154,7 +153,6 @@
     iframe.setAttribute('allowfullscreen', 'allowfullscreen')
     iframe.setAttribute('webkitallowfullscreen', 'webkitallowfullscreen')
   }
-
 
   GM_addStyle(`
     .anjude-btn{
