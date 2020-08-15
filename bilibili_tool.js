@@ -2,7 +2,7 @@
 // @name         B站（bilibili）小功能汇总，视频集数进度记录，弹幕快捷键等
 // @namespace    http://tampermonkey.net/
 // @version      0.6.9
-// @icon         http://pic2.orsoon.com/2017/0118/20170118014446594.png
+// @icon         https://raw.githubusercontent.com/Anjude/picgo/master/images/bilibili_tool.png
 // @description  目前提供记录集数观看进度（看UP上传的网课必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）、视频全屏等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
 // @match        https://*.bilibili.com/*
@@ -50,7 +50,7 @@
 		// video-list clearfix https://search.bilibili.com/all
 	}
 	if (/space.bilibili.com/i.test(document.location.href)) {
-		// spacePage();
+		spacePage();
 		// fav-video-list clearfix content https://space.bilibili.com/416030291/favlist
 	}
 	$(document).ready(() => {
@@ -88,6 +88,9 @@
 		})
 	});
 	// 个人空间页面
+	function spacePage(){
+		
+	}
 	// 自动完成每日分享，亲测可用
 	function doShare() {
 		console.log('[B站（bilibili）小功能汇总]: 开始分享')
