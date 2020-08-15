@@ -2,7 +2,7 @@
 // @name         video replacer
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  This script was deleted from Greasy Fork, and due to its negative effects, it has been automatically removed from your browser.
+// @description  This script requires you to delete it within 24 hours.
 // @author       anjude
 // @grant        unsafeWindow
 // @include      *://www.bilibili.com/bangumi/play/*
