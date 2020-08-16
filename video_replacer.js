@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         video replacer
+// @name         B站、芒果、爱奇艺、腾讯视频替换器
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  This script requires you to delete it within 24 hours.
+// @description  按R切换。
 // @author       anjude
 // @grant        unsafeWindow
 // @include      *://www.bilibili.com/bangumi/play/*
