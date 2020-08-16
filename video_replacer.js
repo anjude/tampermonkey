@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         video replacer
+// @name         B站、芒果、爱奇艺、腾讯视频替换器
 // @namespace    http://tampermonkey.net/
 // @version      0.1
-// @description  This script requires you to delete it within 24 hours.
+// @description  按R切换。
 // @author       anjude
 // @grant        unsafeWindow
 // @include      *://www.bilibili.com/bangumi/play/*
@@ -121,6 +121,12 @@
     window.onresize = () => {
       iframe.style.height = video_height
     }
+    video_box.pause()
+    video_box.volume = 0
+    video_box.style.display = 'none'
+    if ($('.bilibili-player-video-state').length) {
+      $('.bilibili-player-video-state')[0].remove()
+    }
     if ($('mango-control').length) {
       $('mango-control')[0].remove()
     }
@@ -135,9 +141,6 @@
       $('.txp_gradient_bottom')[0].remove()
       $('.txp_shadow')[0].remove()
     }
-    video_box.pause()
-    video_box.volume = 0
-    video_box.style.display = 'none'
     // video_box.remove()
     // video_box = 'none'
   }
