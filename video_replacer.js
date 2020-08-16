@@ -151,8 +151,8 @@
 
   function iframeInit(title = '1917') {
     iframe.id = 'anjude-iframe'
-    iframe.src = `https://baidu.com/${title}`
-    // iframe.src = `https://z1.m1907.cn?jx=${title}`
+    // iframe.src = `https://baidu.com/${title}`
+    iframe.src = `https://z1.m1907.cn?jx=${title}`
     iframe.height = 0
     iframe.width = '100%'
     iframe.setAttribute('frameborder', 'no')
