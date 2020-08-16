@@ -58,7 +58,7 @@
       title = unsafeWindow.__INITIAL_STATE__.mediaInfo.title
       video_box = document.getElementsByTagName('video')[0]
       box_parent = document.querySelectorAll('.bilibili-player-video')[0]
-      video_height = document.getElementById('player_module').style.height
+      video_height = $('.bilibili-player-video')[0].clientHeight
       // video_box = document.getElementById('player_module')
       // box_parent = document.querySelectorAll('.plp-l')[0]
       // video_height = video_box.style.height
@@ -126,6 +126,10 @@
     video_box.style.display = 'none'
     if ($('.bilibili-player-video-state').length) {
       $('.bilibili-player-video-state')[0].remove()
+      $('.bilibili-player-video-control-wrap')[0].remove()
+      $('.bilibili-player-video-toast-wrp')[0].remove()
+      $('.bilibili-player-video-top')[0].remove()
+      $('.bilibili-player-video-record').length ? $('.bilibili-player-video-record')[0].remove()  :''
     }
     if ($('mango-control').length) {
       $('mango-control')[0].remove()
@@ -147,8 +151,8 @@
 
   function iframeInit(title = '1917') {
     iframe.id = 'anjude-iframe'
-    // iframe.src = `https://baidu.com/${title}`
-    iframe.src = `https://z1.m1907.cn?jx=${title}`
+    iframe.src = `https://baidu.com/${title}`
+    // iframe.src = `https://z1.m1907.cn?jx=${title}`
     iframe.height = 0
     iframe.width = '100%'
     iframe.setAttribute('frameborder', 'no')
