@@ -58,7 +58,7 @@
       title = unsafeWindow.__INITIAL_STATE__.mediaInfo.title
       video_box = document.getElementsByTagName('video')[0]
       box_parent = document.querySelectorAll('.bilibili-player-video')[0]
-      video_height = $('#player_module').clientHeight
+      video_height = document.getElementById('player_module').style.height
       // video_box = document.getElementById('player_module')
       // box_parent = document.querySelectorAll('.plp-l')[0]
       // video_height = video_box.style.height
