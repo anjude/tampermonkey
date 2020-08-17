@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         B站、芒果、爱奇艺、腾讯视频替换器
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  按R切换。
 // @author       anjude
 // @grant        unsafeWindow
 // @include      *://www.bilibili.com/bangumi/play/*
 // @include      *.mgtv.com/b/*
 // @include      *.iqiyi.com/v_*
+// @include      *.iqiyi.com/a_*
 // @include      *v.qq.com/x/*
 // @grant        GM_addStyle
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
@@ -22,7 +23,7 @@
   var iframe = document.createElement("iframe"),
     video_box = -1,
     box_parent = -1,
-    title = 0,
+    title = '1917',
     video_height = 0
   console.log(herf, document.title)
   console.log(unsafeWindow)
@@ -71,20 +72,24 @@
       video_box = document.getElementsByTagName('video')[0]
       box_parent = document.querySelectorAll('container')[0]
       video_height = $('container')[0].clientHeight
-      console.log('title:', title, video_box)
     } else if (/iqiyi.com\/v_/.test(herf)) {
-      title = $('#widget-videotitle')[0].innerText
+      // title = $('#widget-videotitle')[0].innerText
+      title = $('.header-link')[0].innerText
       video_box = document.getElementsByTagName('video')[0]
       box_parent = document.querySelectorAll('.iqp-player')[1]
       video_height = $('.iqp-player')[1].clientHeight
-      console.log('title:', title, video_box, box_parent)
+    } else if (/iqiyi.com\/a_/.test(herf)) {
+      title = document.title
+      video_box = document.getElementsByTagName('video')[0]
+      box_parent = document.querySelectorAll('.iqp-player')[1]
+      video_height = $('.iqp-player')[1].clientHeight
     } else if (/qq.com\/x/.test(herf)) {
       title = $('._main_title')[0].innerText
       video_box = document.getElementsByTagName('video')[0]
       box_parent = document.querySelectorAll('.txp_video_container')[0]
       video_height = $('.txp_video_container')[0].clientHeight
-      console.log('title:', title, video_box, box_parent)
     }
+    console.log('title:', title, video_box, box_parent)
     // iframe init
     iframeInit(title);
 
@@ -129,7 +134,7 @@
       $('.bilibili-player-video-control-wrap')[0].remove()
       $('.bilibili-player-video-toast-wrp')[0].remove()
       $('.bilibili-player-video-top')[0].remove()
-      $('.bilibili-player-video-record').length ? $('.bilibili-player-video-record')[0].remove()  :''
+      $('.bilibili-player-video-record').length ? $('.bilibili-player-video-record')[0].remove() : ''
     }
     if ($('mango-control').length) {
       $('mango-control')[0].remove()
