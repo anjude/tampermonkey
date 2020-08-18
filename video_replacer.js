@@ -172,8 +172,6 @@
       height: 56px;
       position: fixed;
       top: 36%;
-      opacity: 0.6;
-      z-index: 999;
       text-align: center;
       line-height: 56px;
       overflow: hidden;
