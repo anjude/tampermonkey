@@ -169,11 +169,11 @@
   GM_addStyle(`
     .anjude-btn{
       width: 30px;
-      height: 56px;
+      height: 36px;
       position: fixed;
       top: 36%;
       text-align: center;
-      line-height: 56px;
+      line-height: 36px;
       overflow: hidden;
       border-radius: 5px;
       background: #DFB360;
