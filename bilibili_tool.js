@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         B站（bilibili）小功能汇总，视频集数进度记录，弹幕快捷键等
+// @name         B站（bilibili）小功能汇总，视频集数进度记录，每日任务，快捷键增强等
 // @namespace    http://tampermonkey.net/
 // @version      0.6.9
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png

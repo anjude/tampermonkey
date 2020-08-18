@@ -300,14 +300,14 @@ document.addEventListener('readystatechange', function() {
         // 快捷键注册
         addEventListener('keydown', function(e) {
           if (e.keyCode == 38) {
-            if(curSpeed == 60)
-              return;
-            timer.changeTime(59, 0, true);
-            curSpeed = 60
+            if (curSpeed != 60 && e.ctrlKey) {
+              timer.changeTime(59, 0, true);
+              curSpeed = 60;
+            }
           }
         });
         addEventListener('keyup', function(e) {
-          if (e.keyCode == 38) {
+          if (e.keyCode == 38 && curSpeed == 60) {
             timer.changeTime(0, 0, false, true);
             curSpeed = 1
           }

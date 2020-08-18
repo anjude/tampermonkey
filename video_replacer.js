@@ -129,6 +129,7 @@
     video_box.pause()
     video_box.volume = 0
     video_box.style.display = 'none'
+    // bilibili
     if ($('.bilibili-player-video-state').length) {
       $('.bilibili-player-video-state')[0].remove()
       $('.bilibili-player-video-control-wrap')[0].remove()
@@ -136,15 +137,19 @@
       $('.bilibili-player-video-top')[0].remove()
       $('.bilibili-player-video-record').length ? $('.bilibili-player-video-record')[0].remove() : ''
     }
+    // mango
     if ($('mango-control').length) {
       $('mango-control')[0].remove()
     }
     if ($('.iqp-bottom').length) {
       $('.iqp-bottom')[0].remove()
     }
+    // iqy
     if ($('.black-screen').length) {
       $('.black-screen')[0].remove()
+      $('.qy-player-vippay-popup').length ? $('.qy-player-vippay-popup')[0].parentNode.remove() : ''
     }
+    // tx
     if ($('.txp_bottom').length) {
       $('.txp_bottom')[0].remove()
       $('.txp_gradient_bottom')[0].remove()
