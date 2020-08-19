@@ -25,8 +25,8 @@
     box_parent = -1,
     title = '1917',
     video_height = 0
-  console.log(herf, document.title)
-  console.log(unsafeWindow)
+  // console.log(herf, document.title)
+  // console.log(unsafeWindow)
   $(document).ready(() => {
     $(document).delegate("input, textarea",
       "focus",
@@ -89,7 +89,7 @@
       box_parent = document.querySelectorAll('.txp_video_container')[0]
       video_height = $('.txp_video_container')[0].clientHeight
     }
-    console.log('title:', title, video_box, box_parent)
+    // console.log('title:', title, video_box, box_parent)
     // iframe init
     iframeInit(title);
 
@@ -120,7 +120,7 @@
     }
     // if (unsafeWindow.player) unsafeWindow.player.pause()
     // if (video_box == 'none') return
-    console.log('iframe.src:', iframe.src, 'box_parent:', box_parent, 'video_box', video_box)
+    // console.log('iframe.src:', iframe.src, 'box_parent:', box_parent, 'video_box', video_box)
     box_parent.insertBefore(iframe, video_box)
     iframe.height = video_height
     window.onresize = () => {
