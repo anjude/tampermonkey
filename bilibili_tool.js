@@ -54,13 +54,13 @@
 		// fav-video-list clearfix content https://space.bilibili.com/416030291/favlist
 	}
 	$(document).ready(() => {
-		$("div").delegate("input, textarea",
+		$(document).delegate("input, textarea",
 			"focus",
 			function() {
 				focus = true
 				console.log('onfocus')
 			});
-		$("div").delegate("input, textarea",
+		$(document).delegate("input, textarea",
 			"blur",
 			function() {
 				console.log('onblur')
