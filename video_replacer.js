@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         B站、芒果、爱奇艺、腾讯视频替换器
+// @name         B站、芒果、爱奇艺、腾讯等视频替换器
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  一键切换，无感尊享。
 // @author       anjude
 // @grant        unsafeWindow
@@ -10,6 +10,7 @@
 // @include      *.iqiyi.com/v_*
 // @include      *.iqiyi.com/a_*
 // @include      *v.qq.com/x/*
+// @include      *v.youku.com/v_*
 // @grant        GM_addStyle
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
 // ==/UserScript==
@@ -25,8 +26,8 @@
     box_parent = -1,
     title = '1917',
     video_height = 0
-  // console.log(herf, document.title)
-  // console.log(unsafeWindow)
+  console.log(herf, document.title)
+  console.log(unsafeWindow)
   $(document).ready(() => {
     $(document).delegate("input, textarea",
       "focus",
@@ -88,6 +89,11 @@
       video_box = document.getElementsByTagName('video')[0]
       box_parent = document.querySelectorAll('.txp_video_container')[0]
       video_height = $('.txp_video_container')[0].clientHeight
+    } else if (/v.youku.com\/v_/.test(herf)) {
+      title = $('.title-link')[0].innerText
+      video_box = document.getElementsByTagName('video')[0]
+      box_parent = document.querySelectorAll('.youku-film-player')[0]
+      video_height = $('.youku-film-player')[0].clientHeight
     }
     // console.log('title:', title, video_box, box_parent)
     // iframe init
@@ -118,8 +124,6 @@
     if (!iframe.src || !video_box) {
       init()
     }
-    // if (unsafeWindow.player) unsafeWindow.player.pause()
-    // if (video_box == 'none') return
     // console.log('iframe.src:', iframe.src, 'box_parent:', box_parent, 'video_box', video_box)
     box_parent.insertBefore(iframe, video_box)
     iframe.height = video_height
@@ -154,6 +158,11 @@
       $('.txp_bottom')[0].remove()
       $('.txp_gradient_bottom')[0].remove()
       $('.txp_shadow')[0].remove()
+    }
+    // youku
+    if ($('.h5-layer-conatiner').length) {
+      $('.h5-layer-conatiner')[0].remove()
+      $('.h5player-dashboard')[0].remove()
     }
     // video_box.remove()
     // video_box = 'none'
