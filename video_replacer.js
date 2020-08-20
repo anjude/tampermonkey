@@ -2,7 +2,7 @@
 // @name         B站、芒果、爱奇艺、腾讯视频替换器
 // @namespace    http://tampermonkey.net/
 // @version      0.2
-// @description  按R切换。
+// @description  一键切换，无感尊享。
 // @author       anjude
 // @grant        unsafeWindow
 // @include      *://www.bilibili.com/bangumi/play/*
