@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.6.10
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
-// @description  算是收藏比例比较高的一个宝藏脚本，目前提供记录集数观看进度（看UP上传的网课必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）、视频全屏等功能，更多请参考详细描述，有空就会更新~
+// @description  目前提供记录集数观看进度（看UP上传的网课必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）、视频全屏等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
 // @match        https://*.bilibili.com/*
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
