@@ -75,10 +75,10 @@
 
 	function baiduDisk() {
 		console.log(document.getElementsByClassName("find-light-icon"))
-		document.getElementsByClassName("newIcon")[0].remove()
 		for (var i = 0, len = document.getElementsByClassName("find-light-icon").length; i < len; i++) {
 			document.getElementsByClassName("find-light-icon")[0].remove()
 		}
+		document.getElementsByClassName("newIcon")[0].remove()
 	}
 
 	function ad360() {
