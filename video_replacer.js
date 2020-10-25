@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站、芒果、爱奇艺、腾讯等视频替换器
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  一键解析，无感切换。
 // @author       anjude
 // @grant        unsafeWindow
@@ -44,7 +44,7 @@
         return;
       switch (e.keyCode) {
         case replace_video:
-          replaceVideo();
+          // replaceVideo();
           break;
       }
     })
