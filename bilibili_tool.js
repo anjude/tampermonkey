@@ -87,10 +87,11 @@
 					jumpChap();
 					break;
                 case take_note:
+                    if(e.altKey){
+                        offNote();
+                        return;
+                    }
                     takeNote();
-                    break;
-                case off_note:
-                    offNote();
                     break;
             }
 		})
