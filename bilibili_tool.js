@@ -31,6 +31,7 @@
 	var is_fullscreen = 70 // 键盘F，开关全屏
 	var his_chap = 72 // 键盘H，查看历史观看集数
 	var jump_chap = 74 // 键盘J，跳转上次观看集数
+	var is_lightoff = 76 //键盘L，切换关灯模式
     var take_note = 78 // 键盘N，记笔记
     var off_note = 77 // 键盘M，关闭记笔记
 
@@ -76,6 +77,9 @@
 			switch (e.keyCode) {
 				case is_barrage:
 					isBarrage();
+					break;
+				case is_lightoff:
+					isLightOff();
 					break;
 				case is_fullscreen:
 					isFullscreen();
@@ -280,6 +284,30 @@
 				break;
 			}
 		}
+	}
+	//宽屏并关灯模式
+    function isLightOff() {
+		var checkbox = document.getElementsByClassName('bui-checkbox-input')
+		var setting = document.getElementsByClassName('bilibili-player-video-btn-setting')[0]
+		var event_over = document.createEvent('MouseEvent')		//关灯模式为懒加载
+		var event_out = document.createEvent('MouseEvent')
+		event_over.initMouseEvent('mouseover',true,true)
+		event_out.initMouseEvent('mouseout',true,true)
+		setting.dispatchEvent(event_over)
+		setting.dispatchEvent(event_out)
+		document.getElementsByClassName('bilibili-player-iconfont-widescreen-off')[0].click()
+		for (var i = 0, len = checkbox.length; i < len; i++) {
+			if ('关灯模式' == checkbox[i].ariaLabel) {
+				checkbox[i].click();
+				break;
+			}
+		}
+        if(window.location.href.match('bangumi')){
+            window.scrollTo(0,50)		//打开关灯模式后滚动到合适位置
+        }
+        else{
+            window.scrollTo(0,130)
+        }
 	}
 	// 开关全屏
 	function isFullscreen() {
