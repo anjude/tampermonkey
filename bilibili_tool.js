@@ -239,7 +239,7 @@
 		var node = document.getElementsByClassName('on')
 		for (var i = 0, len = node.length; i < len; i++) {
 			if (/video\/(.v[0-9|a-z|A-Z]*)\??/i.test(node[i].innerHTML)) {
-				var regx = /video\/(.V[0-9a-zA-Z]*)\?p=(\d+).*title="(.*)"><div/i
+				var regx = /video\/(.V[0-9a-zA-Z]*)\?p=(\d+).*title="(.*?)"><div/i
 				info = regx.exec(node[i].innerHTML)
 				break;
 			}
