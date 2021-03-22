@@ -45,7 +45,7 @@
 		btn3.appendChild(node5);
 		elm.appendChild(btn3);
 
-		btn1.style.marginLeft = "300px";
+		btn1.style.marginLeft = "400px";
 		var selected = (btn) => {
 			cur_choose.style.backgroundColor = "white";
 			cur_choose.style.color = "black";
