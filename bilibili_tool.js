@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【看网课必备】 哔哩哔哩（bilibili|B站）小功能汇总，视频集数进度记录，每日任务，快捷键增强等
 // @namespace    http://tampermonkey.net/
-// @version      0.6.16
+// @version      0.6.17
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
 // @description  算是收藏比例比较高的一个宝藏脚本，一站式提供各种好用的功能，目前提供记录集数观看进度（看UP上传的分p视频必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）、视频全屏等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
@@ -210,6 +210,9 @@
             alert('成功删除！')
         });
 
+		// 设置连播
+        setTimeout(dealEpisodic, 2000)
+
         // <a href="/video/BV1pt41147eM?p=1" class="" title="01"><i class="van-icon-
         // console.log('监测当前集数', $('.on'))
         // console.log('监测当前集数', document.getElementsByClassName('on'))
@@ -278,6 +281,49 @@
         }
         // console.log(schedule_chart)
         GM_setValue('schedule_chart', schedule_chart)
+    }
+
+    function dealEpisodic() {
+        var btn = document.querySelector("#reco_list > div.next-play > p > span > span.switch-button");
+        var btn_multi = document.querySelector("#multi_page > div.head-con > div.head-right > span > span.switch-button");
+        if (btn_multi) {
+        	// 兼容多p视频
+            var cur_status = /switch-button on/.test(btn_multi.getAttribute('class'));
+        	var multi_episodic = GM_getValue("multi_episodic") == undefined ? cur_status : GM_getValue("multi_episodic");
+        	if(multi_episodic == undefined){
+        		GM_setValue("multi_episodic", cur_status);
+        	}
+            if (multi_episodic != cur_status) {
+                btn_multi.click();
+            }
+            btn_multi.addEventListener("click", function(e) {
+                var cur_status = /switch-button on/.test(this.getAttribute('class'));
+                // 过滤脚本模拟点击
+                if (e.isTrusted) {
+                    GM_setValue("multi_episodic", !cur_status);
+                }
+            })
+        }
+        if (!btn) { return; }
+
+        // 初始，根据缓存决定是否禁用连播
+        var cur_status = /switch-button on/.test(btn.getAttribute('class'));
+        var is_episodic = GM_getValue("is_episodic") == undefined ? cur_status : GM_getValue("is_episodic")
+        if (GM_getValue("is_episodic") == undefined) {
+            GM_setValue("is_episodic", cur_status);
+        }
+        if (cur_status != is_episodic) {
+            btn.click();
+            cur_status = !cur_status;
+            console.log(`[B站（bilibili）小功能汇总]: ${cur_status ? "开启" : "关闭"}非多p视频连播`);
+        }
+        menu_map.episodic = GM_registerMenuCommand(`${cur_status ? "关闭" : "开启"}非多p视频连播`, isEpisodic);
+        btn.addEventListener("click", function(e) {
+            // 过滤脚本模拟点击
+            if (e.isTrusted) {
+                isEpisodic(false);
+            }
+        });
     }
 
     // 键盘菜单
@@ -352,27 +398,22 @@
     }
 
     // 开关非多p视频连播
-    function isEpisodic() {
-        // record_list 估计就是历史视频列表的意思，如果是历史视频列表，按缓存数据决定是否连播
+    function isEpisodic(click = true) {
         var btn = document.querySelector("#reco_list > div.next-play > p > span > span.switch-button")
         if (!btn) {
             return;
         }
-        // 初始，取反
-        var is_episodic = GM_getValue("is_episodic");
         var cur_status = /switch-button on/.test(btn.getAttribute('class'))
-        if (is_episodic == cur_status) {
-            GM_setValue("is_episodic", !cur_status)
+        if (click) {
             btn.click()
-            console.log(`${cur_status ? "关闭" : "开启"}非多p视频连播`, GM_getValue("is_episodic"));
-
-            // 重新设置title
-            GM_unregisterMenuCommand(menu_map.episodic)
-            menu_map.episodic = GM_registerMenuCommand(`${cur_status ? "关闭" : "开启"}非多p视频连播`, function() {
-                let is_episodic = GM_getValue("is_episodic")
-                isEpisodic();
-            });
         }
+        cur_status = !cur_status
+        GM_setValue("is_episodic", cur_status)
+        console.log(`[B站（bilibili）小功能汇总]: ${cur_status ? "开启" : "关闭"}非多p视频连播`);
+
+        // 重新设置title
+        GM_unregisterMenuCommand(menu_map.episodic);
+        menu_map.episodic = GM_registerMenuCommand(`${cur_status ? "关闭" : "开启"}非多p视频连播`, isEpisodic);
     }
 
     function takeNote() {
