@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【看网课必备】 哔哩哔哩（bilibili|B站）小功能汇总，视频集数进度记录，每日任务，快捷键增强等
 // @namespace    http://tampermonkey.net/
-// @version      0.6.17
+// @version      0.6.18
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
 // @description  算是收藏比例比较高的一个宝藏脚本，一站式提供各种好用的功能，目前提供记录集数观看进度（看UP上传的分p视频必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）、视频全屏等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
@@ -76,7 +76,8 @@
                 focus = false
             });
         $(document).keydown((e) => {
-            if (focus || _blockKey()) {
+        	// 如果正在打字或者特殊情况，屏蔽快捷键
+            if (!e.altKey && (focus || _blockKey(e))) {
                 return;
             }
             // console.log('键盘：',e)
@@ -417,11 +418,13 @@
     }
 
     function takeNote() {
+    	console.log("[B站（bilibili）小功能汇总]: 开启笔记");
         $(".note-btn.note-btn__pink").click()
     }
 
     function offNote() {
-        $(".close-btn")[0].click()
+    	console.log("[B站（bilibili）小功能汇总]: 关闭笔记");
+        $(".bili-note-iconfont.iconiconfont_icon_close").click()
     }
 
 
@@ -470,8 +473,14 @@
     }
 
     // 处理需要屏蔽快捷键
-    function _blockKey() {
-        return $(".note-drag-bar").length == 0 ? false : true
+    function _blockKey(e) {
+    	let is_block = false;
+    	// 笔记框出现屏蔽快捷键
+    	let note_btn = $(".resizable-component.bili-note");
+    	if(note_btn.length && note_btn[0].style.display != "none"){
+    		is_block = true;
+    	}
+        return is_block;
     }
 
     GM_addStyle(`
