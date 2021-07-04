@@ -6,6 +6,7 @@
 // @description  按 alt + j 跳转聚合导航页面，选择相应搜索引擎，即可跳转你需要的资源，后面会不断筛选最强力的搜索引擎~
 // @author       anjude
 // @match        *
+// @include      *
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
 // @require      https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js
 // @grant        GM_setValue
