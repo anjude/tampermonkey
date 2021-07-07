@@ -91,7 +91,9 @@
                     isLightOff();
                     break;
                 case is_fullscreen:
-                    isFullscreen();
+                    if (!e.ctrlKey) {
+                        isFullscreen();
+                    }
                     break;
                 case his_chap:
                     hisChap();
