@@ -54,7 +54,7 @@
             switch (e.keyCode) {
                 case toWeindex:
                     if (e.altKey) {
-                        window.open("http://39.108.128.80/#/")
+                        window.open("anjude.xyz")
                     }
                     break
                 default:
