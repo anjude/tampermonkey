@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【最新】全网资源聚合搜索
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      0.0.2
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/weindex-icon.png
 // @description  按 alt + j 跳转聚合导航页面，选择相应搜索引擎，即可跳转你需要的资源，后面会不断筛选最强力的搜索引擎~
 // @author       anjude
@@ -54,7 +54,7 @@
             switch (e.keyCode) {
                 case toWeindex:
                     if (e.altKey) {
-                        window.open("anjude.xyz")
+                        window.open("https://www.anjude.xyz")
                     }
                     break
                 default:
