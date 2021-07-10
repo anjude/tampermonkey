@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【看网课必备】 哔哩哔哩（bilibili|B站）小功能汇总，视频集数进度记录，每日任务，快捷键增强等
 // @namespace    http://tampermonkey.net/
-// @version      0.6.18
+// @version      0.6.19
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
 // @description  算是收藏比例比较高的一个宝藏脚本，一站式提供各种好用的功能，目前提供记录集数观看进度（看UP上传的分p视频必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）、视频全屏等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
@@ -36,6 +36,7 @@
     var jump_chap = 74 // 键盘J，跳转上次观看集数
     var is_lightoff = 76 //键盘L，切换关灯模式
     var take_note = 78 // 键盘N，记笔记
+    let toWeindex = 74 // 键盘J，跳转聚合导航
 
     var search_page = {
         listener: -1,
@@ -108,6 +109,11 @@
                     }
                     takeNote();
                     break;
+                case toWeindex:
+                    if (e.altKey) {
+                        window.open("https://www.anjude.xyz")
+                    }
+                    break
             }
         })
     });
