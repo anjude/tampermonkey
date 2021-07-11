@@ -100,7 +100,9 @@
                     hisChap();
                     break;
                 case jump_chap:
-                    jumpChap();
+                    if (!e.altKey) {
+                        jumpChap();
+                    }
                     break;
                 case take_note:
                     if (e.altKey) {
