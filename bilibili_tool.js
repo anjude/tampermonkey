@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         【看网课必备】 哔哩哔哩（bilibili|B站）小功能汇总，视频集数进度记录，每日任务，快捷键增强等
+// @name         【看网课必备】 哔哩哔哩（bilibili|B站）小功能快捷键，视频集数进度记录，每日任务，快捷键增强等
 // @namespace    http://tampermonkey.net/
 // @version      0.6.19
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
