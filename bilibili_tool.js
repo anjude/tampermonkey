@@ -36,7 +36,6 @@
     var jump_chap = 74 // 键盘J，跳转上次观看集数
     var is_lightoff = 76 //键盘L，切换关灯模式
     var take_note = 78 // 键盘N，记笔记
-    let toWeindex = 74 // 键盘J，跳转聚合导航
 
     var search_page = {
         listener: -1,
@@ -77,11 +76,11 @@
                 focus = false
             });
         $(document).keydown((e) => {
-        	// 如果正在打字或者特殊情况，屏蔽快捷键
+            // 如果正在打字或者特殊情况，屏蔽快捷键
             if (!e.altKey && (focus || _blockKey(e))) {
                 return;
             }
-            // console.log('键盘：',e)
+            console.log('键盘：',e.keyCode)
             switch (e.keyCode) {
                 case is_barrage:
                     if (e.altKey) {
@@ -102,6 +101,8 @@
                 case jump_chap:
                     if (!e.altKey) {
                         jumpChap();
+                    } else {
+                        window.open("https://www.anjude.xyz")
                     }
                     break;
                 case take_note:
@@ -111,11 +112,6 @@
                     }
                     takeNote();
                     break;
-                case toWeindex:
-                    if (e.altKey) {
-                        window.open("https://www.anjude.xyz")
-                    }
-                    break
             }
         })
     });
@@ -221,7 +217,7 @@
             alert('成功删除！')
         });
 
-		// 设置连播
+        // 设置连播
         setTimeout(dealEpisodic, 2000)
 
         // <a href="/video/BV1pt41147eM?p=1" class="" title="01"><i class="van-icon-
@@ -298,12 +294,12 @@
         var btn = document.querySelector("#reco_list > div.next-play > p > span > span.switch-button");
         var btn_multi = document.querySelector("#multi_page > div.head-con > div.head-right > span > span.switch-button");
         if (btn_multi) {
-        	// 兼容多p视频
+            // 兼容多p视频
             var cur_status = /switch-button on/.test(btn_multi.getAttribute('class'));
-        	var multi_episodic = GM_getValue("multi_episodic") == undefined ? cur_status : GM_getValue("multi_episodic");
-        	if(multi_episodic == undefined){
-        		GM_setValue("multi_episodic", cur_status);
-        	}
+            var multi_episodic = GM_getValue("multi_episodic") == undefined ? cur_status : GM_getValue("multi_episodic");
+            if(multi_episodic == undefined){
+                GM_setValue("multi_episodic", cur_status);
+            }
             if (multi_episodic != cur_status) {
                 btn_multi.click();
             }
@@ -428,12 +424,12 @@
     }
 
     function takeNote() {
-    	console.log("[B站（bilibili）小功能汇总]: 开启笔记");
+        console.log("[B站（bilibili）小功能汇总]: 开启笔记");
         $(".note-btn.note-btn__pink").click()
     }
 
     function offNote() {
-    	console.log("[B站（bilibili）小功能汇总]: 关闭笔记");
+        console.log("[B站（bilibili）小功能汇总]: 关闭笔记");
         $(".bili-note-iconfont.iconiconfont_icon_close").click()
     }
 
@@ -484,12 +480,12 @@
 
     // 处理需要屏蔽快捷键
     function _blockKey(e) {
-    	let is_block = false;
-    	// 笔记框出现屏蔽快捷键
-    	let note_btn = $(".resizable-component.bili-note");
-    	if(note_btn.length && note_btn[0].style.display != "none"){
-    		is_block = true;
-    	}
+        let is_block = false;
+        // 笔记框出现屏蔽快捷键
+        let note_btn = $(".resizable-component.bili-note");
+        if(note_btn.length && note_btn[0].style.display != "none"){
+            is_block = true;
+        }
         return is_block;
     }
 
@@ -507,67 +503,67 @@
     }
     @keyframes fadeIn {
     0%    {opacity: 0}
-	    100%  {opacity: 1}
-	}
-	@-webkit-keyframes fadeIn {
-	    0%    {opacity: 0}
-	    100%  {opacity: 1}
-	}
-	@-moz-keyframes fadeIn {
-	    0%    {opacity: 0}
-	    100%  {opacity: 1}
-	}
-	@-o-keyframes fadeIn {
-	    0%    {opacity: 0}
-	    100%  {opacity: 1}
-	}
-	@-ms-keyframes fadeIn {
-	    0%    {opacity: 0}
-	    100%  {opacity: 1}
-	}
-	@keyframes fadeOut {
-	    0%    {opacity: 1}
-	    100%  {opacity: 0}
-	}
-	@-webkit-keyframes fadeOut {
-	    0%    {opacity: 1}
-	    100%  {opacity: 0}
-	}
-	@-moz-keyframes fadeOut {
-	    0%    {opacity: 1}
-	    100%  {opacity: 0}
-	}
-	@-o-keyframes fadeOut {
-	    0%    {opacity: 1}
-	    100%  {opacity: 0}
-	}
-	@-ms-keyframes fadeOut {
-	    0%    {opacity: 1}
-	    100%  {opacity: 0}
-	}
-	.web-toast{
-	    position: fixed;
-	    background: rgba(0, 0, 0, 0.7);
-	    color: #fff;
-	    font-size: 14px;
-	    line-height: 1;
-	    padding:10px;
-	    border-radius: 3px;
-	    left: 50%;
-	    top: 50%;
-	    transform: translate(-50%,-50%);
-	    -webkit-transform: translate(-50%,-50%);
-	    -moz-transform: translate(-50%,-50%);
-	    -o-transform: translate(-50%,-50%);
-	    -ms-transform: translate(-50%,-50%);
-	    z-index: 9999;
-	    white-space: nowrap;
-	}
-	.fadeOut{
-	    animation: fadeOut .5s;
-	}
-	.fadeIn{
-	    animation:fadeIn .5s;
-	}
-	`)
+        100%  {opacity: 1}
+    }
+    @-webkit-keyframes fadeIn {
+        0%    {opacity: 0}
+        100%  {opacity: 1}
+    }
+    @-moz-keyframes fadeIn {
+        0%    {opacity: 0}
+        100%  {opacity: 1}
+    }
+    @-o-keyframes fadeIn {
+        0%    {opacity: 0}
+        100%  {opacity: 1}
+    }
+    @-ms-keyframes fadeIn {
+        0%    {opacity: 0}
+        100%  {opacity: 1}
+    }
+    @keyframes fadeOut {
+        0%    {opacity: 1}
+        100%  {opacity: 0}
+    }
+    @-webkit-keyframes fadeOut {
+        0%    {opacity: 1}
+        100%  {opacity: 0}
+    }
+    @-moz-keyframes fadeOut {
+        0%    {opacity: 1}
+        100%  {opacity: 0}
+    }
+    @-o-keyframes fadeOut {
+        0%    {opacity: 1}
+        100%  {opacity: 0}
+    }
+    @-ms-keyframes fadeOut {
+        0%    {opacity: 1}
+        100%  {opacity: 0}
+    }
+    .web-toast{
+        position: fixed;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        font-size: 14px;
+        line-height: 1;
+        padding:10px;
+        border-radius: 3px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        -webkit-transform: translate(-50%,-50%);
+        -moz-transform: translate(-50%,-50%);
+        -o-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+        z-index: 9999;
+        white-space: nowrap;
+    }
+    .fadeOut{
+        animation: fadeOut .5s;
+    }
+    .fadeIn{
+        animation:fadeIn .5s;
+    }
+    `)
 })();
