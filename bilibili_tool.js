@@ -349,38 +349,50 @@
         }
     }
     //宽屏并关灯模式
-    function isLightOff() {
-        var checkbox = document.getElementsByClassName('bui-checkbox-input')
-        var setting = document.getElementsByClassName('bilibili-player-video-btn-setting')[0]
-        var event_over = document.createEvent('MouseEvent') //关灯模式为懒加载
-        var event_out = document.createEvent('MouseEvent')
-        event_over.initMouseEvent('mouseover', true, true)
-        event_out.initMouseEvent('mouseout', true, true)
-        setting.dispatchEvent(event_over)
-        setting.dispatchEvent(event_out)
-        document.getElementsByClassName('bilibili-player-iconfont-widescreen-off')[0].click()
-        for (var i = 0, len = checkbox.length; i < len; i++) {
-            if ('关灯模式' == checkbox[i].ariaLabel) {
-                checkbox[i].click();
-                break;
-            }
-        }
+    function isLightOff() {   
         if (window.location.href.match('bangumi')) {
+        	document.getElementsByClassName('squirtle-single-setting-other-choice squirtle-lightoff ')[0].click()
+        	document.getElementsByClassName('squirtle-video-widescreen squirtle-video-item ')[0].click()
             window.scrollTo(0, 50) //打开关灯模式后滚动到合适位置
         } else {
+	        var checkbox = document.getElementsByClassName('bui-checkbox-input')
+	        var setting = document.getElementsByClassName('bilibili-player-video-btn-setting')[0]
+	        var event_over = document.createEvent('MouseEvent') //关灯模式为懒加载
+	        var event_out = document.createEvent('MouseEvent')
+	        event_over.initMouseEvent('mouseover', true, true)
+	        event_out.initMouseEvent('mouseout', true, true)
+	        setting.dispatchEvent(event_over)
+	        setting.dispatchEvent(event_out)
+		    if (document.getElementsByClassName('bilibili-player-iconfont-widescreen-off').length) {
+	            document.getElementsByClassName('bilibili-player-iconfont-widescreen-off')[0].click()
+	        } else {
+	            document.getElementsByClassName('bilibili-player-iconfont-widescreen-off')[0].click()
+	        }
+	        for (var i = 0, len = checkbox.length; i < len; i++) {
+	            if ('关灯模式' == checkbox[i].ariaLabel) {
+	                checkbox[i].click();
+	                break;
+	            }
+	        }
             window.scrollTo(0, 130)
         }
     }
+
     // 开关全屏
     function isFullscreen() {
-        // console.log(document.getElementsByClassName('video-state-fullscreen-off'))
-        if (document.getElementsByClassName('video-state-fullscreen-off').length) {
-            document.getElementsByClassName('bilibili-player-iconfont-fullscreen-off')[0].click()
-        } else {
-            document.getElementsByClassName('bilibili-player-iconfont-fullscreen-on')[0].click()
-        }
+    	if (window.location.href.match('bangumi')) {
+    		document.getElementsByClassName('squirtle-video-fullscreen squirtle-video-item')[0].click()
+		}
+    	else {
+	        // console.log(document.getElementsByClassName('video-state-fullscreen-off'))
+	        if (document.getElementsByClassName('video-state-fullscreen-off').length) {
+	            document.getElementsByClassName('bilibili-player-iconfont-fullscreen-off')[0].click()
+	        } else {
+	            document.getElementsByClassName('bilibili-player-iconfont-fullscreen-on')[0].click()
+	        }
+	    }
     }
-
+    
     function hisChap() {
         var cur_dic = _getChapDic() || {}
         var tip = cur_dic.bv_id ? `您已观看到 ${cur_dic.part}：${cur_dic.title}` : '本片暂无记录~'
