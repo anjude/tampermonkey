@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         【看网课必备】 哔哩哔哩（bilibili|B站）小功能快捷键，视频集数进度记录，每日任务，快捷键增强等
+// @name         【看网课必备】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，视频集数进度记录，每日任务等
 // @namespace    http://tampermonkey.net/
-// @version      0.6.19
+// @version      0.6.20
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
 // @description  算是收藏比例比较高的一个宝藏脚本，一站式提供各种好用的功能，目前提供记录集数观看进度（看UP上传的分p视频必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）、视频全屏等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
@@ -26,6 +26,7 @@
      * 键盘编码：https://blog.csdn.net/zhaozhbcn/article/details/38852583
      * 对应编码数值填至相应设置中就可以
      * 例子： var is_barrage = 77 为键盘 M ，把原本66改为77即可
+     * 如果不需要该快捷键，把快捷键编码值设置为1000即可~
      */
 
     var menu_map = {}
@@ -36,6 +37,10 @@
     var jump_chap = 74 // 键盘J，跳转上次观看集数
     var is_lightoff = 76 //键盘L，切换关灯模式
     var take_note = 78 // 键盘N，记笔记
+
+    // 需要按住 Alt + CTRL + SHIFT
+    var take_note_photo = 80 // 键盘P，笔记截屏幕
+    var take_note_time = 67 // 键盘C，笔记截屏幕
 
     var search_page = {
         listener: -1,
@@ -80,7 +85,7 @@
             if (!e.altKey && (focus || _blockKey(e))) {
                 return;
             }
-            console.log('键盘：',e.keyCode)
+            // console.log('键盘：',e.keyCode)
             switch (e.keyCode) {
                 case is_barrage:
                     if (e.altKey) {
@@ -112,6 +117,9 @@
                     }
                     takeNote();
                     break;
+                default:
+                    // 一些不常用的小操作，集中一个函数处理
+                    _keyCtrl(e);
             }
         })
     });
@@ -295,7 +303,7 @@
         var btn_multi = document.querySelector("#multi_page > div.head-con > div.head-right > span > span.switch-button");
         if (btn_multi) {
             // 兼容多p视频
-            var cur_status = /switch-button on/.test(btn_multi.getAttribute('class'));
+            let cur_status = /switch-button on/.test(btn_multi.getAttribute('class'));
             var multi_episodic = GM_getValue("multi_episodic") == undefined ? cur_status : GM_getValue("multi_episodic");
             if(multi_episodic == undefined){
                 GM_setValue("multi_episodic", cur_status);
@@ -437,14 +445,19 @@
 
     function takeNote() {
         console.log("[B站（bilibili）小功能汇总]: 开启笔记");
-        $(".note-btn.note-btn__pink").click()
+        // 兼容 cheese课堂区和普通视频区的笔记按钮
+        let note_btn = document.querySelector("#arc_toolbar_report > div.rigth-btn > div:nth-child(2) > div") ||
+            document.querySelector("#app > div > div.l-con > div.video-toolbar > div.ops > span.note-btn")
+        note_btn.click()
     }
 
     function offNote() {
         console.log("[B站（bilibili）小功能汇总]: 关闭笔记");
-        $(".bili-note-iconfont.iconiconfont_icon_close").click()
+        // 兼容 cheese课堂区和普通视频区的笔记按钮
+        let note_off_btn = document.querySelector("#app > div.resizable-component.bili-note.active-note > div.note-drag-bar.drag-el > div.operation-btns > div.close-btn") ||
+            document.querySelector("#app > div.resizable-component.bili-note > div.note-drag-bar.drag-el > div.operation-btns > div > i")
+        note_off_btn.click()
     }
-
 
     function _getChapDic() {
         if (!/video\/(.v[0-9|a-z|A-Z]*)\??/i.exec(document.location.href)) {
@@ -499,6 +512,19 @@
             is_block = true;
         }
         return is_block;
+    }
+
+    // 处理一些个性化的小快捷键功能
+    function _keyCtrl(e){
+        // console.log(e)
+        if(e.altKey && e.ctrlKey && e.shiftKey && e.keyCode == take_note_photo){
+            let take_screen_shot = document.querySelector("#web-toolbar > div > span.ql-capture-btn.ql-bar > i");
+            take_screen_shot.click()
+        }
+        if(e.altKey && e.ctrlKey && e.shiftKey && e.keyCode == take_note_time){
+            let take_flag = document.querySelector("#web-toolbar > div > span.ql-tag-btn.ql-bar-btn > i")
+            take_flag.click()
+        }
     }
 
     GM_addStyle(`
