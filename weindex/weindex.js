@@ -37,12 +37,12 @@
             "focus",
             function() {
                 focus = true
-                console.log('onfocus')
+                // console.log('onfocus')
             });
         $(document).delegate("input, textarea",
             "blur",
             function() {
-                console.log('onblur')
+                // console.log('onblur')
                 focus = false
             });
         $(document).keydown((e) => {
@@ -54,11 +54,11 @@
             switch (e.keyCode) {
                 case toWeindex:
                     if (e.altKey) {
-                        window.open("https://www.anjude.xyz")
+                        window.open("http://www.anjude.xyz")
                     }
                     break
                 default:
-                    console.log("do nothing!")
+                    // console.log("do nothing!")
             }
         })
     });
