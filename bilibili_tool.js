@@ -524,11 +524,12 @@
     // 处理一些个性化的小快捷键功能
     function _keyCtrl(e){
         // console.log(e)
-        if(e.altKey && e.ctrlKey && e.shiftKey && e.keyCode == take_note_photo){
+        let pressKey = String.fromCharCode(e.keyCode)
+        if(e.altKey && e.ctrlKey && e.shiftKey && pressKey == take_note_photo){
             let take_screen_shot = document.querySelector("#web-toolbar > div > span.ql-capture-btn.ql-bar > i");
             take_screen_shot.click()
         }
-        if(e.altKey && e.ctrlKey && e.shiftKey && e.keyCode == take_note_time){
+        if(e.altKey && e.ctrlKey && e.shiftKey && pressKey == take_note_time){
             let take_flag = document.querySelector("#web-toolbar > div > span.ql-tag-btn.ql-bar-btn > i")
             take_flag.click()
         }
