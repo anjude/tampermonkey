@@ -31,16 +31,16 @@
 
     var menu_map = {}
 
-    var is_barrage = 66 // 键盘B，开关弹幕
-    var is_fullscreen = 70 // 键盘F，开关全屏
-    var his_chap = 72 // 键盘H，查看历史观看集数
-    var jump_chap = 74 // 键盘J，跳转上次观看集数
-    var is_lightoff = 76 //键盘L，切换关灯模式
-    var take_note = 78 // 键盘N，记笔记
+    var is_barrage = "B" // 键盘B，开关弹幕
+    var is_fullscreen = "F" // 键盘F，开关全屏
+    var his_chap = "H" // 键盘H，查看历史观看集数
+    var jump_chap = "J" // 键盘J，跳转上次观看集数
+    var is_lightoff = "L" //键盘L，切换关灯模式
+    var take_note = "N" // 键盘N，记笔记
 
     // 需要按住 Alt + CTRL + SHIFT
-    var take_note_photo = 80 // 键盘P，笔记截屏幕
-    var take_note_time = 67 // 键盘C，笔记截屏幕
+    var take_note_photo = "P" // 键盘P，笔记截屏幕
+    var take_note_time = "C" // 键盘C，笔记截屏幕
 
     var search_page = {
         listener: -1,
@@ -80,13 +80,17 @@
                 console.log('onblur')
                 focus = false
             });
+        let pressKey = String.fromCharCode(e.keyCode)
+        // if(typeof pressKey == "string"){
+        //     pressKey = pressKey.charCodeAt()
+        // }
         $(document).keydown((e) => {
             // 如果正在打字或者特殊情况，屏蔽快捷键
             if (!e.altKey && (focus || _blockKey(e))) {
                 return;
             }
             // console.log('键盘：',e.keyCode)
-            switch (e.keyCode) {
+            switch (pressKey) {
                 case is_barrage:
                     if (e.altKey) {
                         isBarrage();

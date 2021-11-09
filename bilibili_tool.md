@@ -25,12 +25,13 @@
 
 快捷键可自行修改，代码前面一点有说明
 
-键盘代码：https://blog.csdn.net/zhaozhbcn/article/details/38852583
+键盘代码：[https://blog.csdn.net/zhaozhbcn/article/details/38852583](https://blog.csdn.net/zhaozhbcn/article/details/38852583)
 
-github地址：https://github.com/Anjude/tampermonkey
+github地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anjude/tampermonkey)
 
 ### 版本更新
 
+- 0.6.21 快捷键从键码编程容易阅读的字符，自定义快捷键更方便啦，后继可能加入自定义选择+缓存机制（懒ing）
 - 0.6.20 修复和优化笔记区快捷键功能
 - 0.6.19 增加跳转全网资源导航
 - 0.6.18 修复记笔记快捷键失效
