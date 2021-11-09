@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【看网课必备】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，视频集数进度记录，每日任务等
 // @namespace    http://tampermonkey.net/
-// @version      0.6.20
+// @version      0.6.21
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
 // @description  算是收藏比例比较高的一个宝藏脚本，一站式提供各种好用的功能，目前提供记录集数观看进度（看UP上传的分p视频必备）、弹幕按键开关、搜索页面标记已看视频、完成每日任务（除投币任务）、视频全屏等功能，更多请参考详细描述，有空就会更新~
 // @author       anjude
@@ -83,7 +83,6 @@
                 console.log('onblur')
                 focus = false
             });
-        let pressKey = String.fromCharCode(e.keyCode)
         // if(typeof pressKey == "string"){
         //     pressKey = pressKey.charCodeAt()
         // }
@@ -93,6 +92,7 @@
                 return;
             }
             // console.log('键盘：',e.keyCode)
+            let pressKey = String.fromCharCode(e.keyCode)
             switch (pressKey) {
                 case is_barrage:
                     if (e.altKey) {
