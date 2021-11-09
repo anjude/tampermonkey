@@ -8,5 +8,7 @@
 
 github地址：https://github.com/Anjude/tampermonkey
 
-顺便推个时间管理小程序：time walkers
+**欢迎来我的公众号交流：豆小匠的编程日常**
+
+![](https://gitee.com/anjude/public-resource/raw/md-img/20211109095133.jpeg)
 

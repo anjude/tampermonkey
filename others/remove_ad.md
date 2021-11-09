@@ -6,6 +6,6 @@
 
 github地址：https://github.com/Anjude/tampermonkey
 
-顺便推个时间管理小程序：time walkers
+**欢迎来我的公众号交流：豆小匠的编程日常**
 
-![img](https://gitee.com/anjude/public-resource/raw/md-img/20210711085246.png)
+![](https://gitee.com/anjude/public-resource/raw/md-img/20211109094856.jpeg)

@@ -44,5 +44,7 @@ github地址：https://github.com/Anjude/tampermonkey
 - 0.6.7 支持更多输入框屏蔽快捷键
 - 0.6.6 修复输入框打字会触发快捷键
 
-**顺便推个时间管理小程序：时光早安**
+**欢迎来我的公众号交流：豆小匠的编程日常**
+
+![](https://gitee.com/anjude/public-resource/raw/md-img/20211109095113.jpeg)
 
