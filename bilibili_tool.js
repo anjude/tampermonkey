@@ -351,8 +351,8 @@
     // 键盘菜单
     // 开关弹幕
     function isBarrage() {
-        let node = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.video-state-blackside.video-state-pause.video-state-ending-panel-flag.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-danmaku-switch.bui.bui-switch > input")
-            || document.querySelector("#bilibili-player > div > div > div.bpx-player-primary-area > div.bpx-player-sending-area > div > div.bpx-player-dm-root > div.bpx-player-dm-switch.bui.bui-switch > div > input")
+        let node = document.querySelector("div.bilibili-player-video-danmaku-switch.bui.bui-switch > input")
+            || document.querySelector("div.bpx-player-dm-switch.bui.bui-switch > div > input")
         node.click()
     }
 
