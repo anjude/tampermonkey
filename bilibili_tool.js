@@ -351,18 +351,11 @@
     // 键盘菜单
     // 开关弹幕
     function isBarrage() {
-        var node = $('.bui-switch-input')
-        for (var i = 0, len = node.length; i < len; i++) {
-            if ($('.bui-switch-input')[i].offsetParent) {
-                $('.bui-switch-input')[i].click();
-                _toast({
-                    message: '切换',
-                    time: 100
-                })
-                break;
-            }
-        }
+        let node = document.querySelector("#bilibiliPlayer > div.bilibili-player-area.video-state-blackside.video-state-pause.video-state-ending-panel-flag.progress-shadow-show > div.bilibili-player-video-bottom-area > div > div.bilibili-player-video-danmaku-root > div.bilibili-player-video-danmaku-switch.bui.bui-switch > input")
+            || document.querySelector("#bilibili-player > div > div > div.bpx-player-primary-area > div.bpx-player-sending-area > div > div.bpx-player-dm-root > div.bpx-player-dm-switch.bui.bui-switch > div > input")
+        node.click()
     }
+
     //宽屏并关灯模式
     function isLightOff() {   
         if (window.location.href.match('bangumi')) {
