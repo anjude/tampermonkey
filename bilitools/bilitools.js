@@ -21,8 +21,8 @@
     'use strict'
     // 检查版本
     const RELEASE_VERSION = '0.0.2'
-    const DEV = 'DEBUG'
-    // const DEV = 'RELEASE'
+    // const DEV = 'DEBUG'
+    const DEV = 'RELEASE'
     let updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
     updateVersion && GM_setValue('RELEASE_VERSION', RELEASE_VERSION)
     // resetScript()
@@ -36,7 +36,7 @@
             takeNote: '000N',  // 打开视频笔记
             notePicShot: '101P',   // 笔记-视频截图
             noteTimePoint: '101T',   // 笔记-时间标记
-            unlockBangumi: '000V',   // 解锁视频
+            unlockBangumi: '100V',   // 解锁视频
         },
         videoRecordMap: {}, // 视频记录
         multiUnceasing: true,   // 多集自动连播
