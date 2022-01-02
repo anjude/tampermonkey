@@ -9,12 +9,13 @@
 
 - Alt + Shift + Ctrl 称为 **三键**
 
-| **添加快捷键**      | **助记单词** | **功能**      |
-| ------------------- | ------------ | ------------- |
-| **U**               | UpToTop      | 回到顶部      |
-| **N**               | Note         | 打开/关闭笔记 |
-| **alt + shift + p** | picture      | 笔记-视频截图 |
-| **alt + shift + T** | Time-Tag     | 笔记-时间标志 |
+| **添加快捷键**      | **助记单词** | **功能**          |
+| ------------------- | ------------ | ----------------- |
+| **U**               | UpToTop      | 回到顶部          |
+| **N**               | Note         | 打开/关闭笔记     |
+| **V**               | Video        | 打开/关闭视频解锁 |
+| **alt + shift + p** | picture      | 笔记-视频截图     |
+| **alt + shift + T** | Time-Tag     | 笔记-时间标志     |
 
 | **原配快捷键** | **助记单词** | **功能**          |
 | -------------- | ------------ | ----------------- |
@@ -35,7 +36,8 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 ### 版本更新
 
 - 0.0.1 首版发布
+- 0.0.2 增加视频解锁（有条件请开大会员）
 
-**欢迎来我的公众号交流：豆小匠 Coding**
+**扫码成为打卡人：早安打卡人 HD**
 
-![](https://gitee.com/anjude/public-resource/raw/md-img/20220101224030.jpg)![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg)
+![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg)

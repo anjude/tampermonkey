@@ -21,7 +21,9 @@
     'use strict'
     // 检查版本
     const RELEASE_VERSION = '0.0.2'
-    let updateVersion = RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
+    const DEV = 'DEBUG'
+    // const DEV = 'RELEASE'
+    let updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
     updateVersion && GM_setValue('RELEASE_VERSION', RELEASE_VERSION)
     // resetScript()
     /**
@@ -34,10 +36,12 @@
             takeNote: '000N',  // 打开视频笔记
             notePicShot: '101P',   // 笔记-视频截图
             noteTimePoint: '101T',   // 笔记-时间标记
+            unlockBangumi: '000V',   // 解锁视频
         },
         videoRecordMap: {}, // 视频记录
         multiUnceasing: true,   // 多集自动连播
         singleUncreasing: false,    // 单集自动连播
+        autoUnlockVideo: false, // 是否自动解锁视频
         shareDate: '2022/1/1',
         lastClearup: new Date()
     }
@@ -75,7 +79,12 @@
             '#video-list > ul',
             'div.mixin-list > ul.video-list',    // 番剧
             'div.flow-loader > ul'
-        ]
+        ],
+        playerBox: ['#player_module'],
+        parseApiList: [
+            { id: 1, url: 'https://vip.parwix.com:4433/player/?url=' }
+        ],
+        bangumiLi: ['li.ep-item.cursor.badge.visited']
     }
 
     const getElement = (list) => {
@@ -156,6 +165,8 @@
                     return NotePicShot()
                 case keyMap.noteTimePoint:
                     return NoteTimePoint()
+                case keyMap.unlockBangumi:
+                    return UnlockBangumi(true)
                 default:
                     keyCtrl(command)  // 一些不常用的小操作，集中一个函数处理
             }
@@ -174,7 +185,9 @@
                         /\/player\/playurl/.test(responseURL)
                             && chapListener(result);
                         /x\/web-interface\/search/.test(responseURL)
-                            && dealRead(result)
+                            && dealRead(result);
+                        /pgc\/view\/web\/section\/order/.test(responseURL)
+                            && UnlockBangumi()
                     } catch (err) { }
                 })
                 return target.apply(thisArg, args)
@@ -259,6 +272,35 @@
             }
             e.prepend(addDiv);
         })
+    }
+
+    const UnlockBangumi = (setAutoUnlock, parseApi = siteConfig.parseApiList[0]) => {
+        if (setAutoUnlock) {
+            let set = !bili2sConf.autoUnlockVideo
+            bili2sConf.autoUnlockVideo = set
+            GM_setValue('bili2sConf', bili2sConf)
+            Toast(`[B站小助手]:${set ? '开启' : '关闭'}自动解锁!`)
+        }
+        let videoInfo = getElement(siteConfig.bangumiLi)?.innerHTML
+        if (!bili2sConf.autoUnlockVideo
+            || videoInfo && !/>会员<\/div>/.test(videoInfo)
+            || !videoInfo
+        ) { return }
+
+        let newPlayer = document.createElement('iframe')
+        newPlayer.id = 'anjude-iframe'
+        newPlayer.height = '100%'
+        newPlayer.width = '100%'
+        newPlayer.src = parseApi.url + window.location.href
+        newPlayer.setAttribute('allow', 'autoplay')
+        newPlayer.setAttribute('frameborder', 'no')
+        newPlayer.setAttribute('border', '0')
+        newPlayer.setAttribute('allowfullscreen', 'allowfullscreen')
+        newPlayer.setAttribute('webkitallowfullscreen', 'webkitallowfullscreen')
+
+        let playerBox = getElement(siteConfig.playerBox)
+        playerBox.innerHTML = ''
+        playerBox.append(newPlayer)
     }
 
     const runScript = () => {
