@@ -20,7 +20,7 @@
 (function () {
     'use strict'
     // 检查版本
-    const RELEASE_VERSION = '0.0.2'
+    const RELEASE_VERSION = '0.0.3'
     // const DEV = 'DEBUG'
     const DEV = 'RELEASE'
     let updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
