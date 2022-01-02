@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         【小破站必备】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，每日任务等
+// @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，每日任务等
 // @namespace    http://tampermonkey.net/
 // @version      0.0.1
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
@@ -108,6 +108,7 @@
 
     const NotePicShot = () => {
         let picBtn = getElement(siteConfig.picBtnList)
+        console.log(111, picBtn);
         picBtn.click()
     }
 
@@ -145,7 +146,7 @@
             let command = `${k(e.altKey)}${k(e.ctrlKey)}${k(e.shiftKey)}${pressKey}`
             let keyMap = bili2sConf.shortcutMap
 
-            // console.log('键盘:', command)
+            console.log('键盘:', command)
             switch (command) {
                 case keyMap.upToTop:
                     return UpToTop()
@@ -182,14 +183,13 @@
     }
 
     const chapListener = (res) => {
-        let listItem = getElement(chapListItem).innerHTML
-        let regxList = /video\/([^\?]*)\?p=(\d+)'.*title='(.*?)'><div/i.exec(listItem)
-        Object.assign(bili2sConf.videoRecordMap, {
-            [regxList[1]]: {
-                p: regxList[2],
-                title: regxList[3],
-                updateTime: new Date()
-            }
+        let listItem = getElement(siteConfig.chapListItem).innerHTML
+        let regxList = /video\/([^\?]*)\?p=(\d+).*title=.(.*?).><div/i.exec(listItem)
+        let bvid = regxList[1]
+        bili2sConf.videoRecordMap[bvid] = Object.assign(bili2sConf.videoRecordMap[bvid] || {}, {
+            p: regxList[2],
+            title: regxList[3],
+            updateTime: new Date()
         })
         GM_setValue('bili2sConf', bili2sConf)
     }
@@ -205,12 +205,13 @@
 
     const setVideoRecord = () => {
         let bvid = getBvid()
-        let videoRecord = bili2sConf.videoRecordMap[bvid] || {}
+        let videoRecord = bili2sConf.videoRecordMap[bvid] || {
+            docTitle: document.title,
+            p: 1
+        }
         videoRecord.updateTime = new Date()
-        videoRecord.docTitle = document.title
-        Object.assign(bili2sConf.videoRecordMap, {
-            [bvid]: videoRecord
-        })
+        bili2sConf.videoRecordMap[bvid] = Object.assign(bili2sConf.videoRecordMap[bvid] || {}, videoRecord)
+        // console.log(bili2sConf.videoRecordMap[bvid], videoRecord)
         GM_setValue('bili2sConf', bili2sConf)
     }
 
