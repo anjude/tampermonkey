@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.0.1
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
-// @description  另一个宝藏B站工具箱脚本的重构版，去掉无用功能，增加更多使用功能！具体看脚本介绍~
+// @description  另一个宝藏B站工具箱脚本的重构版，去掉无用功能，增加更多实用功能！具体看脚本介绍~
 // @author       anjude
 // @match        https://*.bilibili.com/*
 // @grant        GM_setValue
@@ -32,8 +32,8 @@
         shortcutMap: {
             upToTop: '000U',   // 回到顶部
             takeNote: '000N',  // 打开视频笔记
-            notePicShot: '110P',   // 笔记-视频截图
-            noteTimePoint: '110T',   // 笔记-时间标记
+            notePicShot: '101P',   // 笔记-视频截图
+            noteTimePoint: '101T',   // 笔记-时间标记
         },
         videoRecordMap: {}, // 视频记录
         multiUnceasing: true,   // 多集自动连播
