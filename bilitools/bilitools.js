@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，每日任务等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      0.0.2
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
 // @description  另一个宝藏B站工具箱脚本的重构版，去掉无用功能，增加更多实用功能！具体看脚本介绍~
 // @author       anjude
@@ -20,7 +20,7 @@
 (function () {
     'use strict'
     // 检查版本
-    const RELEASE_VERSION = '0.0.1'
+    const RELEASE_VERSION = '0.0.2'
     let updateVersion = RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
     updateVersion && GM_setValue('RELEASE_VERSION', RELEASE_VERSION)
     // resetScript()
