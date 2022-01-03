@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，每日任务等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.3
+// @version      0.0.5
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
-// @description  另一个宝藏B站工具箱脚本的重构版，去掉无用功能，增加更多实用功能！具体看脚本介绍~
+// @description  另一个宝藏B站工具箱脚本的重构版，去掉不常用功能，增加更多实用功能！自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务，视频解锁，视频已看标签等等，具体看脚本介绍~
 // @author       anjude
 // @match        https://*.bilibili.com/*
 // @grant        GM_setValue
@@ -21,7 +21,7 @@
 (function () {
   'use strict'
   // 检查版本
-  const RELEASE_VERSION = '0.0.4'
+  const RELEASE_VERSION = '0.0.5'
   // const DEV = 'DEBUG'
   const DEV = 'RELEASE'
   let updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
@@ -96,7 +96,8 @@
       notePicShot: '笔记-视频截图',
       noteTimePoint: '笔记-时间标志'
     },  // shortcut list
-    scSetting: ''
+    scSetting: '',
+    multiPageJump: false  // 是否跳转上次观看
   }
 
   const startHttpProxy = () => {
@@ -104,7 +105,7 @@
       apply: (target, thisArg, args) => {
         thisArg.addEventListener('load', event => {
           try {
-            console.log(111, event.target.responseURL)
+            // console.log(111, event.target.responseURL)
             let { responseText, responseURL } = event.target
             if (!/^{.*}$/.test(responseText)) return
             const result = JSON.parse(responseText);
@@ -157,7 +158,6 @@
 
   const NotePicShot = () => {
     let picBtn = getElement(siteConfig.picBtnList)
-    console.log(111, picBtn);
     picBtn.click()
   }
 
@@ -181,7 +181,6 @@
   const setShortcut = (command) => {
     let commandString = getShortCut(command)
     let scSetting = siteConfig.scSetting
-    console.log(111, commandString, scSetting)
     let innerTextList = document.querySelector(`#${scSetting}`).innerHTML.split(':')
     document.querySelector(`#${scSetting}`).innerHTML = innerTextList[0] + ': ' + commandString
     siteConfig.scm[scSetting] = command
@@ -239,6 +238,8 @@
     let bvid = getBvid()
     let videoHis = bili2sConf.videoRecordMap[bvid]
     videoHis && (() => {
+      if (siteConfig.multiPageJump) { return }
+      siteConfig.multiPageJump = !siteConfig.multiPageJump
       document.querySelector(`div.cur-list > ul > li:nth-child(${videoHis.p}) > a`).click()
       Toast('小助手: 跳转上次观看集数')
     })()
@@ -285,7 +286,7 @@
 
   const dealRead = (res) => {
     let searchResBox = getElement(siteConfig.searchResBox)
-    console.log(searchResBox.childNodes)
+    // console.log(searchResBox.childNodes)
     let resList = searchResBox.childNodes
     resList.forEach(e => {
       let bvid = getBvid(e.innerHTML)
