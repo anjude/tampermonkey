@@ -39,7 +39,7 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 - 0.0.2 增加视频解锁（有条件请开大会员）
 - 0.0.3 快捷键自定义
 
-![image-20220103141359159](https://gitee.com/anjude/public-resource/raw/md-img/20220103141405.png)
+![](https://gitee.com/anjude/public-resource/raw/md-img/20220103142228.png)
 
 **推荐个小程序：**
 
