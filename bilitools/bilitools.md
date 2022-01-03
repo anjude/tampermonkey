@@ -37,7 +37,10 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 
 - 0.0.1 首版发布
 - 0.0.2 增加视频解锁（有条件请开大会员）
+- 0.0.3 快捷键自定义
 
-**扫码成为打卡人：早安打卡人 HD**
+![image-20220103141359159](https://gitee.com/anjude/public-resource/raw/md-img/20220103141405.png)
+
+**推荐个小程序：**
 
 ![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg)
