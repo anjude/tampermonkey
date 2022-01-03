@@ -21,9 +21,9 @@
 (function () {
   'use strict'
   // 检查版本
-  const RELEASE_VERSION = '0.0.3'
-  const DEV = 'DEBUG'
-  // const DEV = 'RELEASE'
+  const RELEASE_VERSION = '0.0.4'
+  // const DEV = 'DEBUG'
+  const DEV = 'RELEASE'
   let updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
   updateVersion && GM_setValue('RELEASE_VERSION', RELEASE_VERSION)
   // resetScript()
@@ -79,7 +79,10 @@
     searchResBox: [
       '#video-list > ul',
       'div.mixin-list > ul.video-list',    // 番剧
-      'div.flow-loader > ul'
+      'div.flow-loader > ul',
+      'div.rcmd-box',  // 首页推荐
+      'div.section.video > div',  // UP主页
+      '#submit-video-list > ul.list-list'  // UP主页，更多视频
     ],
     playerBox: ['#player_module'],
     parseApiList: [
@@ -101,16 +104,18 @@
       apply: (target, thisArg, args) => {
         thisArg.addEventListener('load', event => {
           try {
-            // console.log(111, event.target.responseURL)
+            console.log(111, event.target.responseURL)
             let { responseText, responseURL } = event.target
             if (!/^{.*}$/.test(responseText)) return
             const result = JSON.parse(responseText);
             /\/player\/playurl/.test(responseURL)
               && chapListener(result);
-            /x\/web-interface\/search/.test(responseURL)
+            (/x\/web-interface\/search/.test(responseURL)
+              || /x\/web-interface\/index\/top\/rcmd/.test(responseURL)
+              || /x\/space\/arc/.test(responseURL))
               && dealRead(result);
             /pgc\/view\/web\/section\/order/.test(responseURL)
-              && UnlockBangumi()
+              && UnlockBangumi();
           } catch (err) { }
         })
         return target.apply(thisArg, args)
@@ -129,7 +134,7 @@
   }
 
   const getBvid = (href) => {
-    return /video\/([^\?]*)/i.exec(href || document.location.href)[1]
+    return /video\/([0-9|a-z|A-Z]*)/i.exec(href || document.location.href)[1]
   }
 
   const UpToTop = () => { // 回到顶部
@@ -199,7 +204,7 @@
       let command = `${k(e.altKey)}${k(e.ctrlKey)}${k(e.shiftKey)}${pressKey}`
       let keyMap = bili2sConf.shortcutMap
 
-      console.log('键盘:', command, siteConfig.scSetting)
+      // console.log('键盘:', command, siteConfig.scSetting)
       if (siteConfig.scSetting) { return setShortcut(command) }
       switch (command) {
         case keyMap.upToTop:
@@ -220,7 +225,7 @@
 
   const chapListener = (res) => {
     let listItem = getElement(siteConfig.chapListItem).innerHTML
-    let regxList = /video\/([^\?]*)\?p=(\d+).*title=.(.*?).><div/i.exec(listItem)
+    let regxList = /video\/([0-9|a-z|A-Z]*)\?p=(\d+).*title=.(.*?).><div/i.exec(listItem)
     let bvid = regxList[1]
     bili2sConf.videoRecordMap[bvid] = Object.assign(bili2sConf.videoRecordMap[bvid] || {}, {
       p: regxList[2],
