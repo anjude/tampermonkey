@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，每日任务等
+// @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，每日任务，视频解析等
 // @namespace    http://tampermonkey.net/
 // @version      0.0.5
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
-// @description  🔥🔥🔥推荐：2022最友好的B站助手。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务，视频自动解锁，视频已看标签等等，具体看脚本介绍~
+// @description  🔥🔥🔥推荐 2022最友好的B站助手，无冲突。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务，视频自动解锁，视频已看标签等等，具体看脚本介绍~
 // @author       anjude
 // @match        https://*.bilibili.com/*
 // @grant        GM_setValue
@@ -311,7 +311,7 @@
       let set = !bili2sConf.autoUnlockVideo
       bili2sConf.autoUnlockVideo = set
       GM_setValue('bili2sConf', bili2sConf)
-      Toast(`[B站小助手]:${set ? '开启' : '关闭'}自动解锁!`)
+      Toast(`B站小助手:${set ? '开启' : '关闭'}自动解锁!`)
     }
     let videoInfo = getElement(siteConfig.bangumiLi)?.innerHTML
     if (!bili2sConf.autoUnlockVideo
@@ -478,51 +478,16 @@ ${scItem}
     .video-view{
       display:inline-block;
       position:absolute;
-      left:0px;
-      top:0px;
-      background:#FFF;
-      color:#666;
-      opacity: 0.8;
-      padding:1px 5px;
+      left:0px; top:0px;
+      background:#FFF; color:#666;
+      opacity: 0.8; padding:1px 5px;
       z-index:999;
     }
     @keyframes fadeIn {
     0%    {opacity: 0}
         100%  {opacity: 1}
     }
-    @-webkit-keyframes fadeIn {
-        0%    {opacity: 0}
-        100%  {opacity: 1}
-    }
-    @-moz-keyframes fadeIn {
-        0%    {opacity: 0}
-        100%  {opacity: 1}
-    }
-    @-o-keyframes fadeIn {
-        0%    {opacity: 0}
-        100%  {opacity: 1}
-    }
-    @-ms-keyframes fadeIn {
-        0%    {opacity: 0}
-        100%  {opacity: 1}
-    }
     @keyframes fadeOut {
-        0%    {opacity: 1}
-        100%  {opacity: 0}
-    }
-    @-webkit-keyframes fadeOut {
-        0%    {opacity: 1}
-        100%  {opacity: 0}
-    }
-    @-moz-keyframes fadeOut {
-        0%    {opacity: 1}
-        100%  {opacity: 0}
-    }
-    @-o-keyframes fadeOut {
-        0%    {opacity: 1}
-        100%  {opacity: 0}
-    }
-    @-ms-keyframes fadeOut {
         0%    {opacity: 1}
         100%  {opacity: 0}
     }
@@ -537,10 +502,6 @@ ${scItem}
         left: 50%;
         top: 50%;
         transform: translate(-50%,-50%);
-        -webkit-transform: translate(-50%,-50%);
-        -moz-transform: translate(-50%,-50%);
-        -o-transform: translate(-50%,-50%);
-        -ms-transform: translate(-50%,-50%);
         z-index: 9999;
         white-space: nowrap;
     }
