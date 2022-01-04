@@ -31,7 +31,7 @@
 | **E**          | 无           | 收藏              |
 | **shift+2**    | 无           | 二倍速            |
 
-添加的快捷键可自行修改，代码前面一点有说明
+**添加的快捷键可自行设置**
 
 github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anjude/tampermonkey)
 
