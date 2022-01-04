@@ -82,7 +82,8 @@
       'div.flow-loader > ul',
       'div.rcmd-box',  // 首页推荐
       'div.section.video > div',  // UP主页
-      '#submit-video-list > ul.list-list'  // UP主页，更多视频
+      '#submit-video-list > ul.list-list',  // UP主页，更多视频
+      '#reco_list > div.rec-list'
     ],
     playerBox: ['#player_module'],
     parseApiList: [
@@ -286,9 +287,11 @@
 
   const dealRead = (res) => {
     let searchResBox = getElement(siteConfig.searchResBox)
-    // console.log(searchResBox.childNodes)
+    console.log(searchResBox.childNodes)
     let resList = searchResBox.childNodes
     resList.forEach(e => {
+      if (!e.innerHTML) return
+      e.style.position = 'relative'
       let bvid = getBvid(e.innerHTML)
       let addDiv = document.createElement("div")
       addDiv.className = 'video-view'
@@ -343,6 +346,7 @@
       setTimeout(() => {
         setVideoRecord()
         dealUnceasing(isMultiPage)
+        dealRead()
         date === bili2sConf.shareDate || doShare()
       }, siteConfig.delayMs);
     }
