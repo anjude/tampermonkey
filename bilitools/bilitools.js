@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.0.5
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
-// @description  另一个宝藏B站工具箱脚本的重构版，去掉不常用功能，增加更多实用功能！自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务，视频解锁，视频已看标签等等，具体看脚本介绍~
+// @description  🔥🔥🔥推荐：2022最友好的B站助手。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务，视频自动解锁，视频已看标签等等，具体看脚本介绍~
 // @author       anjude
 // @match        https://*.bilibili.com/*
 // @grant        GM_setValue
@@ -83,7 +83,7 @@
       'div.rcmd-box',  // 首页推荐
       'div.section.video > div',  // UP主页
       '#submit-video-list > ul.list-list',  // UP主页，更多视频
-      '#reco_list > div.rec-list'
+      '#reco_list > div.rec-list',  // 相关视频
     ],
     playerBox: ['#player_module'],
     parseApiList: [
@@ -287,7 +287,7 @@
 
   const dealRead = (res) => {
     let searchResBox = getElement(siteConfig.searchResBox)
-    console.log(searchResBox.childNodes)
+    // console.log(searchResBox.childNodes)
     let resList = searchResBox.childNodes
     resList.forEach(e => {
       if (!e.innerHTML) return
