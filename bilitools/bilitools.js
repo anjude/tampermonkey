@@ -428,6 +428,9 @@
     GM_registerMenuCommand('设置快捷键', () => {
       document.querySelector('#sc-box').style.display = ''
     })
+    GM_registerMenuCommand('重置脚本', () => {
+      resetScript()
+    })
   }
 
   function initSettingPanel() {
