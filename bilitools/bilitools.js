@@ -21,7 +21,7 @@
 (function () {
   'use strict'
   // 检查版本
-  const RELEASE_VERSION = '0.0.5'
+  const RELEASE_VERSION = '0.0.6'
   // const DEV = 'DEBUG'
   const DEV = 'RELEASE'
   let updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
@@ -37,18 +37,20 @@
       takeNote: '000N',  // 打开视频笔记
       notePicShot: '101P',   // 笔记-视频截图
       noteTimePoint: '101T',   // 笔记-时间标记
-      unlockBangumi: '100V',   // 解锁视频
+      changeParseApi: '100V',   // 解锁视频
     },
     videoRecordMap: {}, // 视频记录
     multiUnceasing: true,   // 多集自动连播
     singleUncreasing: false,    // 单集自动连播
     autoUnlockVideo: false, // 是否自动解锁视频
     shareDate: '2022/1/1',
-    lastClearup: new Date()
+    lastClearup: new Date(),
+    parseApiIndex: 0, // 解析接口选择
   }
   let bili2sConf = GM_getValue('bili2sConf') || defaultBili2sConf
 
   if (updateVersion) {
+    bili2sConf = Object.assign(defaultBili2sConf, bili2sConf)
     bili2sConf.shortcutMap = Object.assign(defaultBili2sConf.shortcutMap, bili2sConf.shortcutMap)
     GM_setValue('bili2sConf', bili2sConf)
   }
@@ -87,13 +89,14 @@
     ],
     playerBox: ['#player_module'],
     parseApiList: [
-      { id: 1, url: 'https://vip.parwix.com:4433/player/?url=' }
+      { id: 1, url: 'https://vip.parwix.com:4433/player/?url=' },
+      { id: 2, url: 'https://www.mtosz.com/m3u8.php?url=' },
     ],
     bangumiLi: ['li.ep-item.cursor.badge.visited'],
     shortcutList: {
       upToTop: '回到顶部',
       takeNote: '打开/关闭笔记',
-      unlockBangumi: '打开/关闭视频解锁',
+      changeParseApi: '切换视频解析接口',
       notePicShot: '笔记-视频截图',
       noteTimePoint: '笔记-时间标志'
     },  // shortcut list
@@ -117,7 +120,7 @@
               || /x\/space\/arc/.test(responseURL))
               && dealRead(result);
             /pgc\/view\/web\/section\/order/.test(responseURL)
-              && UnlockBangumi();
+              && UnlockBangumi(bili2sConf.parseApiIndex);
           } catch (err) { }
         })
         return target.apply(thisArg, args)
@@ -215,8 +218,8 @@
           return NotePicShot()
         case keyMap.noteTimePoint:
           return NoteTimePoint()
-        case keyMap.unlockBangumi:
-          return UnlockBangumi(true)
+        case keyMap.changeParseApi:
+          return ChangeParseApi(true)
         default:
           keyCtrl(command)  // 一些不常用的小操作，集中一个函数处理
       }
@@ -306,7 +309,15 @@
     })
   }
 
-  const UnlockBangumi = (setAutoUnlock, parseApi = siteConfig.parseApiList[0]) => {
+  const ChangeParseApi = () => {
+    let curIndex = bili2sConf.parseApiIndex
+    bili2sConf.parseApiIndex = (curIndex + 1) % siteConfig.parseApiList.length
+    UnlockBangumi(bili2sConf.parseApiIndex)
+    GM_setValue('bili2sConf', bili2sConf)
+    Toast(`B站小助手: 切换解析接口成功!`)
+  }
+
+  const UnlockBangumi = (parseApiIndex = 0, setAutoUnlock) => {
     if (setAutoUnlock) {
       let set = !bili2sConf.autoUnlockVideo
       bili2sConf.autoUnlockVideo = set
@@ -317,8 +328,9 @@
     if (!bili2sConf.autoUnlockVideo
       || videoInfo && !/>会员<\/div>/.test(videoInfo)
       || !videoInfo
-    ) { return }
+    ) { return $('#anjude-iframe').length && location.reload() }
 
+    let parseApi = siteConfig.parseApiList[parseApiIndex]
     let newPlayer = document.createElement('iframe')
     newPlayer.id = 'anjude-iframe'
     newPlayer.height = '100%'
@@ -327,12 +339,13 @@
     newPlayer.setAttribute('allow', 'autoplay')
     newPlayer.setAttribute('frameborder', 'no')
     newPlayer.setAttribute('border', '0')
-    newPlayer.setAttribute('allowfullscreen', 'allowfullscreen')
+    newPlayer.setAttribute('allowfullscreen', 'true')
     newPlayer.setAttribute('webkitallowfullscreen', 'webkitallowfullscreen')
 
     let playerBox = getElement(siteConfig.playerBox)
     playerBox.innerHTML = ''
     playerBox.append(newPlayer)
+    // Toast(`B站小助手: 解析完成`, 500)
   }
 
   const runScript = () => {
@@ -444,12 +457,15 @@
 <div id="sc-box" style="display:none;width:300px;">
 <div id="sc-title" style="width: 100%;height: 20px;
 text-align: center;font-size: 16px;padding: 20px;">
-快捷键设置(点击选中)
+快捷键设置(点击选中设置)
+</div>
+<div style="display:flex; font-size: 15px;">
+<label>自动解锁视频 <input type="checkbox" id="auto-unlockvideo" ${bili2sConf.autoUnlockVideo ? 'checked' : ''} /></label>
 </div>
 <div style="font-size: 15px;">
 ${scItem}
 </div>
-<div style="justify-content: center;display: flex;">
+<div style="justify-content:center; display: flex;">
 <button id="anjude-scok-btn">设置完成</button>
 </div>
 </div>
@@ -470,10 +486,21 @@ ${scItem}
       GM_setValue('bili2sConf', bili2sConf)
       document.querySelector('#sc-box').style.display = 'none'
     })
+    document.querySelector('#auto-unlockvideo').addEventListener('click', function (e) {
+      UnlockBangumi(bili2sConf.parseApiIndex, true)
+    })
   }
 
   function getCss() {
     return `
+    #auto-unlockvideo{
+      background-color: initial;
+	    cursor: default;
+	    appearance: checkbox;
+	    box-sizing: border-box;
+	    padding: initial;
+	    border: initial;
+    }
     #sc-box{
         padding: 10px;border-radius: 5px; 
         background: #F6F6F6;border: #44b549 2px solid;
