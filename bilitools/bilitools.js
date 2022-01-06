@@ -139,7 +139,8 @@
   }
 
   const getBvid = (href) => {
-    return /video\/([0-9|a-z|A-Z]*)/i.exec(href || document.location.href)[1]
+    let res = /video\/([0-9|a-z|A-Z]*)/ig.exec(href || document.location.href)
+    return res === null ? false : res[1]
   }
 
   const UpToTop = () => { // 回到顶部
@@ -296,6 +297,7 @@
       if (!e.innerHTML) return
       e.style.position = 'relative'
       let bvid = getBvid(e.innerHTML)
+      if (!bvid) return
       let addDiv = document.createElement("div")
       addDiv.className = 'video-view'
       if (bili2sConf.videoRecordMap[bvid]) {
@@ -326,7 +328,7 @@
     }
     let videoInfo = getElement(siteConfig.bangumiLi)?.innerHTML
     if (!bili2sConf.autoUnlockVideo
-      || videoInfo && !/>会员<\/div>/.test(videoInfo)
+      || videoInfo && !/>(会员|付费)<\/div>/.test(videoInfo)
       || !videoInfo
     ) { return $('#anjude-iframe').length && location.reload() }
 
