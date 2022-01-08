@@ -5,7 +5,7 @@
 3. 多 P 视频和单集视频的连播设置隔离
 4. 设置搜索等页面视频已看标签
 5. 每日分享/ 签到观看一个 up 视频后自动获得经验
-6. 会员视频可设置自动替换解析（默认不替换）
+6. 会员视频可设置自动替换解析（默认不替换，有条件请支持大会员哦~）
 7. 欢迎反馈，有时间就会更新~
 
 ### 快捷键一览(含 B 站原配)
@@ -48,6 +48,6 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 
 ![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg)
 
-![](https://gitee.com/anjude/public-resource/raw/md-img/20220103142228.png)
+![image-20220108133723341](https://gitee.com/anjude/public-resource/raw/md-img/20220108133729.png)
 
 ![image-20220105095243504](https://gitee.com/anjude/public-resource/raw/md-img/20220105095249.png)
