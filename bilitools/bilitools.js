@@ -484,14 +484,17 @@ text-align: center;font-size: 16px;padding: 20px;">
 快捷键设置(点击选中设置)
 </div>
 <div style="display:flex; font-size: 15px;">
-<label>自动解锁视频 <input type="checkbox" id="auto-unlockvideo" ${bili2sConf.autoUnlockVideo ? 'checked' : ''} /></label>
+<label>自动解锁会员视频 <input type="checkbox" id="auto-unlockvideo" ${bili2sConf.autoUnlockVideo ? 'checked' : ''} /></label>
 </div>
 <div style="font-size: 15px;">
 ${scItem}
 </div>
-<div style="justify-content:center; display: flex;">
+<div style="justify-content:center; display: flex; padding: 10px;">
 <button id="anjude-scok-btn">设置完成</button>
 </div>
+<a style="font-size: 12px; color: blue;" target="_blank" href="https://greasyfork.org/zh-CN/scripts/437941/feedback">好用的话，去给个好评咯~</a>
+<a id="badguy" style="font-size: 12px; color: red;margin-left: 10px;">烂脚本,我要差评!</a>
+<img id="miniprogram" style="display: none;" src="https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg">
 </div>
     `)
     $(document.body).append(boxHtml)
@@ -513,11 +516,16 @@ ${scItem}
     document.querySelector('#auto-unlockvideo').addEventListener('click', function (e) {
       UnlockBangumi(bili2sConf.parseApiIndex, true)
     })
+    document.querySelector('#badguy').addEventListener('click', function (e) {
+      let cur = document.querySelector('#miniprogram').style.display
+      document.querySelector('#miniprogram').style.display = cur ? '' : 'none'
+    })
     updateVersion && (document.querySelector('#sc-box').style.display = '')
   }
 
   function getCss() {
     return `
+    a{text-decoration:none;}
     #auto-unlockvideo{
       background-color: initial;
 	    cursor: default;
