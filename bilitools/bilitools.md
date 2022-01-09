@@ -43,6 +43,8 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 - 0.0.3 快捷键自定义
 - 0.0.4 兼容更多已看场景
 - 0.0.5 可切换视频解析源
+- 0.0.6 修复已知问题
+- 0.0.7 增加更多解析源
 
 **防失联**
 

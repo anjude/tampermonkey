@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，每日任务，视频解析等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.6
+// @version      0.0.7
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
 // @description  🔥🔥🔥推荐 2022最友好的B站助手，功能纯净无冲突。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       豆小匠Coding
@@ -21,7 +21,7 @@
 (function () {
   'use strict'
   // 检查版本
-  const RELEASE_VERSION = '0.0.6'
+  const RELEASE_VERSION = '0.0.7'
   let DEV = 'RELEASE'
   // DEV = 'DEBUG'
   let updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
