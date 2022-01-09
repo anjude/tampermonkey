@@ -53,7 +53,6 @@
     bili2sConf = Object.assign(defaultBili2sConf, bili2sConf)
     bili2sConf.shortcutMap = Object.assign(defaultBili2sConf.shortcutMap, bili2sConf.shortcutMap)
     GM_setValue('bili2sConf', bili2sConf)
-    document.querySelector('#sc-box').style.display = ''
     Toast('脚本已更新，请查看左上角设置')
   }
 
@@ -514,6 +513,7 @@ ${scItem}
     document.querySelector('#auto-unlockvideo').addEventListener('click', function (e) {
       UnlockBangumi(bili2sConf.parseApiIndex, true)
     })
+    updateVersion && (document.querySelector('#sc-box').style.display = '')
   }
 
   function getCss() {
