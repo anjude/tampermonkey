@@ -22,8 +22,8 @@
   'use strict'
   // 检查版本
   const RELEASE_VERSION = '0.0.6'
-  // const DEV = 'DEBUG'
-  const DEV = 'RELEASE'
+  let DEV = 'RELEASE'
+  // DEV = 'DEBUG'
   let updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
   updateVersion && GM_setValue('RELEASE_VERSION', RELEASE_VERSION)
   // resetScript()
