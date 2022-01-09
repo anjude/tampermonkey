@@ -53,6 +53,8 @@
     bili2sConf = Object.assign(defaultBili2sConf, bili2sConf)
     bili2sConf.shortcutMap = Object.assign(defaultBili2sConf.shortcutMap, bili2sConf.shortcutMap)
     GM_setValue('bili2sConf', bili2sConf)
+    document.querySelector('#sc-box').style.display = ''
+    Toast('脚本已更新，请查看左上角设置')
   }
 
   // 网站配置
@@ -88,9 +90,19 @@
       '#reco_list > div.rec-list',  // 相关视频
     ],
     playerBox: ['#player_module'],
-    parseApiList: [
-      { id: 1, url: 'https://vip.parwix.com:4433/player/?url=' },
-      { id: 2, url: 'https://www.mtosz.com/m3u8.php?url=' },
+    parseApiList: [ // 解析链接均收集自网络，经过简单测试
+      { url: 'https://vip.parwix.com:4433/player/?url=', name: 'Parwix解析系统' },
+      { url: 'https://www.yemu.xyz/?url=', name: '夜幕解析' },
+      { url: 'https://vip.bljiex.cc/?v=', name: 'BL解析' },
+      { url: 'https://www.1717yun.com/jx/ty.php?url=', name: '1717云解析' },
+      { url: 'https://jx.rdhk.net/?v=', name: '4080视频解析' },
+      { url: 'https://go.yh0523.cn/y.cy?url=', name: '盘古云解析' },
+      { url: 'https://yparse.jn1.cc/index.php?url=', name: '云解析' },
+      { url: 'https://vip.mmkv.cn/tv.php?url=', name: 'mmkv' },
+      { url: 'https://z1.m1907.cn/?jx=', name: 'm1907' },
+      { url: 'https://17kyun.com/api.php?url=', name: '17kyun' },
+      { url: 'https://www.mtosz.com/m3u8.php?url=', name: 'mtosz' },
+      { url: 'https://lecurl.cn/?url=', name: 'dplayer - by-le' },
     ],
     bangumiLi: ['li.ep-item.cursor.badge.visited'],
     shortcutList: {
@@ -316,7 +328,7 @@
     bili2sConf.parseApiIndex = (curIndex + 1) % siteConfig.parseApiList.length
     UnlockBangumi(bili2sConf.parseApiIndex)
     GM_setValue('bili2sConf', bili2sConf)
-    Toast(`B站小助手: 切换解析接口 ${bili2sConf.parseApiIndex + 1}`)
+    Toast(`B站小助手: 解析接口${bili2sConf.parseApiIndex + 1} ${siteConfig.parseApiList[bili2sConf.parseApiIndex].name}`)
   }
 
   const UnlockBangumi = (parseApiIndex = 0, setAutoUnlock) => {
@@ -383,6 +395,17 @@
 
   function resetScript() {
     GM_deleteValue('bili2sConf')
+  }
+
+  function helper() {
+    let str = ``
+    let list = str.match(/https?:\/\/[0-9a-zA-Z./?_-]*=/ig)
+    list.forEach((e, i) => {
+      setTimeout(() => {
+        console.log(i, i === list.length - 1);
+        window.open(`${e}https://www.bilibili.com/bangumi/play/ep457778?spm_id_from=333.999.0.0`, 'target')
+      }, i * 15000)
+    })
   }
 
   function clearupStore() {
