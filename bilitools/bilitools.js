@@ -316,7 +316,7 @@
     bili2sConf.parseApiIndex = (curIndex + 1) % siteConfig.parseApiList.length
     UnlockBangumi(bili2sConf.parseApiIndex)
     GM_setValue('bili2sConf', bili2sConf)
-    Toast(`B站小助手: 切换解析接口成功!`)
+    Toast(`B站小助手: 切换解析接口 ${bili2sConf.parseApiIndex + 1}`)
   }
 
   const UnlockBangumi = (parseApiIndex = 0, setAutoUnlock) => {
