@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，每日任务，视频解析等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.7
+// @version      0.0.8
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
 // @description  🔥🔥🔥推荐 2022最友好的B站助手，功能纯净无冲突。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       豆小匠Coding
@@ -21,11 +21,12 @@
 (function () {
   'use strict'
   // 检查版本
-  const RELEASE_VERSION = '0.0.7'
+  const RELEASE_VERSION = '0.0.8'
   let DEV = 'RELEASE'
   // DEV = 'DEBUG'
   let updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
   updateVersion && GM_setValue('RELEASE_VERSION', RELEASE_VERSION)
+  startHttpProxy()
   // resetScript()
   /**
    * 默认设置
@@ -46,6 +47,7 @@
     shareDate: '2022/1/1',
     lastClearup: new Date(),
     parseApiIndex: 0, // 解析接口选择
+    pretendVip: false
   }
   let bili2sConf = GM_getValue('bili2sConf') || defaultBili2sConf
 
@@ -88,6 +90,12 @@
       '#submit-video-list > ul.list-list',  // UP主页，更多视频
       '#reco_list > div.rec-list',  // 相关视频
     ],
+    vipIcon: 'bili-avatar-icon--big-vip',
+    vipSpan: [
+      'div.avatar-container > div > div > span',
+      'div.big-avatar-container--default > a > div > span',
+    ],
+    vipLabel: 'div.h-vipType',
     playerBox: ['#player_module'],
     parseApiList: [ // 解析链接均收集自网络，经过简单测试
       { url: 'https://vip.parwix.com:4433/player/?url=', name: 'Parwix解析系统' },
@@ -100,8 +108,9 @@
       { url: 'https://vip.mmkv.cn/tv.php?url=', name: 'mmkv' },
       { url: 'https://z1.m1907.cn/?jx=', name: 'm1907' },
       { url: 'https://17kyun.com/api.php?url=', name: '17kyun' },
-      { url: 'https://www.mtosz.com/m3u8.php?url=', name: 'mtosz' },
+      // { url: 'https://www.mtosz.com/m3u8.php?url=', name: 'mtosz' },
       { url: 'https://lecurl.cn/?url=', name: 'dplayer - by-le' },
+      { url: 'https://vip5.jiexi.one/?url=', name: '爱爱蓝光解析' },
     ],
     bangumiLi: ['li.ep-item.cursor.badge.visited'],
     shortcutList: {
@@ -115,35 +124,11 @@
     multiPageJump: false  // 是否跳转上次观看
   }
 
-  const startHttpProxy = () => {
-    XMLHttpRequest.prototype.send = new Proxy(XMLHttpRequest.prototype.send, {
-      apply: (target, thisArg, args) => {
-        thisArg.addEventListener('load', event => {
-          try {
-            // console.log(111, event.target.responseURL)
-            let { responseText, responseURL } = event.target
-            if (!/^{.*}$/.test(responseText)) return
-            const result = JSON.parse(responseText);
-            /\/player\/playurl/.test(responseURL)
-              && chapListener(result);
-            (/x\/web-interface\/search/.test(responseURL)
-              || /x\/web-interface\/index\/top\/rcmd/.test(responseURL)
-              || /x\/space\/arc/.test(responseURL))
-              && dealRead(result);
-            /pgc\/view\/web\/section\/order/.test(responseURL)
-              && UnlockBangumi(bili2sConf.parseApiIndex);
-          } catch (err) { }
-        })
-        return target.apply(thisArg, args)
-      }
-    })
-  }
-
   GM_addStyle(getCss())
   setCommand()
-  startHttpProxy()
 
   const getElement = (list) => {
+    if (typeof list === 'string') return document.querySelector(list)
     let btn = document.querySelector(list[0])
     list.forEach(e => { btn = document.querySelector(e) || btn })
     return btn
@@ -361,33 +346,44 @@
     // Toast(`B站小助手: 解析完成`, 500)
   }
 
+  const pretendVip = () => {
+    siteConfig.vipSpan.forEach(e => {
+      let vipSpan = getElement(e)
+      vipSpan && vipSpan.classList.add(siteConfig.vipIcon)
+    })
+    let vipLabel = getElement(siteConfig.vipLabel)
+    if (vipLabel) {
+      let newClass = vipLabel.getAttribute('class').replace('disable', '')
+      vipLabel.setAttribute('class', newClass)
+    }
+  }
+
   const runScript = () => {
     let date = new Date().toLocaleDateString()
     let href = window.location.href
     let isMultiPage = getElement(siteConfig.multiPageBox)
     if (isMultiPage) {
-      setTimeout(() => { multiPageJump() }, siteConfig.delayMs)
+      multiPageJump()
     }
     if (/\/video\//.test(href)) {
-      setTimeout(() => {
-        setVideoRecord()
-        dealUnceasing(isMultiPage)
-        dealRead()
-        date === bili2sConf.shareDate || doShare()
-      }, siteConfig.delayMs);
+      setVideoRecord()
+      dealUnceasing(isMultiPage)
+      dealRead()
+      date === bili2sConf.shareDate || doShare()
     }
     if (/search.bilibili.com/.test(href)) {
-      setTimeout(() => {
-        dealRead()
-      }, siteConfig.delayMs)
+      dealRead()
     }
+    bili2sConf.pretendVip && pretendVip()
   }
 
   // 执行脚本
   try {
-    runScript()
+    setTimeout(() => {
+      runScript()
+    }, siteConfig.delayMs);
     clearupStore()
-    // console.log('[B站小助手]:', bili2sConf)
+    console.log('[B站小助手]:', bili2sConf)
   } catch (err) {
     console.log('[B站小助手]:', err)
   }
@@ -424,6 +420,30 @@
     })
     bili2sConf.lastClearup = new Date()
     GM_setValue('bili2sConf', bili2sConf)
+  }
+
+  function startHttpProxy() {
+    XMLHttpRequest.prototype.send = new Proxy(XMLHttpRequest.prototype.send, {
+      apply: (target, thisArg, args) => {
+        thisArg.addEventListener('load', event => {
+          try {
+            console.log(111, event.target.responseURL)
+            let { responseText, responseURL } = event.target
+            if (!/^{.*}$/.test(responseText)) return
+            const result = JSON.parse(responseText);
+            /\/player\/playurl/.test(responseURL)
+              && chapListener(result);
+            (/x\/web-interface\/search/.test(responseURL)
+              || /x\/web-interface\/index\/top\/rcmd/.test(responseURL)
+              || /x\/space\/arc/.test(responseURL))
+              && dealRead(result);
+            /pgc\/view\/web\/section\/order/.test(responseURL)
+              && UnlockBangumi(bili2sConf.parseApiIndex);
+          } catch (err) { }
+        })
+        return target.apply(thisArg, args)
+      }
+    })
   }
 
   function Toast(message = "已完成", time = 2000) {
@@ -466,7 +486,9 @@
       document.querySelector('#sc-box').style.display = ''
     })
     GM_registerMenuCommand('重置脚本', () => {
-      resetScript()
+      if (confirm('重置后观看记录、快捷键修改等数据将清空!')) {
+        resetScript()
+      }
     })
   }
 
@@ -483,7 +505,8 @@
 text-align: center;font-size: 16px;padding: 20px;">
 快捷键设置(点击选中设置)
 </div>
-<div style="display:flex; font-size: 15px;">
+<div style="display:flex; font-size: 15px;flex-direction: column;">
+<label>假装是大会员 <input type="checkbox" id="pretend-vip" ${bili2sConf.pretendVip ? 'checked' : ''} /></label>
 <label>自动解锁会员视频 <input type="checkbox" id="auto-unlockvideo" ${bili2sConf.autoUnlockVideo ? 'checked' : ''} /></label>
 </div>
 <div style="font-size: 15px;">
@@ -515,6 +538,11 @@ ${scItem}
     })
     document.querySelector('#auto-unlockvideo').addEventListener('click', function (e) {
       UnlockBangumi(bili2sConf.parseApiIndex, true)
+    })
+    document.querySelector('#pretend-vip').addEventListener('click', function (e) {
+      bili2sConf.pretendVip = !bili2sConf.pretendVip
+      GM_setValue('bili2sConf', bili2sConf)
+      Toast('小助手: 刷新页面后生效')
     })
     document.querySelector('#badguy').addEventListener('click', function (e) {
       let cur = document.querySelector('#miniprogram').style.display
