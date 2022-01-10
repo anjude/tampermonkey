@@ -55,6 +55,7 @@
     delayMs: 2000,
     scrollBtnList: [
       'div.item.back-top', // 首页
+      'button.primary-btn.top-btn', // 新版首页
       'div.item.backup',  // up视频,
       'div.tool-item.backup.iconfont.icon-up',  // 
       '#app > div.to-top', // up主所有视频
@@ -86,6 +87,7 @@
     vipSpan: [
       'div.avatar-container > div > div > span',
       'div.big-avatar-container--default > a > div > span',
+      'a.header-entry-avatar > div > span',
     ],
     vipLabel: 'div.h-vipType',
     playerBox: ['#player_module'],
@@ -385,7 +387,7 @@
       runScript()
     }, siteConfig.delayMs);
     clearupStore()
-    console.log('[B站小助手]:', bili2sConf)
+    // console.log('[B站小助手]:', bili2sConf)
   } catch (err) {
     console.log('[B站小助手]:', err)
   }
@@ -515,7 +517,8 @@ text-align: center;font-size: 16px;padding: 20px;">
 ${scItem}
 </div>
 <div style="justify-content:center; display: flex; padding: 10px;">
-<button id="anjude-scok-btn">设置完成</button>
+<button id="anjude-scok-btn" style="color: white; font-size:16px; border-radius: 2px;
+background: green;padding: 3px;">设置完成</button>
 </div>
 <a style="font-size: 12px; color: blue;" target="_blank" href="https://greasyfork.org/zh-CN/scripts/437941/feedback">好用的话，去给个好评咯~</a>
 <a id="badguy" style="font-size: 12px; color: red;margin-left: 10px;">烂脚本,我要差评!</a>
