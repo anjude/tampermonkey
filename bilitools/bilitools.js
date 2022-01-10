@@ -24,10 +24,9 @@
   const RELEASE_VERSION = '0.0.8'
   let DEV = 'RELEASE'
   // DEV = 'DEBUG'
-  let updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
+  const updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
   updateVersion && GM_setValue('RELEASE_VERSION', RELEASE_VERSION)
   startHttpProxy()
-  // resetScript()
   /**
    * 默认设置
    * `${e.altKey}${e.ctrlKey}${e.shiftKey}${pressKey}`
@@ -49,17 +48,10 @@
     parseApiIndex: 0, // 解析接口选择
     pretendVip: false
   }
-  let bili2sConf = GM_getValue('bili2sConf') || defaultBili2sConf
-
-  if (updateVersion) {
-    bili2sConf = Object.assign(defaultBili2sConf, bili2sConf)
-    bili2sConf.shortcutMap = Object.assign(defaultBili2sConf.shortcutMap, bili2sConf.shortcutMap)
-    GM_setValue('bili2sConf', bili2sConf)
-    Toast('脚本已更新，请查看左上角设置')
-  }
 
   // 网站配置
   const siteConfig = {
+    isFirst: false,
     delayMs: 2000,
     scrollBtnList: [
       'div.item.back-top', // 首页
@@ -122,6 +114,16 @@
     },  // shortcut list
     scSetting: '',
     multiPageJump: false  // 是否跳转上次观看
+  }
+
+  let bili2sConf = GM_getValue('bili2sConf') || defaultBili2sConf
+
+  if (updateVersion) {
+    bili2sConf = Object.assign(defaultBili2sConf, bili2sConf)
+    bili2sConf.shortcutMap = Object.assign(defaultBili2sConf.shortcutMap, bili2sConf.shortcutMap)
+    GM_getValue('bili2sConf') || (siteConfig.isFirst = true)
+    GM_setValue('bili2sConf', bili2sConf)
+    Toast('脚本已更新，请查看左上角设置')
   }
 
   GM_addStyle(getCss())
@@ -216,7 +218,7 @@
         case keyMap.noteTimePoint:
           return NoteTimePoint()
         case keyMap.changeParseApi:
-          return ChangeParseApi(true)
+          return ChangeParseApi()
         default:
           keyCtrl(command)  // 一些不常用的小操作，集中一个函数处理
       }
@@ -225,7 +227,7 @@
 
   const chapListener = (res) => {
     let listItem = getElement(siteConfig.chapListItem).innerHTML
-    let regxList = /video\/([0-9|a-z|A-Z]*)\?p=(\d+).*title=.(.*?).><div/i.exec(listItem)
+    let regxList = /video\/([0-9a-zA-Z]*)\?p=(\d+).*title=.(.*?).><div/i.exec(listItem)
     let bvid = regxList[1]
     bili2sConf.videoRecordMap[bvid] = Object.assign(bili2sConf.videoRecordMap[bvid] || {}, {
       p: regxList[2],
@@ -427,7 +429,7 @@
       apply: (target, thisArg, args) => {
         thisArg.addEventListener('load', event => {
           try {
-            console.log(111, event.target.responseURL)
+            // console.log(111, event.target.responseURL)
             let { responseText, responseURL } = event.target
             if (!/^{.*}$/.test(responseText)) return
             const result = JSON.parse(responseText);
@@ -497,7 +499,7 @@
     siteConfig.scm = bili2sConf.shortcutMap
     let scItem = ''
     Object.keys(SCL).forEach(e => {
-      scItem += `<div id="${e}">设置${SCL[e]}快捷键: ${getShortCut(siteConfig.scm[e])}</div>`
+      scItem += `<div id="${e}">${SCL[e]}快捷键: ${getShortCut(siteConfig.scm[e])}</div>`
     })
     let boxHtml = $(`
 <div id="sc-box" style="display:none;width:300px;">
