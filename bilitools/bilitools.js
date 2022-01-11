@@ -486,7 +486,7 @@
 
   function setCommand() {
     initSettingPanel()
-    GM_registerMenuCommand('设置快捷键', () => {
+    GM_registerMenuCommand('设置脚本', () => {
       document.querySelector('#sc-box').style.display = ''
     })
     GM_registerMenuCommand('重置脚本', () => {
