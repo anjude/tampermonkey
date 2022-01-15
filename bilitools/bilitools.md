@@ -1,5 +1,6 @@
 ## 功能详细
-<span style="color: red;">视频中出现的广告、优惠券与脚本无关，请不要相信或者点击，拉到最下面有常见问题回答，首次安装请查收</span>
+
+<span style="color: red;">视频中出现的广告、优惠券与脚本无关，请不要相信或者点击，拉到最下面有常见问题回答，首次安装请务必查收</span>
 
 1. 自动跳转多 P 视频（UP 上传视频）上次观看进度
 2. 快捷键说明见下方快捷键一览
@@ -46,10 +47,6 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 - 0.0.6 修复已知问题
 - 0.0.7 增加更多解析源
 
-**防失联**
-
-![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg)
-
 ![image-20220108133723341](https://gitee.com/anjude/public-resource/raw/md-img/20220108133729.png)
 
 ![image-20220105095243504](https://gitee.com/anjude/public-resource/raw/md-img/20220105095249.png)
@@ -66,5 +63,9 @@ Q: 脚本无效？
 A: 先说一下哪个功能无效。
 
 Q: 快捷键怎么自定义？
-A: 打开B站，点击右上角油猴脚本，脚本有 **设置脚本** 选项，点击快捷键项，然后直接键入想要设置的快捷键，如 Alt + R（是直接按键，不是输入文字）就可以自定义快捷键。
+A: 打开 B 站，点击右上角油猴脚本，脚本有 **设置脚本** 选项，点击快捷键项，然后直接键入想要设置的快捷键，如 Alt + R（是直接按键，不是输入文字）就可以自定义快捷键。
 
+Q: 插件有广告吗？
+A: 有且只有一个，下面的小程序码，可以扫码进去点击一下广告，或在小程序客服联系到我。
+
+![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg)
