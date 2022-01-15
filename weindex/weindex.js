@@ -9,6 +9,7 @@
 // @include      *
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
 // @require      https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js
+// @grant        GM_openInTab
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_deleteValue
@@ -73,8 +74,27 @@
       // console.log('键盘:', command)
       switch (command) {
         case keyMap.toSite:
-          window.open('http://anjude.xyz')
+          window.GM_openInTab('http://anjude.xyz', { active: true, insert: true, setParent: true })
       }
     })
   })
+
+
 })();
+function startHttpProxy() {
+  XMLHttpRequest.prototype.send = new Proxy(XMLHttpRequest.prototype.send, {
+    apply: (target, thisArg, args) => {
+      thisArg.addEventListener('load', event => {
+        try {
+          // console.log(111, event.target.responseURL)
+          let { responseText, responseURL } = event.target
+          if (!/^{.*}$/.test(responseText)) return
+          const result = JSON.parse(responseText);
+          /\/player\/playurl/.test(responseURL)
+            && chapListener(result);
+        } catch (err) { }
+      })
+      return target.apply(thisArg, args)
+    }
+  })
+}
