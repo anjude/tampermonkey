@@ -20,7 +20,6 @@
 - 0.0.2 增加全网影视资源的搜索引擎
 - 0.0.1 功能初始化
 
-**欢迎来我的公众号交流：豆小匠Coding**
+**欢迎扫码到小程序客服提需求**
 
-![](https://gitee.com/anjude/public-resource/raw/md-img/20211118174149.jpeg)
-
+![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg)
