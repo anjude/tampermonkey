@@ -6,6 +6,7 @@
 // @description  🔥🔥🔥推荐 2022最友好的B站助手，功能纯净无冲突。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       豆小匠Coding
 // @match        https://*.bilibili.com/*
+// @grant        GM_openInTab
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_deleteValue
@@ -394,7 +395,10 @@
     }, siteConfig.delayMs);
     clearupStore()
   } catch (err) {
-    console.log('[B站小助手]:', err)
+    console.log('[B站小助手]:', err.name, err.message)
+    if (confirm(`【B站小助手】: 请截图反馈 ${err}`)) {
+      window.GM_openInTab('https://greasyfork.org/zh-CN/scripts/437941/feedback', { active: true, insert: true, setParent: true })
+    }
   }
 
   function resetScript() {
