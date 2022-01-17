@@ -1,3 +1,5 @@
+<a href="https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服</a>
+
 ## 功能详细
 
 <span style="color: red;">视频中出现的广告、优惠券与脚本无关，请不要相信或者点击，拉到最下面有常见问题回答，首次安装请务必查收</span>
@@ -19,6 +21,7 @@
 | **U**               | UpToTop      | 回到顶部         |
 | **N**               | Note         | 打开/关闭笔记    |
 | **alt + V**         | Video        | 切换视频解析接口 |
+| **alt + M**         | Menu         | 打开菜单         |
 | **alt + shift + p** | picture      | 笔记-视频截图    |
 | **alt + shift + T** | Time-Tag     | 笔记-时间标志    |
 
@@ -39,13 +42,15 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 
 ### 版本更新
 
-- 0.0.1 首版发布
-- 0.0.2 增加视频解锁（有条件请开大会员）
-- 0.0.3 快捷键自定义
-- 0.0.4 兼容更多已看场景
-- 0.0.5 可切换视频解析源
-- 0.0.6 修复已知问题
+- 0.0.9 修复已知问题
+- 0.0.8 修复已知问题
 - 0.0.7 增加更多解析源
+- 0.0.6 修复已知问题
+- 0.0.5 可切换视频解析源
+- 0.0.4 兼容更多已看场景
+- 0.0.3 快捷键自定义
+- 0.0.2 增加视频解锁（有条件请开大会员）
+- 0.0.1 首版发布
 
 ![image-20220108133723341](https://gitee.com/anjude/public-resource/raw/md-img/20220108133729.png)
 

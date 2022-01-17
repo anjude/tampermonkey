@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，每日任务，视频解析等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.8
+// @version      0.0.9
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
 // @description  🔥🔥🔥推荐 2022最友好的B站助手，功能纯净无冲突。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       豆小匠Coding
@@ -21,7 +21,7 @@
 (function () {
   'use strict'
   // 检查版本
-  const RELEASE_VERSION = '0.0.8'
+  const RELEASE_VERSION = '0.0.9'
   let DEV = 'RELEASE'
   // DEV = 'DEBUG'
   const updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
@@ -38,6 +38,7 @@
       notePicShot: '101P',   // 笔记-视频截图
       noteTimePoint: '101T',   // 笔记-时间标记
       changeParseApi: '100V',   // 解锁视频
+      showMenu: '100M',   // 打开菜单
     },
     videoRecordMap: {}, // 视频记录
     multiUnceasing: true,   // 多集自动连播
@@ -111,8 +112,9 @@
       upToTop: '回到顶部',
       takeNote: '打开/关闭笔记',
       changeParseApi: '切换视频解析接口',
+      showMenu: '打开菜单',
       notePicShot: '笔记-视频截图',
-      noteTimePoint: '笔记-时间标志'
+      noteTimePoint: '笔记-时间标志',
     },  // shortcut list
     scSetting: '',
     multiPageJump: false  // 是否跳转上次观看
@@ -121,15 +123,14 @@
   let bili2sConf = GM_getValue('bili2sConf') || defaultBili2sConf
 
   if (updateVersion) {
+    let shortcutMap = Object.assign({}, defaultBili2sConf.shortcutMap)
     bili2sConf = Object.assign(defaultBili2sConf, bili2sConf)
-    bili2sConf.shortcutMap = Object.assign(defaultBili2sConf.shortcutMap, bili2sConf.shortcutMap)
+    bili2sConf.shortcutMap = Object.assign(shortcutMap, bili2sConf.shortcutMap)
+    console.log(shortcutMap, defaultBili2sConf.shortcutMap, bili2sConf.shortcutMap);
     GM_getValue('bili2sConf') || (siteConfig.isFirst = true)
     GM_setValue('bili2sConf', bili2sConf)
-    Toast('脚本已更新，请查看左上角设置')
+    Toast('脚本已更新')
   }
-
-  GM_addStyle(getCss())
-  setCommand()
 
   const getElement = (list) => {
     if (typeof list === 'string') return document.querySelector(list)
@@ -215,12 +216,14 @@
           return UpToTop()
         case keyMap.takeNote:
           return TakeNote()
+        case keyMap.changeParseApi:
+          return ChangeParseApi()
+        case keyMap.showMenu:
+          return document.querySelector('#sc-box').style.display = ''
         case keyMap.notePicShot:
           return NotePicShot()
         case keyMap.noteTimePoint:
           return NoteTimePoint()
-        case keyMap.changeParseApi:
-          return ChangeParseApi()
         default:
           keyCtrl(command)  // 一些不常用的小操作，集中一个函数处理
       }
@@ -383,11 +386,13 @@
 
   // 执行脚本
   try {
+    // console.log('[B站小助手]:', bili2sConf)
+    GM_addStyle(getCss())
+    setCommand()
     setTimeout(() => {
       runScript()
     }, siteConfig.delayMs);
     clearupStore()
-    // console.log('[B站小助手]:', bili2sConf)
   } catch (err) {
     console.log('[B站小助手]:', err)
   }
