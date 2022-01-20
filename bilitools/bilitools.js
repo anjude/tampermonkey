@@ -15,12 +15,13 @@
 // @grant        GM_unregisterMenuCommand
 // @grant        GM_xmlhttpRequest
 // @original-script   https://github.com/Anjude/tampermonkey
+// @require     https://greasyfork.org/scripts/438842-jquery-3-2-1/code/jquery@321.js?version=1010443
 // @require     https://greasyfork.org/scripts/412159-mydrag/code/MyDrag.js?version=858320
-// @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
 // ==/UserScript==
 
 (function () {
   'use strict'
+  // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
   const RELEASE_VERSION = '0.0.9'
   let DEV = 'RELEASE'
@@ -93,6 +94,7 @@
     ],
     vipLabel: 'div.h-vipType',
     playerBox: ['#player_module'],
+    videoBox: ['video'],
     parseApiList: [ // 解析链接均收集自网络，经过简单测试
       { url: 'https://vip.parwix.com:4433/player/?url=', name: 'Parwix解析系统' },
       { url: 'https://www.yemu.xyz/?url=', name: '夜幕解析' },
@@ -349,6 +351,9 @@
     newPlayer.setAttribute('webkitallowfullscreen', 'webkitallowfullscreen')
 
     let playerBox = getElement(siteConfig.playerBox)
+    let videoBox = getElement(siteConfig.videoBox)
+
+    videoBox && videoBox.pause() && (videoBox.volume = 0)
     playerBox.innerHTML = ''
     playerBox.append(newPlayer)
     // Toast(`B站小助手: 解析完成`, 500)
@@ -568,6 +573,7 @@ background: green;padding: 3px;">设置完成</button>
   function getCss() {
     return `
     a{text-decoration:none;}
+    #pretend-vip,
     #auto-unlockvideo{
       background-color: initial;
 	    cursor: default;
