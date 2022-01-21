@@ -353,7 +353,7 @@
     let playerBox = getElement(siteConfig.playerBox)
     let videoBox = getElement(siteConfig.videoBox)
 
-    videoBox && videoBox.pause() && (videoBox.volume = 0)
+    videoBox && (videoBox.muted = true) && videoBox.pause()
     playerBox.innerHTML = ''
     playerBox.append(newPlayer)
     // Toast(`B站小助手: 解析完成`, 500)

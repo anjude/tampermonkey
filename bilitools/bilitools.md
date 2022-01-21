@@ -44,7 +44,7 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 
 ### 版本更新
 
-- 0.0.9 修复已知问题
+- 0.0.9 修复重复视频声音
 - 0.0.8 修复已知问题
 - 0.0.7 增加更多解析源
 - 0.0.6 修复已知问题
@@ -75,3 +75,4 @@ A: 打开 B 站，点击右上角油猴脚本，脚本有 **设置脚本** 选�
 Q: 插件有广告吗？
 A: 有且只有一个，下面的小程序码，可以扫码进去点击一下广告，或在小程序客服联系到我。
 
+![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg)
