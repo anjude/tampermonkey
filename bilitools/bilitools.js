@@ -536,7 +536,7 @@ background: green;padding: 3px;">设置完成</button>
 </div>
 <a style="font-size: 12px; color: blue;" target="_blank" href="https://greasyfork.org/zh-CN/scripts/437941/feedback">好用的话，去给个好评咯~</a>
 <a id="badguy" style="font-size: 12px; color: red;margin-left: 10px;">烂脚本,我要差评!</a>
-<img id="miniprogram" style="display: none;" src="https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg">
+<img id="miniprogram" style="display: none;" src="https://gitee.com/anjude/public-resource/raw/md-img/20220122110243.png">
 </div>
     `)
     $(document.body).append(boxHtml)

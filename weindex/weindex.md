@@ -22,4 +22,4 @@
 
 **欢迎扫码到小程序客服提需求**
 
-![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg)
+![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220122110243.png)

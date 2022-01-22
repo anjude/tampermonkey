@@ -1,4 +1,4 @@
-<a href="https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，秒回</a>
+<a href="https://gitee.com/anjude/public-resource/raw/md-img/20220122110243.png" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，秒回</a>
 
 ## 功能详细
 
@@ -12,7 +12,7 @@
 6. 会员视频可设置自动替换解析（默认不替换，有条件请支持大会员哦~）
 7. 扫描小程序码（我的 --> 客服）反馈，回复最快！
 
-![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg)
+![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220122110243.png)
 
 ### 快捷键一览(含 B 站原配)
 
@@ -75,4 +75,4 @@ A: 打开 B 站，点击右上角油猴脚本，脚本有 **设置脚本** 选�
 Q: 插件有广告吗？
 A: 有且只有一个，下面的小程序码，可以扫码进去点击一下广告，或在小程序客服联系到我。
 
-![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220102161201.jpg)
+![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220122110243.png)
