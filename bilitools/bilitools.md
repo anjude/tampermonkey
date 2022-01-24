@@ -44,6 +44,7 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 
 ### 版本更新
 
+- 0.0.10 优化多集连播体验和兼容部分网络延迟高的场景
 - 0.0.9 修复重复视频声音
 - 0.0.8 修复已知问题
 - 0.0.7 增加更多解析源

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，每日任务，视频解析等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.9
+// @version      0.0.10
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
 // @description  🔥🔥🔥推荐 2022最友好的B站助手，功能纯净无冲突。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       豆小匠Coding
@@ -23,7 +23,7 @@
   'use strict'
   // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
-  const RELEASE_VERSION = '0.0.9'
+  const RELEASE_VERSION = '0.0.10'
   let DEV = 'RELEASE'
   // DEV = 'DEBUG'
   const updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
@@ -55,7 +55,7 @@
   // 网站配置
   const siteConfig = {
     isFirst: false,
-    delayMs: 2000,
+    delay2s: 2000,
     scrollBtnList: [
       'div.item.back-top', // 首页
       'button.primary-btn.top-btn', // 新版首页
@@ -119,8 +119,7 @@
       notePicShot: '笔记-视频截图',
       noteTimePoint: '笔记-时间标志',
     },  // shortcut list
-    scSetting: '',
-    multiPageJump: false  // 是否跳转上次观看
+    scSetting: ''
   }
 
   let bili2sConf = GM_getValue('bili2sConf') || defaultBili2sConf
@@ -133,6 +132,12 @@
     GM_getValue('bili2sConf') || (siteConfig.isFirst = true)
     GM_setValue('bili2sConf', bili2sConf)
     Toast('脚本已更新')
+  }
+
+  const delayExecute = (execution, delayMs) => {
+    setTimeout(() => {
+      execution()
+    }, delayMs || siteConfig.delay2s);
   }
 
   const getElement = (list) => {
@@ -245,14 +250,18 @@
     GM_setValue('bili2sConf', bili2sConf)
   }
 
-  const multiPageJump = () => {
+  const multiPageJump = async () => {
     let bvid = getBvid()
     let videoHis = bili2sConf.videoRecordMap[bvid]
     videoHis && (() => {
-      if (siteConfig.multiPageJump) { return }
-      siteConfig.multiPageJump = !siteConfig.multiPageJump
-      document.querySelector(`div.cur-list > ul > li:nth-child(${videoHis.p}) > a`).click()
-      Toast('小助手: 跳转上次观看集数')
+      let hrefRegexp = new RegExp(`${bvid}\\?p=\\d+`, 'i')
+      if (hrefRegexp.test(window.location.href)) { return }
+      let curChapLi = document.querySelector(`div.cur-list > ul > li:nth-child(${videoHis.p}) > a > div`)
+      if (!curChapLi) {
+        return delayExecute(multiPageJump)
+      }
+      curChapLi.click()
+      Toast(`小助手: 跳转上次观看 P${videoHis.p}`)
     })()
   }
 
@@ -272,6 +281,9 @@
     // 处理连播
     let switchCase = isMultiPage ? 'multiUnceasing' : 'singleUncreasing'
     let unceasingBtn = getElement(siteConfig.unceasingBtnList)
+    if (!unceasingBtn) {
+      return delayExecute(dealUnceasing)
+    }
     let curUnceasing = /switch-button on/.test(unceasingBtn.getAttribute('class'))
     curUnceasing === bili2sConf[switchCase]
       || unceasingBtn.click()
@@ -287,6 +299,9 @@
   const doShare = () => {
     console.log('[B站小助手]: 开始分享!')
     let shareBtn = getElement(siteConfig.shareBtnList)
+    if (!shareBtn) {
+      return delayExecute(doShare)
+    }
     shareBtn.click()
     document.body.lastChild.remove()
     bili2sConf.shareDate = new Date().toLocaleDateString()
@@ -397,7 +412,7 @@
     setCommand()
     setTimeout(() => {
       runScript()
-    }, siteConfig.delayMs);
+    }, siteConfig.delay2s);
     clearupStore()
   } catch (err) {
     console.log('[B站小助手]:', err.name, err.message)
