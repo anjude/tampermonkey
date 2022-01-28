@@ -322,11 +322,11 @@
       let addDiv = document.createElement("div")
       addDiv.className = 'video-view'
       if (bili2sConf.videoRecordMap[bvid]) {
-        addDiv.innerHTML = "看过";
-        addDiv.style.opacity = 1;
+        addDiv.innerHTML = '已看'
+        addDiv.style.opacity = 0.9;
         addDiv.style.color = 'red';
       } else {
-        addDiv.innerHTML = "未看";
+        // addDiv.innerHTML = "未看";
       }
       e.prepend(addDiv);
     })
