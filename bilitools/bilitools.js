@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.0.10
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
-// @description  🔥🔥🔥推荐 2022最友好的B站助手，功能纯净无冲突。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
+// @description  🔥🔥🔥推荐 2022最友好的B站助手，功能智能自动化。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       豆小匠Coding
 // @match        https://*.bilibili.com/*
 // @grant        GM_openInTab
@@ -24,9 +24,9 @@
   // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
   const RELEASE_VERSION = '0.0.10'
-  let DEV = 'RELEASE'
-  // DEV = 'DEBUG'
-  const updateVersion = DEV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
+  let ENV = 'RELEASE'
+  // ENV = 'DEBUG'
+  const updateVersion = ENV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
   updateVersion && GM_setValue('RELEASE_VERSION', RELEASE_VERSION)
   startHttpProxy()
   /**
