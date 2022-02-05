@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）小助手--功能快捷键，每日任务，视频解析等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.10
+// @version      0.0.11
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/bilibili_tool.png
 // @description  🔥🔥🔥推荐 2022最友好的B站助手，功能智能自动化。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       豆小匠Coding
@@ -23,7 +23,7 @@
   'use strict'
   // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
-  const RELEASE_VERSION = '0.0.10'
+  const RELEASE_VERSION = '0.0.11'
   let ENV = 'RELEASE'
   // ENV = 'DEBUG'
   const updateVersion = ENV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
@@ -37,6 +37,7 @@
     shortcutMap: {
       upToTop: '000U',   // 回到顶部
       takeNote: '000N',  // 打开视频笔记
+      lightOff: '000L',  // 开关宽屏模式
       notePicShot: '101P',   // 笔记-视频截图
       noteTimePoint: '101T',   // 笔记-时间标记
       changeParseApi: '100V',   // 解锁视频
@@ -68,9 +69,14 @@
       'div.note-btn', // 普通up视频
       'span.note-btn'  // 课堂视频
     ],
-    notePanelList: [
-      'div.resizable-component.bili-note' // 普通up视频
+    notePanelList: ['div.resizable-component.bili-note' // 普通up视频 
     ],
+    lightOffBtn: ['div.squirtle-single-setting-other-choice.squirtle-lightoff',
+      'div.bilibili-player-fl.bilibili-player-video-btn-setting-right-others-content-lightoff.bui.bui-checkbox.bui-dark > input'],
+    wideScreenBtn: ['div.squirtle-widescreen-wrap.squirtle-block-wrap > div', // bangumi 视频
+      'div.bilibili-player-video-btn.bilibili-player-video-btn-widescreen' // up 视频
+    ],
+    videoSettingBtn: ['div.bilibili-player-video-btn.bilibili-player-video-btn-setting'],
     picBtnList: ['span.ql-capture-btn'],
     pointBtnList: ['span.ql-tag-btn'],
     multiPageBox: ['#multi_page > div.cur-list'],
@@ -118,6 +124,7 @@
       showMenu: '打开菜单',
       notePicShot: '笔记-视频截图',
       noteTimePoint: '笔记-时间标志',
+      lightOff: '开关宽屏模式'
     },  // shortcut list
     scSetting: ''
   }
@@ -150,6 +157,21 @@
   const getBvid = (href) => {
     let res = /video\/([0-9|a-z|A-Z]*)/ig.exec(href || document.location.href)
     return res === null ? false : res[1]
+  }
+
+  // 改编自 github 网友贡献的代码，详情请参见 github 的提交记录
+  const LightOff = () => {
+    let settingBtn = getElement(siteConfig.videoSettingBtn)
+    settingBtn?.dispatchEvent(new MouseEvent('mouseover'))
+    settingBtn?.dispatchEvent(new MouseEvent('mouseout'))
+
+    let wideScreenBtn = getElement(siteConfig.wideScreenBtn)
+    let lightOffBtn = getElement(siteConfig.lightOffBtn)
+    let scrollDistance = window.location.href.match('bangumi') ? 50 : 100
+
+    wideScreenBtn.click()
+    lightOffBtn.click()
+    window.scrollTo(0, scrollDistance)
   }
 
   const UpToTop = () => { // 回到顶部
@@ -222,6 +244,8 @@
       switch (command) {
         case keyMap.upToTop:
           return UpToTop()
+        case keyMap.lightOff:
+          return LightOff()
         case keyMap.takeNote:
           return TakeNote()
         case keyMap.changeParseApi:
