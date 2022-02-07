@@ -15,7 +15,7 @@
 // @grant        GM_unregisterMenuCommand
 // @grant        GM_xmlhttpRequest
 // @original-script   https://github.com/Anjude/tampermonkey
-// @require     https://greasyfork.org/scripts/438842-jquery-3-2-1/code/jquery@321.js?version=1010443
+// @require      https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.2.1/jquery.min.js
 // @require     https://greasyfork.org/scripts/412159-mydrag/code/MyDrag.js?version=858320
 // ==/UserScript==
 
@@ -81,7 +81,9 @@
     pointBtnList: ['span.ql-tag-btn'],
     multiPageBox: ['#multi_page > div.cur-list'],
     chapListItem: ['div.cur-list > ul > li.on'],
-    shareBtnList: ['div.share-btns > div:nth-child(6)'],
+    trendBtnList: ['div.share-btns > div:nth-child(6)',
+      'div.share-info > div > div > span'],
+    shareBtnList: ['div.share-info'],
     unceasingBtnList: ['span.switch-button'],
     searchResBox: [
       '#video-list > ul',
@@ -323,11 +325,15 @@
   const doShare = () => {
     console.log('[B站小助手]: 开始分享!')
     let shareBtn = getElement(siteConfig.shareBtnList)
-    if (!shareBtn) {
+    shareBtn?.dispatchEvent(new MouseEvent('mouseover'))
+
+    let trendBtn = getElement(siteConfig.trendBtnList)
+    if (!trendBtn) {
       return delayExecute(doShare)
     }
-    shareBtn.click()
+    trendBtn.click()
     document.body.lastChild.remove()
+    shareBtn?.dispatchEvent(new MouseEvent('mouseout'))
     bili2sConf.shareDate = new Date().toLocaleDateString()
     GM_setValue('bili2sConf', bili2sConf)
     console.log('[B站小助手]: 分享完成!')
@@ -422,6 +428,9 @@
       dealUnceasing(isMultiPage)
       dealRead()
       date === bili2sConf.shareDate || doShare()
+    }
+    if (/bilibili.com\/bangumi/.test(href)) {
+      // date === bili2sConf.shareDate || doShare()
     }
     if (/search.bilibili.com/.test(href)) {
       dealRead()

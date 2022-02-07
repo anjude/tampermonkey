@@ -19,7 +19,7 @@
 // @grant        GM_registerMenuCommand
 // @grant        GM_unregisterMenuCommand
 // @grant        GM_xmlhttpRequest
-// @require     https://greasyfork.org/scripts/438842-jquery-3-2-1/code/jquery@321.js?version=1010443
+// @require      https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.2.1/jquery.min.js
 // @require     https://greasyfork.org/scripts/412159-mydrag/code/MyDrag.js?version=858320
 // ==/UserScript==
 (function () {
