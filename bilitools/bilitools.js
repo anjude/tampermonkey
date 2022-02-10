@@ -514,6 +514,8 @@
               && dealRead(result);
             /pgc\/view\/web\/section\/order/.test(responseURL)
               && UnlockBangumi(bili2sConf.parseApiIndex);
+            /pgc\/season\/episode\/web\/info/.test(responseURL)
+              && UnlockBangumi(bili2sConf.parseApiIndex);
           } catch (err) { }
         })
         return target.apply(thisArg, args)
