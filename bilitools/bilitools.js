@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）自动增强--功能快捷键，视频智能解析，每日任务等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.11
+// @version      0.0.12
 // @icon         https://gitee.com/anjude/public-resource/raw/md-img/1.png
 // @description  🔥🔥🔥推荐！ 浸入式虚拟会员体验，功能智能自动化，让你的 B站 比别人的更强。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       豆小匠Coding
@@ -23,7 +23,7 @@
   'use strict'
   // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
-  const RELEASE_VERSION = '0.0.11'
+  const RELEASE_VERSION = '0.0.12'
   let ENV = 'RELEASE'
   // ENV = 'DEBUG'
   const updateVersion = ENV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
@@ -50,12 +50,12 @@
     shareDate: '2022/1/1',
     lastClearup: new Date(),
     parseApiIndex: 0, // 解析接口选择
-    pretendVip: false
+    pretendVip: false,
+    installTime: null
   }
 
   // 网站配置
   const siteConfig = {
-    isFirst: false,
     delay2s: 2000,
     scrollBtnList: [
       'div.item.back-top', // 首页
@@ -137,13 +137,14 @@
     let shortcutMap = Object.assign({}, defaultBili2sConf.shortcutMap)
     bili2sConf = Object.assign(defaultBili2sConf, bili2sConf)
     bili2sConf.shortcutMap = Object.assign(shortcutMap, bili2sConf.shortcutMap)
-    console.log(shortcutMap, defaultBili2sConf.shortcutMap, bili2sConf.shortcutMap);
-    GM_getValue('bili2sConf') || (siteConfig.isFirst = true)
+    console.log(shortcutMap, defaultBili2sConf.shortcutMap, bili2sConf.shortcutMap)
     GM_setValue('bili2sConf', bili2sConf)
     Toast('脚本已更新')
   }
 
-  if (siteConfig.isFirst) {
+  if (!bili2sConf.installTime) {
+    bili2sConf.installTime = new Date()
+    GM_setValue('bili2sConf', bili2sConf)
     if (confirm('首次使用,前往微信小程序,随时反馈!')) {
       window.GM_openInTab(
         'https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png',
@@ -425,6 +426,18 @@
     }
   }
 
+  const executeByUri = (responseURL, result) => {
+    /\/player\/playurl/.test(responseURL)
+      && chapListener(result);
+    (/x\/web-interface\/search/.test(responseURL)
+      || /x\/web-interface\/index\/top\/rcmd/.test(responseURL)
+      || /x\/space\/arc/.test(responseURL))
+      && dealRead(result);
+    (/pgc\/view\/web\/section\/order/.test(responseURL)
+      || /pgc\/season\/episode\/web\/info/.test(responseURL))
+      && UnlockBangumi(bili2sConf.parseApiIndex);
+  }
+
   const runScript = () => {
     let date = new Date().toLocaleDateString()
     let href = window.location.href
@@ -506,16 +519,7 @@
             let { responseText, responseURL } = event.target
             if (!/^{.*}$/.test(responseText)) return
             const result = JSON.parse(responseText);
-            /\/player\/playurl/.test(responseURL)
-              && chapListener(result);
-            (/x\/web-interface\/search/.test(responseURL)
-              || /x\/web-interface\/index\/top\/rcmd/.test(responseURL)
-              || /x\/space\/arc/.test(responseURL))
-              && dealRead(result);
-            /pgc\/view\/web\/section\/order/.test(responseURL)
-              && UnlockBangumi(bili2sConf.parseApiIndex);
-            /pgc\/season\/episode\/web\/info/.test(responseURL)
-              && UnlockBangumi(bili2sConf.parseApiIndex);
+            executeByUri(responseURL, result)
           } catch (err) { }
         })
         return target.apply(thisArg, args)

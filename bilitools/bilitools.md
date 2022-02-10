@@ -12,8 +12,6 @@
 6. 快捷键说明见下方快捷键一览
 7. 扫描小程序码（我的 --> 客服）反馈，回复最快！
 
-![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220122110243.png)
-
 ### 快捷键一览(含 B 站原配)
 
 - Alt + Shift + Ctrl 称为 **三键**
@@ -45,6 +43,7 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 
 ### 版本更新
 
+- 0.0.12 兼容 api 更新
 - 0.0.11 取消 **未看** 标签，只在看过的视频左上角打上 **已看** 标签
 - 0.0.10 优化多集连播体验和兼容部分网络延迟高的场景
 - 0.0.9 修复重复视频声音
