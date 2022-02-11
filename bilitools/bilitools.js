@@ -471,8 +471,11 @@
     clearupStore()
   } catch (err) {
     console.log('[B站小助手]:', err.name, err.message)
-    if (confirm(`【B站小助手】: 请截图反馈 ${err}`)) {
-      window.GM_openInTab('https://greasyfork.org/zh-CN/scripts/437941/feedback', { active: true, insert: true, setParent: true })
+    if (confirm(`【B站小助手】: 请截图(到 我的 - 客服 处)反馈 ${err}`)) {
+      window.GM_openInTab(
+        'https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png',
+        { active: true, insert: true, setParent: true }
+      )
     }
   }
 

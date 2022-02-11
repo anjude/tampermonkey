@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站、芒果、爱奇艺、腾讯等视频替换小助手
 // @namespace    http://tampermonkey.net/
-// @version      0.0.1
+// @version      0.0.2
 // @description  一键解析，无感切换。
 // @author       豆小匠coding
 // @grant        unsafeWindow
@@ -26,7 +26,7 @@
   // 此脚本仅为学习之用，请使用者24小时内删除脚本，且不要传播
   'use strict';
 
-  const RELEASE_VERSION = '0.0.1'
+  const RELEASE_VERSION = '0.0.2'
   let ENV = 'RELEASE'
   ENV = 'DEBUG'
 
@@ -35,7 +35,8 @@
   updateVersion && GM_setValue('RELEASE_VERSION', RELEASE_VERSION)
 
   let scriptConfDf = {
-    parseApiIndex: 0
+    parseApiIndex: 0,
+    installTime: null
   }
 
   /**
@@ -82,6 +83,17 @@
     scriptConf = Object.assign(scriptConfDf, GM_getValue('scriptConf') || {})
     GM_setValue('shortcutMap', shortcutMap)
     GM_setValue('scriptConf', scriptConf)
+  }
+
+  if (!scriptConf.installTime) {
+    scriptConf.installTime = new Date()
+    GM_setValue('scriptConf', scriptConf)
+    if (confirm('首次使用,前往微信小程序,随时反馈!')) {
+      window.GM_openInTab(
+        'https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png',
+        { active: true, insert: true, setParent: true }
+      )
+    }
   }
 
   startHttpProxy()
