@@ -28,7 +28,7 @@
 
   const RELEASE_VERSION = '0.0.2'
   let ENV = 'RELEASE'
-  ENV = 'DEBUG'
+  // ENV = 'DEBUG'
 
   const updateVersion = ENV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
 

@@ -103,6 +103,7 @@
     vipLabel: 'div.h-vipType',
     playerBox: ['#player_module'],
     videoBox: ['video'],
+    vipAdClose: ['div.twp-mask > div > i'],
     parseApiList: [ // 解析链接均收集自网络，经过简单测试
       { url: 'https://vip.parwix.com:4433/player/?url=', name: 'Parwix解析系统' },
       { url: 'https://www.yemu.xyz/?url=', name: '夜幕解析' },
@@ -375,12 +376,12 @@
   const ChangeParseApi = () => {
     let curIndex = bili2sConf.parseApiIndex
     bili2sConf.parseApiIndex = (curIndex + 1) % siteConfig.parseApiList.length
-    UnlockBangumi(bili2sConf.parseApiIndex)
+    UnlockBangumi(bili2sConf.parseApiIndex, false, true)
     GM_setValue('bili2sConf', bili2sConf)
     Toast(`B站小助手: 解析接口${bili2sConf.parseApiIndex + 1} ${siteConfig.parseApiList[bili2sConf.parseApiIndex].name}`)
   }
 
-  const UnlockBangumi = (parseApiIndex = 0, setAutoUnlock) => {
+  const UnlockBangumi = (parseApiIndex = 0, setAutoUnlock, forceUnlock) => {
     if (setAutoUnlock) {
       let set = !bili2sConf.autoUnlockVideo
       bili2sConf.autoUnlockVideo = set
@@ -388,7 +389,7 @@
       Toast(`B站小助手:${set ? '开启' : '关闭'}自动解锁!`)
     }
     let videoInfo = getElement(siteConfig.bangumiLi)?.innerHTML
-    if (!bili2sConf.autoUnlockVideo
+    if ((!bili2sConf.autoUnlockVideo && !forceUnlock)
       || videoInfo && !/>(会员|付费)<\/div>/.test(videoInfo)
       || !videoInfo
     ) { return $('#anjude-iframe').length && location.reload() }
@@ -411,6 +412,16 @@
     videoBox && (videoBox.muted = true) && videoBox.pause()
     playerBox.innerHTML = ''
     playerBox.append(newPlayer)
+
+    let monitorTimes = 0
+    let vipAdMonitor = setInterval(() => {
+      monitorTimes++
+      let closeAd = getElement(siteConfig.vipAdClose)
+      if (closeAd || monitorTimes >= (5 * 60 * 1000 / 200)) {
+        closeAd.click()
+        clearInterval(vipAdMonitor)
+      }
+    }, 200);
     // Toast(`B站小助手: 解析完成`, 500)
   }
 
