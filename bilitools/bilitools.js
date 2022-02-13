@@ -409,7 +409,11 @@
     let playerBox = getElement(siteConfig.playerBox)
     let videoBox = getElement(siteConfig.videoBox)
 
-    videoBox && (videoBox.muted = true) && videoBox.pause()
+    if (videoBox) {
+      videoBox.muted = true
+      videoBox.pause()
+    }
+
     playerBox.innerHTML = ''
     playerBox.append(newPlayer)
 
