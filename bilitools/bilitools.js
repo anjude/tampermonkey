@@ -390,7 +390,7 @@
     }
     let videoInfo = getElement(siteConfig.bangumiLi)?.innerHTML
     if (!forceUnlock && (!bili2sConf.autoUnlockVideo
-      || videoInfo && !/>(会员|付费)<\/div>/.test(videoInfo)
+      || videoInfo && !/>(会员|付费|受限)<\/div>/.test(videoInfo)
       || !videoInfo)
     ) { return $('#anjude-iframe').length && location.reload() }
 
