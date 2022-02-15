@@ -1,4 +1,4 @@
-<a href="https://gitee.com/anjude/public-resource/raw/md-img/20220122110243.png" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，秒回</a>
+<a href="https://gitee.com/anjude/public-resource/raw/md-img/20220122110243.png" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，回复最快</a>
 请勿随意给差评，失效请到小程序客服反馈。
 
 ## 功能详细
