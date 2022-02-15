@@ -389,9 +389,9 @@
       Toast(`B站小助手:${set ? '开启' : '关闭'}自动解锁!`)
     }
     let videoInfo = getElement(siteConfig.bangumiLi)?.innerHTML
-    if ((!bili2sConf.autoUnlockVideo && !forceUnlock)
+    if (!forceUnlock && (!bili2sConf.autoUnlockVideo
       || videoInfo && !/>(会员|付费)<\/div>/.test(videoInfo)
-      || !videoInfo
+      || !videoInfo)
     ) { return $('#anjude-iframe').length && location.reload() }
 
     let parseApi = siteConfig.parseApiList[parseApiIndex]
@@ -426,7 +426,7 @@
         clearInterval(vipAdMonitor)
       }
     }, 200);
-    // Toast(`B站小助手: 解析完成`, 500)
+    Toast(`B站小助手: 解析完成`, 500)
   }
 
   const pretendVip = () => {
@@ -533,7 +533,7 @@
       apply: (target, thisArg, args) => {
         thisArg.addEventListener('load', event => {
           try {
-            // console.log(111, event.target.responseURL)
+            console.log(111, event.target.responseURL)
             let { responseText, responseURL } = event.target
             if (!/^{.*}$/.test(responseText)) return
             const result = JSON.parse(responseText);

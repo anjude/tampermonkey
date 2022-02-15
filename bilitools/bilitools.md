@@ -81,7 +81,7 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 
   5.怎么反馈问题？
 
-- 扫描小程序码， 到 我的 - 客服 反馈即可。
+- 扫描小程序码， 到 **我的 - 客服** 反馈即可。
 
   6.分享状态没更新？
 
