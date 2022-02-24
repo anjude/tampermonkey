@@ -1,4 +1,4 @@
-<a href="https://gitee.com/anjude/public-resource/raw/md-img/20220122110243.png" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，回复最快</a>
+<a href="https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，回复最快</a>
 请勿随意给差评，失效请到小程序客服反馈。
 
 ## 功能详细
@@ -44,6 +44,7 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 
 ### 版本更新
 
+- 0.0.13 修复已知问题
 - 0.0.12 兼容 api 更新
 - 0.0.11 取消 **未看** 标签，只在看过的视频左上角打上 **已看** 标签
 - 0.0.10 优化多集连播体验和兼容部分网络延迟高的场景
@@ -81,10 +82,10 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 
   5.怎么反馈问题？
 
-- 扫描小程序码， 到 **我的 - 客服** 反馈即可。
+- 扫描小程序码， 到 **我的 - 客服** 反馈即可！GreasyFork 上的反馈建议只用来发好评-_-。
 
   6.分享状态没更新？
 
 - 分享状态是经常不更新或者延迟更新的，经验增加了就好~
 
-![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/20220122110243.png)
+![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png)

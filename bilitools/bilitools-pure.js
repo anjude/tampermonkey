@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）自动增强--功能快捷键，视频智能解析，每日任务等
+// @name         B站大会员视频自动解析 -- 纯净版
 // @namespace    http://tampermonkey.net/
-// @version      0.0.13
+// @version      0.0.1
 // @icon         https://gitee.com/anjude/public-resource/raw/md-img/1.png
-// @description  🔥🔥🔥推荐！ 浸入式虚拟会员体验，功能智能自动化，让你的 B站 比别人的更强。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
+// @description  浸入式虚拟会员体验，功能智能自动化。
 // @author       豆小匠Coding
 // @match        https://*.bilibili.com/*
 // @grant        GM_openInTab
@@ -35,72 +35,15 @@
    */
   let defaultBili2sConf = {
     shortcutMap: {
-      upToTop: '000U',   // 回到顶部
-      takeNote: '000N',  // 打开视频笔记
-      lightOff: '000L',  // 开关宽屏模式
-      notePicShot: '101P',   // 笔记-视频截图
-      noteTimePoint: '101T',   // 笔记-时间标记
       changeParseApi: '100V',   // 解锁视频
-      showMenu: '100M',   // 打开菜单
     },
-    videoRecordMap: {}, // 视频记录
-    multiUnceasing: true,   // 多集自动连播
-    singleUncreasing: false,    // 单集自动连播
-    autoUnlockVideo: false, // 是否自动解锁视频
-    shareDate: '2022/1/1',
-    lastClearup: new Date(),
     parseApiIndex: 0, // 解析接口选择
-    pretendVip: false,
     installTime: null
   }
 
   // 网站配置
   const siteConfig = {
     delay2s: 2000,
-    scrollBtnList: [
-      'div.item.back-top', // 首页
-      'button.primary-btn.top-btn', // 新版首页
-      'div.item.backup',  // up视频,
-      'div.tool-item.backup.iconfont.icon-up',  // 
-      '#app > div.to-top', // up主所有视频
-      '#cheese_guide > div > div'  // 课堂
-    ],
-    noteBtnList: [
-      'div.note-btn', // 普通up视频
-      'span.note-btn'  // 课堂视频
-    ],
-    notePanelList: ['div.resizable-component.bili-note' // 普通up视频 
-    ],
-    lightOffBtn: ['div.squirtle-single-setting-other-choice.squirtle-lightoff',
-      'div.bilibili-player-fl.bilibili-player-video-btn-setting-right-others-content-lightoff.bui.bui-checkbox.bui-dark > input'],
-    wideScreenBtn: ['div.squirtle-widescreen-wrap.squirtle-block-wrap > div', // bangumi 视频
-      'div.bilibili-player-video-btn.bilibili-player-video-btn-widescreen' // up 视频
-    ],
-    videoSettingBtn: ['div.bilibili-player-video-btn.bilibili-player-video-btn-setting'],
-    picBtnList: ['span.ql-capture-btn'],
-    pointBtnList: ['span.ql-tag-btn'],
-    multiPageBox: ['#multi_page > div.cur-list'],
-    chapListItem: ['div.cur-list > ul > li.on'],
-    trendBtnList: ['div.share-btns > div:nth-child(6)',
-      'div.share-info > div > div > span'],
-    shareBtnList: ['div.share-info'],
-    unceasingBtnList: ['span.switch-button'],
-    searchResBox: [
-      '#video-list > ul',
-      'div.mixin-list > ul.video-list',    // 番剧
-      'div.flow-loader > ul',
-      'div.rcmd-box',  // 首页推荐
-      'div.section.video > div',  // UP主页
-      '#submit-video-list > ul.list-list',  // UP主页，更多视频
-      '#reco_list > div.rec-list',  // 相关视频
-    ],
-    vipIcon: 'bili-avatar-icon--big-vip',
-    vipSpan: [
-      'div.avatar-container > div > div > span',
-      'div.big-avatar-container--default > a > div > span',
-      'a.header-entry-avatar > div > span',
-    ],
-    vipLabel: 'div.h-vipType',
     playerBox: ['#player_module'],
     videoBox: ['video'],
     vipAdClose: ['div.twp-mask > div > i'],
@@ -121,13 +64,7 @@
     ],
     bangumiLi: ['li.ep-item.cursor.badge.visited'],
     shortcutList: {
-      upToTop: '回到顶部',
-      takeNote: '打开/关闭笔记',
       changeParseApi: '切换视频解析接口',
-      showMenu: '打开菜单',
-      notePicShot: '笔记-视频截图',
-      noteTimePoint: '笔记-时间标志',
-      lightOff: '开关宽屏模式'
     },  // shortcut list
     scSetting: ''
   }
@@ -172,53 +109,6 @@
     return res === null ? false : res[1]
   }
 
-  // 改编自 github 网友贡献的代码，详情请参见 github 的提交记录
-  const LightOff = () => {
-    let settingBtn = getElement(siteConfig.videoSettingBtn)
-    settingBtn?.dispatchEvent(new MouseEvent('mouseover'))
-    settingBtn?.dispatchEvent(new MouseEvent('mouseout'))
-
-    let wideScreenBtn = getElement(siteConfig.wideScreenBtn)
-    let lightOffBtn = getElement(siteConfig.lightOffBtn)
-    let scrollDistance = window.location.href.match('bangumi') ? 50 : 100
-
-    wideScreenBtn.click()
-    lightOffBtn.click()
-    window.scrollTo(0, scrollDistance)
-  }
-
-  const UpToTop = () => { // 回到顶部
-    let scrollBtn = getElement(siteConfig.scrollBtnList)
-    if (scrollBtn) scrollBtn.click()
-  }
-
-  const TakeNote = () => {
-    let noteBtn = getElement(siteConfig.noteBtnList)
-    let nodePanel = getElement(siteConfig.notePanelList)
-    let res = nodePanel || (() => {
-      noteBtn.click()
-      return false
-    })()
-    if (!res) return
-
-    nodePanel.style.display = nodePanel.style.display === 'none'
-      ? '' : 'none'
-  }
-
-  const NotePicShot = () => {
-    let picBtn = getElement(siteConfig.picBtnList)
-    picBtn.click()
-  }
-
-  const NoteTimePoint = () => {
-    let pointBtn = getElement(siteConfig.pointBtnList)
-    pointBtn.click()
-  }
-
-  const keyCtrl = () => {
-
-  }
-
   const blockKey = (e) => {
     let isBlock = false
 
@@ -255,123 +145,11 @@
       // console.log('键盘:', command, siteConfig.scSetting)
       if (siteConfig.scSetting) { return setShortcut(command) }
       switch (command) {
-        case keyMap.upToTop:
-          return UpToTop()
-        case keyMap.lightOff:
-          return LightOff()
-        case keyMap.takeNote:
-          return TakeNote()
         case keyMap.changeParseApi:
           return ChangeParseApi()
-        case keyMap.showMenu:
-          return document.querySelector('#sc-box').style.display = ''
-        case keyMap.notePicShot:
-          return NotePicShot()
-        case keyMap.noteTimePoint:
-          return NoteTimePoint()
-        default:
-          keyCtrl(command)  // 一些不常用的小操作，集中一个函数处理
       }
     })
   })
-
-  const chapListener = (res) => {
-    let listItem = getElement(siteConfig.chapListItem).innerHTML
-    let regxList = /video\/([0-9a-zA-Z]*)\?p=(\d+).*title=.(.*?).><div/i.exec(listItem)
-    let bvid = regxList[1]
-    bili2sConf.videoRecordMap[bvid] = Object.assign(bili2sConf.videoRecordMap[bvid] || {}, {
-      p: regxList[2],
-      title: regxList[3],
-      updateTime: new Date()
-    })
-    GM_setValue('bili2sConf', bili2sConf)
-  }
-
-  const multiPageJump = async () => {
-    let bvid = getBvid()
-    let videoHis = bili2sConf.videoRecordMap[bvid]
-    videoHis && (() => {
-      let hrefRegexp = new RegExp(`${bvid}\\?p=\\d+`, 'i')
-      if (hrefRegexp.test(window.location.href)) { return }
-      let curChapLi = document.querySelector(`div.cur-list > ul > li:nth-child(${videoHis.p}) > a > div`)
-      if (!curChapLi) {
-        return delayExecute(multiPageJump)
-      }
-      curChapLi.click()
-      Toast(`小助手: 跳转上次观看 P${videoHis.p}`)
-    })()
-  }
-
-  const setVideoRecord = () => {
-    let bvid = getBvid()
-    let videoRecord = bili2sConf.videoRecordMap[bvid] || {
-      docTitle: document.title,
-      p: 1
-    }
-    videoRecord.updateTime = new Date()
-    bili2sConf.videoRecordMap[bvid] = Object.assign(bili2sConf.videoRecordMap[bvid] || {}, videoRecord)
-    // console.log(bili2sConf.videoRecordMap[bvid], videoRecord)
-    GM_setValue('bili2sConf', bili2sConf)
-  }
-
-  const dealUnceasing = (isMultiPage) => {
-    // 处理连播
-    let switchCase = isMultiPage ? 'multiUnceasing' : 'singleUncreasing'
-    let unceasingBtn = getElement(siteConfig.unceasingBtnList)
-    if (!unceasingBtn) {
-      return delayExecute(dealUnceasing)
-    }
-    let curUnceasing = /switch-button on/.test(unceasingBtn.getAttribute('class'))
-    curUnceasing === bili2sConf[switchCase]
-      || unceasingBtn.click()
-    unceasingBtn.addEventListener("click", (e) => {
-      // 过滤脚本模拟点击
-      if (e.isTrusted) {
-        bili2sConf[switchCase] = !/switch-button on/.test(unceasingBtn.getAttribute('class'))
-        GM_setValue('bili2sConf', bili2sConf);
-      }
-    })
-  }
-
-  const doShare = () => {
-    console.log('[B站小助手]: 开始分享!')
-    let shareBtn = getElement(siteConfig.shareBtnList)
-    shareBtn?.dispatchEvent(new MouseEvent('mouseover'))
-
-    let trendBtn = getElement(siteConfig.trendBtnList)
-    if (!trendBtn) {
-      return delayExecute(doShare)
-    }
-    trendBtn.click()
-    document.body.lastChild.remove()
-    shareBtn?.dispatchEvent(new MouseEvent('mouseout'))
-    bili2sConf.shareDate = new Date().toLocaleDateString()
-    GM_setValue('bili2sConf', bili2sConf)
-    console.log('[B站小助手]: 分享完成!')
-    Toast('小助手: 今日分享任务达成')
-  }
-
-  const dealRead = (res) => {
-    let searchResBox = getElement(siteConfig.searchResBox)
-    // console.log(searchResBox.childNodes)
-    let resList = searchResBox.childNodes
-    resList.forEach(e => {
-      if (!e.innerHTML) return
-      e.style.position = 'relative'
-      let bvid = getBvid(e.innerHTML)
-      if (!bvid) return
-      let addDiv = document.createElement("div")
-      addDiv.className = 'video-view'
-      if (bili2sConf.videoRecordMap[bvid]) {
-        addDiv.innerHTML = '已看'
-        addDiv.style.opacity = 0.9;
-        addDiv.style.color = 'red';
-      } else {
-        // addDiv.innerHTML = "未看";
-      }
-      e.prepend(addDiv);
-    })
-  }
 
   const ChangeParseApi = () => {
     let curIndex = bili2sConf.parseApiIndex
@@ -389,8 +167,7 @@
       Toast(`B站小助手:${set ? '开启' : '关闭'}自动解锁!`)
     }
     let videoInfo = getElement(siteConfig.bangumiLi)?.innerHTML
-    if (!forceUnlock && (!bili2sConf.autoUnlockVideo
-      || videoInfo && !/>(会员|付费|受限)<\/div>/.test(videoInfo)
+    if (!forceUnlock && (videoInfo && !/>(会员|付费|受限)<\/div>/.test(videoInfo)
       || !videoInfo)
     ) { return $('#anjude-iframe').length && location.reload() }
 
@@ -425,54 +202,14 @@
         closeAd.click()
         clearInterval(vipAdMonitor)
       }
-    }, 200);
+    }, 200)
     Toast(`B站小助手: 解析完成`, 500)
   }
 
-  const pretendVip = () => {
-    siteConfig.vipSpan.forEach(e => {
-      let vipSpan = getElement(e)
-      vipSpan && vipSpan.classList.add(siteConfig.vipIcon)
-    })
-    let vipLabel = getElement(siteConfig.vipLabel)
-    if (vipLabel) {
-      let newClass = vipLabel.getAttribute('class').replace('disable', '')
-      vipLabel.setAttribute('class', newClass)
-    }
-  }
-
   const executeByUri = (responseURL, result) => {
-    /\/player\/playurl/.test(responseURL)
-      && chapListener(result);
-    (/x\/web-interface\/search/.test(responseURL)
-      || /x\/web-interface\/index\/top\/rcmd/.test(responseURL)
-      || /x\/space\/arc/.test(responseURL))
-      && dealRead(result);
     (/pgc\/view\/web\/section\/order/.test(responseURL)
       || /pgc\/season\/episode\/web\/info/.test(responseURL))
       && UnlockBangumi(bili2sConf.parseApiIndex);
-  }
-
-  const runScript = () => {
-    let date = new Date().toLocaleDateString()
-    let href = window.location.href
-    let isMultiPage = getElement(siteConfig.multiPageBox)
-    if (isMultiPage) {
-      multiPageJump()
-    }
-    if (/\/video\//.test(href)) {
-      setVideoRecord()
-      dealUnceasing(isMultiPage)
-      dealRead()
-      date === bili2sConf.shareDate || doShare()
-    }
-    if (/bilibili.com\/bangumi/.test(href)) {
-      // date === bili2sConf.shareDate || doShare()
-    }
-    if (/search.bilibili.com/.test(href)) {
-      dealRead()
-    }
-    bili2sConf.pretendVip && pretendVip()
   }
 
   // 执行脚本
@@ -480,10 +217,6 @@
     // console.log('[B站小助手]:', bili2sConf)
     GM_addStyle(getCss())
     setCommand()
-    setTimeout(() => {
-      runScript()
-    }, siteConfig.delay2s);
-    clearupStore()
   } catch (err) {
     console.log('[B站小助手]:', err.name, err.message)
     if (confirm(`【B站小助手】: 请截图(到 我的 - 客服 处)反馈 ${err}`)) {
@@ -507,25 +240,6 @@
         window.open(`${e}https://www.bilibili.com/bangumi/play/ep457778?spm_id_from=333.999.0.0`, 'target')
       }, i * 15000)
     })
-  }
-
-  function clearupStore() {
-    const getDayDiff = (d) => {
-      return (new Date() - new Date(d)) / (1000 * 60 * 60 * 24)
-    }
-    let dayDiff = getDayDiff(bili2sConf.lastClearup)
-    if (dayDiff < 30) return    // 每月清理一次数据
-    console.log('[B站小助手]:开始清理!')
-
-    let recordMapKeys = Object.keys(bili2sConf.videoRecordMap)
-    recordMapKeys.forEach(e => {
-      let updateTime = bili2sConf.videoRecordMap[e].updateTime
-      if (getDayDiff(updateTime) > 365 * 2) {
-        delete bili2sConf.videoRecordMap[e]
-      }
-    })
-    bili2sConf.lastClearup = new Date()
-    GM_setValue('bili2sConf', bili2sConf)
   }
 
   function startHttpProxy() {
@@ -604,10 +318,6 @@
 text-align: center;font-size: 16px;padding: 20px;">
 快捷键设置(点击选中设置)
 </div>
-<div style="display:flex; font-size: 15px;flex-direction: column;">
-<label>假装是大会员 <input type="checkbox" id="pretend-vip" ${bili2sConf.pretendVip ? 'checked' : ''} /></label>
-<label>自动解锁会员视频 <input type="checkbox" id="auto-unlockvideo" ${bili2sConf.autoUnlockVideo ? 'checked' : ''} /></label>
-</div>
 <div style="font-size: 15px;">
 ${scItem}
 </div>
@@ -635,14 +345,6 @@ background: green;padding: 3px;">设置完成</button>
       bili2sConf.shortcutMap = siteConfig.scm
       GM_setValue('bili2sConf', bili2sConf)
       document.querySelector('#sc-box').style.display = 'none'
-    })
-    document.querySelector('#auto-unlockvideo').addEventListener('click', function (e) {
-      UnlockBangumi(bili2sConf.parseApiIndex, true)
-    })
-    document.querySelector('#pretend-vip').addEventListener('click', function (e) {
-      bili2sConf.pretendVip = !bili2sConf.pretendVip
-      GM_setValue('bili2sConf', bili2sConf)
-      Toast('小助手: 刷新页面后生效')
     })
     document.querySelector('#badguy').addEventListener('click', function (e) {
       let cur = document.querySelector('#miniprogram').style.display
