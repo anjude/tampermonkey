@@ -146,12 +146,11 @@
   if (!bili2sConf.installTime) {
     bili2sConf.installTime = new Date()
     GM_setValue('bili2sConf', bili2sConf)
-    if (confirm('首次使用,前往微信小程序,随时反馈!')) {
-      window.GM_openInTab(
-        'https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png',
-        { active: true, insert: true, setParent: true }
-      )
-    }
+    alert('首次使用,前往微信小程序,随时反馈!')
+    window.GM_openInTab(
+      'https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png',
+      { active: true, insert: true, setParent: true }
+    )
   }
 
   const delayExecute = (execution, delayMs) => {
