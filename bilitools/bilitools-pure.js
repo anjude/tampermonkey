@@ -21,7 +21,7 @@
   'use strict'
   // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
-  const RELEASE_VERSION = '0.0.13'
+  const RELEASE_VERSION = '0.0.1'
   let ENV = 'RELEASE'
   // ENV = 'DEBUG'
   const updateVersion = ENV === 'DEBUG' || RELEASE_VERSION !== GM_getValue('RELEASE_VERSION')
@@ -78,10 +78,10 @@
     Toast('脚本已更新')
   }
 
-  if (!bili2sConf.installTime) {
+  if (typeof bili2sConf.installTime !== 'object') {
     bili2sConf.installTime = new Date()
     GM_setValue('bili2sConf', bili2sConf)
-    alert('首次使用,前往微信小程序,随时反馈!')
+    alert('首次使用,前往微信小程序,随时反馈!' + GM_getValue('bili2sConf').parseApiIndex)
     window.GM_openInTab(
       'https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png',
       { active: true, insert: true, setParent: true }
