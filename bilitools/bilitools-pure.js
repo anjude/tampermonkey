@@ -11,8 +11,6 @@
 // @grant        GM_getValue
 // @grant        GM_deleteValue
 // @grant        GM_addStyle
-// @grant        GM_registerMenuCommand
-// @grant        GM_unregisterMenuCommand
 // @grant        GM_xmlhttpRequest
 // @original-script   https://github.com/Anjude/tampermonkey
 // @require      https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.2.1/jquery.min.js
