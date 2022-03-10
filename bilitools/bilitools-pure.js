@@ -294,14 +294,14 @@
 
   function setCommand() {
     initSettingPanel()
-    GM_registerMenuCommand('设置脚本', () => {
-      document.querySelector('#sc-box').style.display = ''
-    })
-    GM_registerMenuCommand('重置脚本', () => {
-      if (confirm('重置后观看记录、快捷键修改等数据将清空!')) {
-        resetScript()
-      }
-    })
+    // GM_registerMenuCommand('设置脚本', () => {
+    //   document.querySelector('#sc-box').style.display = ''
+    // })
+    // GM_registerMenuCommand('重置脚本', () => {
+    //   if (confirm('重置后观看记录、快捷键修改等数据将清空!')) {
+    //     resetScript()
+    //   }
+    // })
   }
 
   function initSettingPanel() {
