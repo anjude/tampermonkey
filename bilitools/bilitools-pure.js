@@ -214,9 +214,11 @@
   // 执行脚本
   try {
     // console.log('[B站小助手]:', bili2sConf)
-    GM_addStyle(getCss())
-    setCommand()
-    checkNew()
+    setTimeout(() => {
+      GM_addStyle(getCss())
+      setCommand()
+      checkNew()
+    }, siteConfig.delay2s);
   } catch (err) {
     console.log('[B站小助手]:', err.name, err.message)
     if (confirm(`【B站小助手】: 请截图(到 我的 - 客服 处)反馈 ${err}`)) {
