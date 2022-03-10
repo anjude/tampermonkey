@@ -75,7 +75,7 @@
     bili2sConf.shortcutMap = Object.assign(shortcutMap, bili2sConf.shortcutMap)
     console.log(shortcutMap, defaultBili2sConf.shortcutMap, bili2sConf.shortcutMap)
     GM_setValue('bili2sConf', bili2sConf)
-    Toast('脚本已更新')
+    // Toast('脚本已更新')
   }
 
   const delayExecute = (execution, delayMs) => {
@@ -105,10 +105,10 @@
   }
 
   const checkNew = () => {
-    if (!bili2sConf.installTime) {
+    if (!GM_getValue('bili2sConf').installTime) {
       bili2sConf.installTime = new Date()
       GM_setValue('bili2sConf', bili2sConf)
-      alert('首次使用,前往微信小程序,随时反馈!' + GM_getValue('bili2sConf').parseApiIndex)
+      alert('首次使用,前往微信小程序,随时反馈!')
       window.GM_openInTab(
         'https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png',
         { active: true, insert: true, setParent: true }
@@ -215,10 +215,8 @@
   try {
     // console.log('[B站小助手]:', bili2sConf)
     GM_addStyle(getCss())
-    setTimeout(() => {
-      setCommand()
-      checkNew()
-    }, siteConfig.delay2s);
+    setCommand()
+    checkNew()
   } catch (err) {
     console.log('[B站小助手]:', err.name, err.message)
     if (confirm(`【B站小助手】: 请截图(到 我的 - 客服 处)反馈 ${err}`)) {
