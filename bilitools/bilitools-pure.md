@@ -1,3 +1,4 @@
+建议使用 Chrome 浏览器
 <a href="https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，回复最快</a>
 请勿随意给差评，失效请到小程序客服反馈。
 

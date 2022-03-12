@@ -87,11 +87,14 @@
     unceasingBtnList: ['span.switch-button'],
     searchResBox: [
       '#video-list > ul',
+      'div.video-list', // 搜索页
+      'div.video.search-all-list > div', // 搜索页
       'div.mixin-list > ul.video-list',    // 番剧
       'div.flow-loader > ul',
       'div.rcmd-box',  // 首页推荐
-      'div.section.video > div',  // UP主页
+      'div.section.video > div.content',  // UP主页
       '#submit-video-list > ul.list-list',  // UP主页，更多视频
+      '#submit-video-list > ul.cube-list',  // UP主页，更多视频
       '#reco_list > div.rec-list',  // 相关视频
     ],
     vipIcon: 'bili-avatar-icon--big-vip',
@@ -351,24 +354,25 @@
   }
 
   const dealRead = (res) => {
-    let searchResBox = getElement(siteConfig.searchResBox)
-    // console.log(searchResBox.childNodes)
-    let resList = searchResBox.childNodes
-    resList.forEach(e => {
-      if (!e.innerHTML) return
-      e.style.position = 'relative'
-      let bvid = getBvid(e.innerHTML)
-      if (!bvid) return
-      let addDiv = document.createElement("div")
-      addDiv.className = 'video-view'
-      if (bili2sConf.videoRecordMap[bvid]) {
-        addDiv.innerHTML = '已看'
-        addDiv.style.opacity = 0.9;
-        addDiv.style.color = 'red';
-      } else {
-        // addDiv.innerHTML = "未看";
-      }
-      e.prepend(addDiv);
+    siteConfig.searchResBox.forEach(boxPath => {
+      let searchResBox = getElement(boxPath)
+      console.log(searchResBox)
+      searchResBox && searchResBox.childNodes.forEach(e => {
+        if (!e.innerHTML) return
+        e.style.position = 'relative'
+        let bvid = getBvid(e.innerHTML)
+        if (!bvid) return
+        let addDiv = document.createElement("div")
+        addDiv.className = 'video-view'
+        if (bili2sConf.videoRecordMap[bvid]) {
+          addDiv.innerHTML = '已看'
+          addDiv.style.opacity = 0.9;
+          addDiv.style.color = 'red';
+        } else {
+          // addDiv.innerHTML = "未看";
+        }
+        e.prepend(addDiv);
+      })
     })
   }
 
