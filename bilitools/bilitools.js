@@ -540,7 +540,9 @@
             let { responseText, responseURL } = event.target
             if (!/^{.*}$/.test(responseText)) return
             const result = JSON.parse(responseText);
-            executeByUri(responseURL, result)
+            setTimeout(() => {
+              executeByUri(responseURL, result)
+            }, siteConfig.delay2s / 4);
           } catch (err) { }
         })
         return target.apply(thisArg, args)
