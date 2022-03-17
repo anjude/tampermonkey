@@ -48,7 +48,7 @@
     singleUncreasing: false,    // 单集自动连播
     autoUnlockVideo: false, // 是否自动解锁视频
     shareDate: '2022/1/1',
-    lastClearup: new Date(),
+    lastClearup: new Date().toLocaleString(),
     parseApiIndex: 0, // 解析接口选择
     pretendVip: false,
     installTime: null
@@ -147,7 +147,7 @@
   }
 
   if (!bili2sConf.installTime) {
-    bili2sConf.installTime = new Date()
+    bili2sConf.installTime = new Date().toLocaleString()
     GM_setValue('bili2sConf', bili2sConf)
     alert('首次使用,前往微信小程序,随时反馈!')
     window.GM_openInTab(
@@ -284,7 +284,7 @@
     bili2sConf.videoRecordMap[bvid] = Object.assign(bili2sConf.videoRecordMap[bvid] || {}, {
       p: regxList[2],
       title: regxList[3],
-      updateTime: new Date()
+      updateTime: new Date().toLocaleString()
     })
     GM_setValue('bili2sConf', bili2sConf)
   }
@@ -310,7 +310,7 @@
       docTitle: document.title,
       p: 1
     }
-    videoRecord.updateTime = new Date()
+    videoRecord.updateTime = new Date().toLocaleString()
     bili2sConf.videoRecordMap[bvid] = Object.assign(bili2sConf.videoRecordMap[bvid] || {}, videoRecord)
     // console.log(bili2sConf.videoRecordMap[bvid], videoRecord)
     GM_setValue('bili2sConf', bili2sConf)
@@ -527,7 +527,7 @@
         delete bili2sConf.videoRecordMap[e]
       }
     })
-    bili2sConf.lastClearup = new Date()
+    bili2sConf.lastClearup = new Date().toLocaleString()
     GM_setValue('bili2sConf', bili2sConf)
   }
 
