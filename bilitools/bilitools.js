@@ -278,7 +278,11 @@
   })
 
   const chapListener = (res) => {
-    let listItem = getElement(siteConfig.chapListItem).innerHTML
+    let listItem = getElement(siteConfig.chapListItem)?.innerHTML
+    if (!listItem) {
+      console.log('非多集视频')
+      return
+    }
     let regxList = /video\/([0-9a-zA-Z]*)\?p=(\d+).*title=.(.*?).><div/i.exec(listItem)
     let bvid = regxList[1]
     bili2sConf.videoRecordMap[bvid] = Object.assign(bili2sConf.videoRecordMap[bvid] || {}, {
@@ -356,7 +360,7 @@
   const dealRead = (res) => {
     siteConfig.searchResBox.forEach(boxPath => {
       let searchResBox = getElement(boxPath)
-      console.log(searchResBox)
+      // console.log(searchResBox)
       searchResBox && searchResBox.childNodes.forEach(e => {
         if (!e.innerHTML) return
         e.style.position = 'relative'
