@@ -95,7 +95,7 @@
       'div.section.video > div.content',  // UP主页
       '#submit-video-list > ul.list-list',  // UP主页，更多视频
       '#submit-video-list > ul.cube-list',  // UP主页，更多视频
-      '#reco_list > div.rec-list',  // 相关视频
+      // '#reco_list > div.rec-list',  // 相关视频
     ],
     vipIcon: 'bili-avatar-icon--big-vip',
     vipSpan: [
