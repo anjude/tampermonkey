@@ -111,16 +111,15 @@
       { url: 'https://vip.parwix.com:4433/player/?url=', name: 'Parwix解析系统' },
       { url: 'https://www.yemu.xyz/?url=', name: '夜幕解析' },
       { url: 'https://vip.bljiex.cc/?v=', name: 'BL解析' },
-      { url: 'https://www.1717yun.com/jx/ty.php?url=', name: '1717云解析' },
-      { url: 'https://jx.rdhk.net/?v=', name: '4080视频解析' },
-      { url: 'https://go.yh0523.cn/y.cy?url=', name: '盘古云解析' },
       { url: 'https://yparse.jn1.cc/index.php?url=', name: '云解析' },
       { url: 'https://vip.mmkv.cn/tv.php?url=', name: 'mmkv' },
       { url: 'https://z1.m1907.cn/?jx=', name: 'm1907' },
-      { url: 'https://17kyun.com/api.php?url=', name: '17kyun' },
-      // { url: 'https://www.mtosz.com/m3u8.php?url=', name: 'mtosz' },
-      { url: 'https://lecurl.cn/?url=', name: 'dplayer - by-le' },
       { url: 'https://vip5.jiexi.one/?url=', name: '爱爱蓝光解析' },
+      // { url: 'https://www.1717yun.com/jx/ty.php?url=', name: '1717云解析' },
+      // { url: 'https://jx.rdhk.net/?v=', name: '4080视频解析' },
+      // { url: 'https://go.yh0523.cn/y.cy?url=', name: '盘古云解析' },
+      // { url: 'https://17kyun.com/api.php?url=', name: '17kyun' },
+      // { url: 'https://lecurl.cn/?url=', name: 'dplayer - by-le' },
     ],
     bangumiLi: ['li.ep-item.cursor.badge.visited'],
     shortcutList: {
@@ -395,6 +394,7 @@
       GM_setValue('bili2sConf', bili2sConf)
       Toast(`B站小助手:${set ? '开启' : '关闭'}自动解锁!`)
     }
+    parseApiIndex %= siteConfig.parseApiList.length
     let videoInfo = getElement(siteConfig.bangumiLi)?.innerHTML
     if (!forceUnlock && (!bili2sConf.autoUnlockVideo
       || videoInfo && !/>(会员|付费|受限)<\/div>/.test(videoInfo)
