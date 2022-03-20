@@ -1,9 +1,9 @@
-建议使用 Chrome 浏览器
+
 <a href="https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，回复最快</a>
 请勿随意给差评，失效请到小程序客服反馈。
 
 ## 功能详细
-
+移动端请使用<a href="https://greasyfork.org/zh-CN/scripts/440539" target="_blanck">https://greasyfork.org/zh-CN/scripts/440539</a>，pc端建议使用 Chrome 浏览器
 <span style="color: red;">视频中出现的广告、优惠券与脚本无关，请不要相信或者点击，拉到最下面有常见问题回答，首次安装请务必查收</span>
 
 1. 自动切换 多 P 视频（UP 上传视频）上次观看进度
