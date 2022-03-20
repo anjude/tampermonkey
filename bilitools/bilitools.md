@@ -3,9 +3,9 @@
 请勿随意给差评，失效请到小程序客服反馈。
 
 ## 功能详细
-移动端请使用 <a href="https://greasyfork.org/zh-CN/scripts/440539" target="_blanck">https://greasyfork.org/zh-CN/scripts/440539</a>，pc端建议使用 Chrome 浏览器
-<br />
 <span style="color: red;">视频中出现的广告、优惠券与脚本无关，请不要相信或者点击，拉到最下面有常见问题回答，首次安装请务必查收</span>
+<br />
+移动端请使用 <a href="https://greasyfork.org/zh-CN/scripts/440539" target="_blanck">https://greasyfork.org/zh-CN/scripts/440539</a>，pc端建议使用 Chrome 浏览器
 
 1. 自动切换 多 P 视频（UP 上传视频）上次观看进度
 2. 自动替换解析会员视频（**默认不替换，需要设置**，有条件请支持大会员哦~）
