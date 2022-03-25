@@ -231,7 +231,7 @@
     return `
     #anjude-parse{
       color: orange;
-      margin: 0px 10px;
+      margin-left: 20px;
     }
     @keyframes fadeIn {
     0%    {opacity: 0}
