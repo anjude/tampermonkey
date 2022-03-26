@@ -48,5 +48,5 @@ github地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anjud
 
 **欢迎来我的公众号交流：豆小匠Coding**
 
-![](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/20220101224030.jpg)
+![](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/20220101224030.jpg)
 

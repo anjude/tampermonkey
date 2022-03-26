@@ -2,7 +2,7 @@
 // @name         B站大会员视频自动解析 -- 纯净版
 // @namespace    http://tampermonkey.net/
 // @version      0.0.2
-// @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/1.png
+// @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  浸入式虚拟会员体验，功能智能自动化。（兼容移动端）
 // @author       豆小匠Coding
 // @match        https://*.bilibili.com/*
@@ -87,7 +87,7 @@
     GM_setValue('bili2sConf', bili2sConf)
     alert('首次使用,前往微信小程序,随时反馈!')
     window.GM_openInTab(
-      'https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/TW-TamperMonkey.png',
+      'https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/TW-TamperMonkey.png',
       { active: true, insert: true, setParent: true }
     )
   }
@@ -161,7 +161,7 @@
     console.log('[B站小助手]:', err.name, err.message)
     if (confirm(`【B站小助手】: 请截图(到 我的 - 客服 处)反馈 ${err}`)) {
       window.GM_openInTab(
-        'https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/TW-TamperMonkey.png',
+        'https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/TW-TamperMonkey.png',
         { active: true, insert: true, setParent: true }
       )
     }

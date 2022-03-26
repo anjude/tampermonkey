@@ -8,7 +8,7 @@ GitHub地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anjud
 
 **扫码二维码，查看详细教程：豆小匠Coding**
 
-![](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/20211118174149.jpeg)
+![](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/20211118174149.jpeg)
 
 扫描后输入【网站快捷键】，查看更详细教程
 

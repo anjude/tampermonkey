@@ -13,7 +13,7 @@
   3. 输入搜索关键词搜索
 - github传送门：[https://github.com/Anjude/tampermonkey](https://github.com/Anjude/tampermonkey)
 
-![image-20210710232213457](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/20210710232213.png)
+![image-20210710232213457](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/20210710232213.png)
 
 ## 版本历史
 
@@ -22,4 +22,4 @@
 
 **欢迎扫码到小程序客服提需求**
 
-![小程序码](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/TW-TamperMonkey.png)
+![小程序码](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/TW-TamperMonkey.png)

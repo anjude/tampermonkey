@@ -90,7 +90,7 @@
     GM_setValue('scriptConf', scriptConf)
     if (confirm('首次使用,前往微信小程序,随时反馈!')) {
       window.GM_openInTab(
-        'https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/TW-TamperMonkey.png',
+        'https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/TW-TamperMonkey.png',
         { active: true, insert: true, setParent: true }
       )
     }
