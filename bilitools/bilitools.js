@@ -2,7 +2,7 @@
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）自动增强--功能快捷键，视频智能解析，每日任务等
 // @namespace    http://tampermonkey.net/
 // @version      0.0.15
-// @icon         https://gitee.com/anjude/public-resource/raw/md-img/1.png
+// @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/1.png
 // @description  🔥🔥🔥推荐！ 浸入式虚拟会员体验，功能智能自动化，让你的 B站 比别人的更强。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       豆小匠Coding
 // @match        https://*.bilibili.com/*
@@ -150,7 +150,7 @@
     GM_setValue('bili2sConf', bili2sConf)
     alert('首次使用,前往微信小程序,随时反馈!')
     window.GM_openInTab(
-      'https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png',
+      'https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/TW-TamperMonkey.png',
       { active: true, insert: true, setParent: true }
     )
   }
@@ -495,7 +495,7 @@
     console.log('[B站小助手]:', err.name, err.message)
     if (confirm(`【B站小助手】: 请截图(到 我的 - 客服 处)反馈 ${err}`)) {
       window.GM_openInTab(
-        'https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png',
+        'https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/TW-TamperMonkey.png',
         { active: true, insert: true, setParent: true }
       )
     }
@@ -637,7 +637,7 @@ background: green;padding: 3px;">设置完成</button>
 </div>
 <a style="font-size: 12px; color: blue;" target="_blank" href="https://greasyfork.org/zh-CN/scripts/437941/feedback">好用的话，去给个好评咯~</a>
 <a id="badguy" style="font-size: 12px; color: red;margin-left: 10px;">烂脚本,我要差评!</a>
-<img id="miniprogram" style="display: none;" src="https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png">
+<img id="miniprogram" style="display: none;" src="https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/TW-TamperMonkey.png">
 </div>
     `)
     $(document.body).append(boxHtml)

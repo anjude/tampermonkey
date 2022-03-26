@@ -1,4 +1,4 @@
-<a href="https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，回复最快</a>
+<a href="https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/TW-TamperMonkey.png" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，回复最快</a>
 请勿随意给差评，失效请到小程序客服反馈。
 
 ## 功能详细
@@ -7,7 +7,7 @@
 
 1. 替换视频播放器
 
-![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png)
+![小程序码](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/TW-TamperMonkey.png)
 
 
 | **快捷键**  | **助记单词** | **功能**         |

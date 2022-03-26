@@ -1,5 +1,5 @@
 
-<a href="https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，回复最快</a>
+<a href="https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/TW-TamperMonkey.png" target="_blanck" style="font-size: 18px; color: blue;font-weight: bold;">联系客服，回复最快</a>
 请勿随意给差评，失效请到小程序客服反馈。
 
 ## 功能详细
@@ -62,9 +62,9 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 - 0.0.2 增加视频解锁（有条件请开大会员）
 - 0.0.1 首版发布
 
-![image-20220108133723341](https://gitee.com/anjude/public-resource/raw/md-img/20220108133729.png)
+![image-20220108133723341](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/20220108133729.png)
 
-![image-20220105095243504](https://gitee.com/anjude/public-resource/raw/md-img/20220105095249.png)
+![image-20220105095243504](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/20220105095249.png)
 
 ### 常见问题
 
@@ -92,4 +92,4 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 
 - 分享状态是经常不更新或者延迟更新的，经验增加了就好~
 
-![小程序码](https://gitee.com/anjude/public-resource/raw/md-img/TW-TamperMonkey.png)
+![小程序码](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@v1/TW-TamperMonkey.png)
