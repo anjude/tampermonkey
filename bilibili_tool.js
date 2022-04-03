@@ -114,7 +114,7 @@
           if (!e.altKey) {
             jumpChap();
           } else {
-            window.open("https://www.anjude.xyz")
+            window.open("https://www.myindex.ga")
           }
           break;
         case take_note:

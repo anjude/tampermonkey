@@ -74,7 +74,7 @@
       // console.log('键盘:', command)
       switch (command) {
         case keyMap.toSite:
-          window.GM_openInTab('http://anjude.xyz', { active: true, insert: true, setParent: true })
+          window.GM_openInTab('http://myindex.ga', { active: true, insert: true, setParent: true })
       }
     })
   })
