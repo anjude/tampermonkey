@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）自动增强--功能快捷键，视频智能解析，每日任务等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.15
+// @version      0.0.16
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  🔥🔥🔥推荐！ 浸入式虚拟会员体验，功能智能自动化，让你的 B站 比别人的更强。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       豆小匠Coding
@@ -23,7 +23,7 @@
   "use strict";
   // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
-  const RELEASE_VERSION = "0.0.15";
+  const RELEASE_VERSION = "0.0.16";
   let ENV = "RELEASE";
   // ENV = 'DEBUG'
   const updateVersion =
@@ -594,11 +594,10 @@
           try {
             // console.log(111, event.target.responseURL)
             let { responseText, responseURL } = event.target;
-            if (!/^{.*}$/.test(responseText)) return;
-            const result = JSON.parse(responseText);
-            setTimeout(() => {
+            if (/^{.*}$/.test(responseText)) {
+              const result = JSON.parse(responseText);
               executeByUri(responseURL, result);
-            }, siteConfig.delay2s / 4);
+            }
           } catch (err) {}
         });
         return target.apply(thisArg, args);

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站大会员视频自动解析 -- 纯净版
 // @namespace    http://tampermonkey.net/
-// @version      0.0.2
+// @version      0.0.3
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  浸入式虚拟会员体验，功能智能自动化。（兼容移动端）
 // @author       豆小匠Coding
@@ -21,7 +21,7 @@
   // return
   let bili2sConf = GM_getValue("bili2sConf");
   // 检查版本
-  const RELEASE_VERSION = "0.0.2";
+  const RELEASE_VERSION = "0.0.3";
   let ENV = "RELEASE";
   // ENV = 'DEBUG'
   const updateVersion =
@@ -218,9 +218,10 @@
           try {
             // console.log(111, event.target.responseURL)
             let { responseText, responseURL } = event.target;
-            if (!/^{.*}$/.test(responseText)) return;
-            const result = JSON.parse(responseText);
-            executeByUri(responseURL, result);
+            if (!/^{.*}$/.test(responseText)) {
+              const result = JSON.parse(responseText);
+              executeByUri(responseURL, result);
+            }
           } catch (err) {}
         });
         return target.apply(thisArg, args);
