@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站大会员视频自动解析 -- 纯净版
 // @namespace    http://tampermonkey.net/
-// @version      0.0.3
+// @version      0.0.6
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  浸入式虚拟会员体验，功能智能自动化。（兼容移动端）
 // @author       豆小匠Coding
