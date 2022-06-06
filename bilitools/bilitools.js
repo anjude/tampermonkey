@@ -23,7 +23,7 @@
   "use strict";
   // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
-  const RELEASE_VERSION = "0.0.16";
+  const RELEASE_VERSION = "0.0.18";
   let ENV = "RELEASE";
   // ENV = 'DEBUG'
   const updateVersion =

@@ -21,7 +21,7 @@
   // return
   let bili2sConf = GM_getValue("bili2sConf");
   // 检查版本
-  const RELEASE_VERSION = "0.0.3";
+  const RELEASE_VERSION = "0.0.6";
   let ENV = "RELEASE";
   // ENV = 'DEBUG'
   const updateVersion =
@@ -218,7 +218,7 @@
           try {
             // console.log(111, event.target.responseURL)
             let { responseText, responseURL } = event.target;
-            if (!/^{.*}$/.test(responseText)) {
+            if (/^{.*}$/.test(responseText)) {
               const result = JSON.parse(responseText);
               executeByUri(responseURL, result);
             }
