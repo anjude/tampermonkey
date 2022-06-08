@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.0.2
 // @description  一键解析，无感切换。
-// @author       豆小匠coding
+// @author       anjude
 // @grant        unsafeWindow
 // @include      *://www.bilibili.com/bangumi/play/*
 // @include      *.mgtv.com/b/*

@@ -4,7 +4,7 @@
 // @version      0.0.1
 // @icon         https://raw.githubusercontent.com/Anjude/tampermonkey/master/images/weindex-icon.png
 // @description  为网站增加自定义快捷键
-// @author       豆小匠Coding
+// @author       anjude
 // @match        *://*.bilibili.com/*
 // @require      https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js
 // @require      https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js
@@ -31,7 +31,7 @@
     let yourKey = "*" // 键盘*，按*你的功能（*代表一个字母）
     let focus = false   // 如果正在输入文字，屏蔽快捷键
 
-    console.log("[豆小匠Coding]：网站快捷键模板启动！")
+    console.log("[anjude]：网站快捷键模板启动！")
 
     $(document).ready(() => {
         $(document).delegate("input, textarea",
@@ -55,14 +55,14 @@
             let pressKey = String.fromCharCode(e.keyCode)
             switch (pressKey) {
                 case upToTop:
-                    console.log("[豆小匠Coding]：按下了 " + pressKey + " ，回到顶部！")
+                    console.log("[anjude]：按下了 " + pressKey + " ，回到顶部！")
                     let scrollBtn = document.querySelector("#elevator > div.list-box > div.item.back-top > i")  // 投稿视频的按钮
                         || document.querySelector("#app > div.v-wrap > div.float-nav > div > div.item.backup > i")  // 主页的按钮
                         || document.querySelector("#app > div.nav-tools > div.tool-item.backup.iconfont.icon-up")   // 番剧区的按钮
                     if(scrollBtn) scrollBtn.click()
                     break
                 case yourKey:
-                    console.log("[豆小匠Coding]：按下了 " + pressKey + " ，你的功能！")
+                    console.log("[anjude]：按下了 " + pressKey + " ，你的功能！")
 
                     if(e.altKey){ console.log("如果按了 alt 键，进入这里！") }
                     let yourBtn = document.querySelector("***")  // 功能按钮

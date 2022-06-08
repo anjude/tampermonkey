@@ -4,7 +4,7 @@
 // @version      0.0.6
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  浸入式虚拟会员体验，功能智能自动化。（兼容移动端）
-// @author       豆小匠Coding
+// @author       anjude
 // @match        https://*.bilibili.com/*
 // @grant        GM_openInTab
 // @grant        GM_addStyle

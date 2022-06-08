@@ -6,6 +6,6 @@
 
 github地址：https://github.com/Anjude/tampermonkey
 
-**欢迎来我的公众号交流：豆小匠Coding**
+**欢迎来我的公众号交流：anjude**
 
 ![](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/20211118174208.jpeg)

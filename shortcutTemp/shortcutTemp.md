@@ -6,7 +6,7 @@
 
 GitHub地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anjude/tampermonkey)
 
-**扫码二维码，查看详细教程：豆小匠Coding**
+**扫码二维码，查看详细教程：anjude**
 
 ![](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/20211118174149.jpeg)
 

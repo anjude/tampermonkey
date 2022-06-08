@@ -46,7 +46,7 @@ github地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anjud
 - 0.6.7 支持更多输入框屏蔽快捷键
 - 0.6.6 修复输入框打字会触发快捷键
 
-**欢迎来我的公众号交流：豆小匠Coding**
+**欢迎来我的公众号交流：anjude**
 
 ![](https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/20220101224030.jpg)
 
