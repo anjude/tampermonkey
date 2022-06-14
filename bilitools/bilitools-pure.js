@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         B站大会员视频自动解析 -- 纯净版
 // @namespace    http://tampermonkey.net/
-// @version      0.0.6
+// @version      0.0.7
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  浸入式虚拟会员体验，功能智能自动化。（兼容移动端）
 // @author       anjude
@@ -21,7 +21,7 @@
   // return
   let bili2sConf = GM_getValue("bili2sConf");
   // 检查版本
-  const RELEASE_VERSION = "0.0.6";
+  const RELEASE_VERSION = "0.0.7";
   let ENV = "RELEASE";
   // ENV = 'DEBUG'
   const updateVersion =
@@ -173,7 +173,7 @@
     console.log("[B站小助手]:", bili2sConf);
     setTimeout(() => {
       GM_addStyle(getCss());
-      setCommand();
+      // setCommand();
       addParseBtn();
     }, siteConfig.delay2s);
   } catch (err) {
@@ -200,11 +200,11 @@
   }
 
   function setCommand() {
-    GM_registerMenuCommand("重置脚本", () => {
-      if (confirm("重置后脚本数据将清空!")) {
-        resetScript();
-      }
-    });
+    // GM_registerMenuCommand("重置脚本", () => {
+    //   if (confirm("重置后脚本数据将清空!")) {
+    //     resetScript();
+    //   }
+    // });
   }
 
   function resetScript() {
