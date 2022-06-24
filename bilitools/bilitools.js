@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）自动增强--功能快捷键，视频智能解析，每日任务等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.18
+// @version      0.0.19
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  🔥🔥🔥推荐！ 浸入式虚拟会员体验，功能智能自动化，让你的 B站 比别人的更强。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       anjude
@@ -23,7 +23,7 @@
   "use strict";
   // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
-  const RELEASE_VERSION = "0.0.18";
+  const RELEASE_VERSION = "0.0.19";
   let ENV = "RELEASE";
   // ENV = 'DEBUG'
   const updateVersion =
@@ -237,7 +237,7 @@
     pointBtn.click();
   };
 
-  const keyCtrl = () => {};
+  const keyCtrl = () => { };
 
   const blockKey = (e) => {
     let isBlock = false;
@@ -427,8 +427,7 @@
     UnlockBangumi(bili2sConf.parseApiIndex, false, true);
     GM_setValue("bili2sConf", bili2sConf);
     Toast(
-      `B站小助手: 解析接口${bili2sConf.parseApiIndex + 1} ${
-        siteConfig.parseApiList[bili2sConf.parseApiIndex].name
+      `B站小助手: 解析接口${bili2sConf.parseApiIndex + 1} ${siteConfig.parseApiList[bili2sConf.parseApiIndex].name
       }`
     );
   };
@@ -598,7 +597,7 @@
               const result = JSON.parse(responseText);
               executeByUri(responseURL, result);
             }
-          } catch (err) {}
+          } catch (err) { }
         });
         return target.apply(thisArg, args);
       },
@@ -682,12 +681,10 @@ text-align: center;font-size: 16px;padding: 20px;">
 快捷键设置(点击选中设置)
 </div>
 <div style="display:flex; font-size: 15px;flex-direction: column;">
-<label>假装是大会员 <input type="checkbox" id="pretend-vip" ${
-      bili2sConf.pretendVip ? "checked" : ""
-    } /></label>
-<label>自动解锁会员视频 <input type="checkbox" id="auto-unlockvideo" ${
-      bili2sConf.autoUnlockVideo ? "checked" : ""
-    } /></label>
+<label>假装是大会员 <input type="checkbox" id="pretend-vip" ${bili2sConf.pretendVip ? "checked" : ""
+      } /></label>
+<label>自动解锁会员视频 <input type="checkbox" id="auto-unlockvideo" ${bili2sConf.autoUnlockVideo ? "checked" : ""
+      } /></label>
 </div>
 <div style="font-size: 15px;">
 ${scItem}
@@ -702,7 +699,12 @@ background: green;padding: 3px;">设置完成</button>
 </div>
     `);
     $(document.body).append(boxHtml);
-    new MyDrag($("#sc-box")[0], { handle: $("#sc-title")[0] });
+    try {
+      new MyDrag($("#sc-box")[0], { handle: $("#sc-title")[0] });
+    } catch (err) {
+      console.log(err);
+      return
+    }
     Object.keys(SCL).forEach((v) => {
       document.querySelector(`#${v}`).addEventListener("click", function (e) {
         siteConfig.scSetting = this.id;
