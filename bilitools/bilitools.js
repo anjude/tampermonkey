@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）自动增强--功能快捷键，视频智能解析，每日任务等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.19
+// @version      0.0.20
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  🔥🔥🔥推荐！ 浸入式虚拟会员体验，功能智能自动化，让你的 B站 比别人的更强。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       anjude
@@ -23,7 +23,7 @@
   "use strict";
   // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
-  const RELEASE_VERSION = "0.0.19";
+  const RELEASE_VERSION = "0.0.20";
   let ENV = "RELEASE";
   // ENV = 'DEBUG'
   const updateVersion =
@@ -134,7 +134,7 @@
       // { url: 'https://17kyun.com/api.php?url=', name: '17kyun' },
       // { url: 'https://lecurl.cn/?url=', name: 'dplayer - by-le' },
     ],
-    bangumiLi: ["li.ep-item.cursor.badge.visited"],
+    bangumiLi: ["li.ep-item.cursor.badge.visited", "#paybar_module > div.vip"],
     shortcutList: {
       upToTop: "回到顶部",
       takeNote: "打开/关闭笔记",
@@ -433,6 +433,7 @@
   };
 
   const UnlockBangumi = (parseApiIndex = 0, setAutoUnlock, forceUnlock) => {
+    debugger
     if (setAutoUnlock) {
       let set = !bili2sConf.autoUnlockVideo;
       bili2sConf.autoUnlockVideo = set;
@@ -441,21 +442,22 @@
     }
     parseApiIndex %= siteConfig.parseApiList.length;
     let videoInfo = getElement(siteConfig.bangumiLi)?.innerHTML;
-    if (
-      !forceUnlock &&
-      (!bili2sConf.autoUnlockVideo ||
-        (videoInfo && !/>(会员|付费|受限)<\/div>/.test(videoInfo)) ||
-        !videoInfo)
-    ) {
-      return $("#anjude-iframe").length && location.reload();
+    if (!forceUnlock) {
+      if (!bili2sConf.autoUnlockVideo || (videoInfo && !/(会员|付费|受限)/.test(videoInfo)) || !videoInfo) {
+        return $("#anjude-iframe").length && location.reload();
+      }
     }
 
+    let href = window.location.href
+    if (/bilibili.com\/watchroom/.test(href)) {
+      href = document.referrer
+    }
     let parseApi = siteConfig.parseApiList[parseApiIndex];
     let newPlayer = document.createElement("iframe");
     newPlayer.id = "anjude-iframe";
     newPlayer.height = "100%";
     newPlayer.width = "100%";
-    newPlayer.src = parseApi.url + window.location.href;
+    newPlayer.src = parseApi.url + href;
     newPlayer.setAttribute("allow", "autoplay");
     newPlayer.setAttribute("frameborder", "no");
     newPlayer.setAttribute("border", "0");
@@ -523,6 +525,9 @@
     }
     if (/bilibili.com\/bangumi/.test(href)) {
       addParseBtn();
+    }
+    if (/bilibili.com\/watchroom/.test(href)) {
+      UnlockBangumi(bili2sConf.parseApiIndex)
     }
     if (/search.bilibili.com/.test(href)) {
       dealRead();
