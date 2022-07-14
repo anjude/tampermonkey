@@ -44,16 +44,18 @@
     vipAdClose: ["div.twp-mask > div > i"],
     parseApiList: [
       // 解析链接均收集自网络，经过简单测试
-      {
-        url: "https://vip.parwix.com:4433/player/?url=",
-        name: "Parwix解析系统",
-      },
+      // https://jx.bozrc.com:4433/player/?url=
+      // {
+      //   url: "https://vip.parwix.com:4433/player/?url=",
+      //   name: "Parwix解析系统",
+      // },
+      { url: "https://jx.bozrc.com:4433/player/?url=", name: "夜幕解析" },
       { url: "https://z1.m1907.cn/?jx=", name: "m1907" },
       { url: "https://yparse.jn1.cc/index.php?url=", name: "云解析" },
-      { url: "https://www.yemu.xyz/?url=", name: "夜幕解析" },
-      { url: "https://vip.bljiex.cc/?v=", name: "BL解析" },
-      { url: "https://vip.mmkv.cn/tv.php?url=", name: "mmkv" },
-      { url: "https://vip5.jiexi.one/?url=", name: "爱爱蓝光解析" },
+      // { url: "https://www.yemu.xyz/?url=", name: "夜幕解析" },
+      // { url: "https://vip.bljiex.cc/?v=", name: "BL解析" },
+      // { url: "https://vip.mmkv.cn/tv.php?url=", name: "mmkv" },
+      // { url: "https://vip5.jiexi.one/?url=", name: "爱爱蓝光解析" },
       // { url: 'https://www.1717yun.com/jx/ty.php?url=', name: '1717云解析' },
       // { url: 'https://jx.rdhk.net/?v=', name: '4080视频解析' },
       // { url: 'https://go.yh0523.cn/y.cy?url=', name: '盘古云解析' },
