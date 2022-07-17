@@ -46,6 +46,7 @@ github 地址：[https://github.com/Anjude/tampermonkey](https://github.com/Anju
 
 ### 版本更新
 
+- 0.0.22 增加专栏视频详细页已看标签
 - 0.0.21 修复已知问题
 - 0.0.20 修复已知问题
 - 0.0.19 修复已知问题

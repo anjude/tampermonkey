@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）自动增强--功能快捷键，视频智能解析，每日任务等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.21
+// @version      0.0.22
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  🔥🔥🔥推荐！ 浸入式虚拟会员体验，功能智能自动化，让你的 B站 比别人的更强。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       anjude
@@ -23,7 +23,7 @@
   "use strict";
   // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
-  const RELEASE_VERSION = "0.0.21";
+  const RELEASE_VERSION = "0.0.22";
   let ENV = "RELEASE";
   // ENV = 'DEBUG'
   const updateVersion =
@@ -89,7 +89,8 @@
     multiPageBox: ["#multi_page > div.cur-list"],
     chapListItem: ["div.cur-list > ul > li.on"],
     trendBtnList: [
-      "div.share-btns > div:nth-child(6)",
+      // "div.box-bottom > div > div:nth-child(1)",
+      "div.share-btns > div:nth-child(1)",
       "div.share-info > div > div > span",
     ],
     shareBtnList: ["div.share-info"],
@@ -104,6 +105,7 @@
       "div.section.video > div.content", // UP主页
       "#submit-video-list > ul.list-list", // UP主页，更多视频
       "#submit-video-list > ul.cube-list", // UP主页，更多视频
+      "#page-series-detail > div > div > div > ul"     // 专栏视频
       // '#reco_list > div.rec-list',  // 相关视频
     ],
     vipIcon: "bili-avatar-icon--big-vip",
@@ -384,8 +386,10 @@
 
   const doShare = () => {
     console.log("[B站小助手]: 开始分享!");
-    let shareBtn = getElement(siteConfig.shareBtnList);
-    shareBtn?.dispatchEvent(new MouseEvent("mouseover"));
+    // let shareBtn = getElement(siteConfig.shareBtnList);
+
+    // console.log(111, shareBtn);
+    // shareBtn?.dispatchEvent(new MouseEvent("mouseover"));
 
     let trendBtn = getElement(siteConfig.trendBtnList);
     if (!trendBtn) {
@@ -393,7 +397,7 @@
     }
     trendBtn.click();
     document.body.lastChild.remove();
-    shareBtn?.dispatchEvent(new MouseEvent("mouseout"));
+    // shareBtn?.dispatchEvent(new MouseEvent("mouseout"));
     bili2sConf.shareDate = new Date().toLocaleDateString();
     GM_setValue("bili2sConf", bili2sConf);
     console.log("[B站小助手]: 分享完成!");
@@ -403,7 +407,7 @@
   const dealRead = (res) => {
     siteConfig.searchResBox.forEach((boxPath) => {
       let searchResBox = getElement(boxPath);
-      // console.log(searchResBox)
+      console.log(searchResBox, boxPath)
       searchResBox &&
         searchResBox.childNodes.forEach((e) => {
           if (!e.innerHTML) return;
@@ -507,6 +511,7 @@
     /\/player\/playurl/.test(responseURL) && chapListener(result);
     (/x\/web-interface\/search/.test(responseURL) ||
       /x\/web-interface\/index\/top\/rcmd/.test(responseURL) ||
+      /x\/series\/archives/.test(responseURL) ||
       /x\/space\/arc/.test(responseURL)) &&
       dealRead(result);
     (/pgc\/view\/web\/section\/order/.test(responseURL) ||
