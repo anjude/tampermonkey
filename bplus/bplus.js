@@ -65,7 +65,7 @@ class FeedQueue {
       // 恢复数据
       $("div.recommended-container").replaceWith(site_data.origin_elem)
       site_data.feed_queue.resetCurr()
-      document.querySelector("div.feed-roll-btn > button:nth-child(1)").click()
+      // document.querySelector("div.feed-roll-btn > button:nth-child(1)").click()
     })
     document.querySelector("div.feed-roll-btn > button:nth-child(2)").addEventListener("click",getPreFeed)
   }
@@ -74,7 +74,7 @@ class FeedQueue {
     let feed_btn = document.querySelector("div.feed-roll-btn > button:nth-child(1)")
     if (!feed_btn){ return }
     feed_btn.addEventListener("click",(e)=> {
-      console.log(site_data.feed_queue.feed_items)
+      // console.log(site_data.feed_queue.feed_items)
       let feed_container = $("div.recommended-container").clone(true)
       site_data.origin_elem = $("div.recommended-container")[0]
       site_data.feed_queue.enqueue(feed_container)
