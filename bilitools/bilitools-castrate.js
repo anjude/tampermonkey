@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）自动增强--功能快捷键，观看进度保存，每日任务等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.2
+// @version      0.0.3
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  🔥🔥🔥推荐！ 浸入式功能智能自动化，让你的 B站 比别人的更强。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），视频已看标签等等，具体看脚本介绍~
 // @author       anjude
@@ -23,13 +23,13 @@
     "use strict";
     // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
     // 检查版本
-    const RELEASE_VERSION = "0.0.2";
+    const RELEASE_VERSION = "0.0.3";
     let ENV = "RELEASE";
     // ENV = 'DEBUG'
     const updateVersion =
         ENV === "DEBUG" || RELEASE_VERSION !== GM_getValue("RELEASE_VERSION");
     updateVersion && GM_setValue("RELEASE_VERSION", RELEASE_VERSION);
-    // startHttpProxy();
+    startHttpProxy();
     /**
      * 默认设置
      * `${e.altKey}${e.ctrlKey}${e.shiftKey}${pressKey}`
@@ -516,9 +516,9 @@
             /x\/series\/archives/.test(responseURL) ||
             /x\/space\/arc/.test(responseURL)) &&
             dealRead(result);
-        (/pgc\/view\/web\/section\/order/.test(responseURL) ||
-            /pgc\/season\/episode\/web\/info/.test(responseURL)) &&
-            UnlockBangumi(bili2sConf.parseApiIndex);
+        // (/pgc\/view\/web\/section\/order/.test(responseURL) ||
+        //     /pgc\/season\/episode\/web\/info/.test(responseURL)) &&
+        //     UnlockBangumi(bili2sConf.parseApiIndex);
     };
 
     const runScript = () => {
