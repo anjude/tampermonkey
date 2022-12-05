@@ -325,6 +325,7 @@
       }
     );
     GM_setValue("bili2sConf", bili2sConf);
+    console.log("[B站小助手]: 记录成功!");
   };
 
   const multiPageJump = async () => {
@@ -508,7 +509,7 @@
   };
 
   const executeByUri = (responseURL, result) => {
-    /\/player\/playurl/.test(responseURL) && chapListener(result);
+    /x\/web-interface\/archive\/desc2/.test(responseURL) && chapListener(result);
     (/x\/web-interface\/search/.test(responseURL) ||
       /x\/web-interface\/index\/top\/rcmd/.test(responseURL) ||
       /x\/series\/archives/.test(responseURL) ||
@@ -546,7 +547,7 @@
 
   // 执行脚本
   try {
-    // console.log('[B站小助手]:', bili2sConf)
+    console.log('[B站小助手]:', bili2sConf)
     GM_addStyle(getCss());
     setCommand();
     setTimeout(() => {
