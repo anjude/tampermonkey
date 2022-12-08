@@ -510,12 +510,12 @@
     };
 
     const executeByUri = (responseURL, result) => {
-        /\/player\/playurl/.test(responseURL) && chapListener(result);
+        /x\/web-interface\/archive\/desc2/.test(responseURL) && chapListener(result);
         (/x\/web-interface\/search/.test(responseURL) ||
-            /x\/web-interface\/index\/top\/rcmd/.test(responseURL) ||
-            /x\/series\/archives/.test(responseURL) ||
-            /x\/space\/arc/.test(responseURL)) &&
-            dealRead(result);
+          /x\/web-interface\/index\/top\/rcmd/.test(responseURL) ||
+          /x\/series\/archives/.test(responseURL) ||
+          /x\/space\/arc/.test(responseURL)) &&
+          dealRead(result);
         // (/pgc\/view\/web\/section\/order/.test(responseURL) ||
         //     /pgc\/season\/episode\/web\/info/.test(responseURL)) &&
         //     UnlockBangumi(bili2sConf.parseApiIndex);
