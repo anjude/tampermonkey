@@ -115,7 +115,7 @@
       "a.header-entry-avatar > div > span",
     ],
     vipLabel: "div.h-vipType",
-    playerBox: ["#player_module"],
+    playerBox: ["#player_module","#bilibili-player"],
     videoBox: ["video"],
     vipAdClose: ["div.twp-mask > div > i"],
     parseApiList: [
@@ -138,7 +138,7 @@
       // { url: 'https://17kyun.com/api.php?url=', name: '17kyun' },
       // { url: 'https://lecurl.cn/?url=', name: 'dplayer - by-le' },
     ],
-    bangumiLi: ["li.ep-item.cursor.badge.visited"],
+    bangumiLi: ["li.ep-item.cursor.badge.visited","div.numberListItem_number_list_item__wszA4.numberListItem_select__ar1X5"],
     watchroomvip: ["#paybar_module > div.vip"],
     shortcutList: {
       upToTop: "回到顶部",
@@ -441,6 +441,7 @@
   };
 
   const UnlockBangumi = (parseApiIndex = 0, setAutoUnlock, forceUnlock) => {
+      console.log("11");
     if (setAutoUnlock) {
       let set = !bili2sConf.autoUnlockVideo;
       bili2sConf.autoUnlockVideo = set;
@@ -509,13 +510,15 @@
   };
 
   const executeByUri = (responseURL, result) => {
-    /x\/web-interface\/archive\/desc2/.test(responseURL) && chapListener(result);
+      // console.log(responseURL);
+    (/x\/web-interface\/archive\/desc2/.test(responseURL)) && chapListener(result);
     (/x\/web-interface\/search/.test(responseURL) ||
       /x\/web-interface\/index\/top\/rcmd/.test(responseURL) ||
       /x\/series\/archives/.test(responseURL) ||
       /x\/space\/arc/.test(responseURL)) &&
       dealRead(result);
     (/pgc\/view\/web\/section\/order/.test(responseURL) ||
+     /pgc\/view\/web\/season/.test(responseURL) ||
       /pgc\/season\/episode\/web\/info/.test(responseURL)) &&
       UnlockBangumi(bili2sConf.parseApiIndex);
   };
@@ -621,12 +624,12 @@
 
   function addParseBtn() {
     let ele = $(`
-    <div id="anjude-parse" class="mobile-info">
+    <div id="anjude-parse" class="mobile-info toolbar_watch_info__KslMm toolbar_item_info__xpKhw">
     <i class="iconfont icon-play"></i>
     <span>解析</span>
     </div>
     `);
-    $("#toolbar_module").append(ele);
+    $("div.toolbar_toolbar__NJCNy").append(ele);
     document
       .querySelector("#anjude-parse")
       .addEventListener("click", ChangeParseApi);
@@ -765,11 +768,11 @@ background: green;padding: 3px;">设置完成</button>
     #pretend-vip,
     #auto-unlockvideo{
       background-color: initial;
-	    cursor: default;
-	    appearance: checkbox;
-	    box-sizing: border-box;
-	    padding: initial;
-	    border: initial;
+      cursor: default;
+      appearance: checkbox;
+      box-sizing: border-box;
+      padding: initial;
+      border: initial;
     }
     #sc-box{
         padding: 10px;border-radius: 5px; 
