@@ -100,7 +100,7 @@
     GM_setValue("bili2sConf", bili2sConf);
     alert("首次使用,前往微信小程序,随时反馈!");
     window.GM_openInTab(
-      "https://mmbiz.qpic.cn/mmbiz_jpg/A9f425z0mvAxjZtQCEAkPgVicTUNicJMgyZZl88AibR57hgLfNgMWYnWSibhKRMNiaTTWxt6QdwYsH7YJU5ndhUqn0w/640?wx_fmt=jpeg",
+      "https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/TamperMonkey-InfoFlow.jpg",
       { active: true, insert: true, setParent: true }
     );
   }
@@ -182,7 +182,7 @@
     console.log("[B站小助手]:", err.name, err.message);
     if (confirm(`【B站小助手】: 请截图(到 我的 - 客服 处)反馈 ${err}`)) {
       window.GM_openInTab(
-        "https://mmbiz.qpic.cn/mmbiz_jpg/A9f425z0mvAxjZtQCEAkPgVicTUNicJMgyZZl88AibR57hgLfNgMWYnWSibhKRMNiaTTWxt6QdwYsH7YJU5ndhUqn0w/640?wx_fmt=jpeg",
+        "https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/TamperMonkey-InfoFlow.jpg",
         { active: true, insert: true, setParent: true }
       );
     }

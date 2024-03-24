@@ -136,7 +136,7 @@
     GM_setValue('installTime', new Date())
     if (confirm('首次使用,前往微信小程序,随时反馈!')) {
       window.GM_openInTab(
-        'https://mmbiz.qpic.cn/mmbiz_jpg/A9f425z0mvAxjZtQCEAkPgVicTUNicJMgyZZl88AibR57hgLfNgMWYnWSibhKRMNiaTTWxt6QdwYsH7YJU5ndhUqn0w/640?wx_fmt=jpeg',
+        'https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/TamperMonkey-InfoFlow.jpg',
         { active: true, insert: true, setParent: true }
       )
     }
