@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         【小破站必备2022】 哔哩哔哩（bilibili|B站）自动增强--功能快捷键，视频智能解析，每日任务等
 // @namespace    http://tampermonkey.net/
-// @version      0.0.22
+// @version      0.0.23
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  🔥🔥🔥推荐！ 浸入式虚拟会员体验，功能智能自动化，让你的 B站 比别人的更强。自动跳转多 P 视频（UP 上传视频）上次观看进度,快捷键增强，每日任务（签到&分享），会员番剧无感解析，视频已看标签等等，具体看脚本介绍~
 // @author       anjude
@@ -23,7 +23,7 @@
   "use strict";
   // @require     https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js
   // 检查版本
-  const RELEASE_VERSION = "0.0.22";
+  const RELEASE_VERSION = "0.0.23";
   let ENV = "RELEASE";
   // ENV = 'DEBUG'
   const updateVersion =
@@ -172,7 +172,7 @@
     GM_setValue("bili2sConf", bili2sConf);
     alert("首次使用,前往微信小程序,随时反馈!");
     window.GM_openInTab(
-      "https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/TW-TamperMonkey.png",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/A9f425z0mvAxjZtQCEAkPgVicTUNicJMgyZZl88AibR57hgLfNgMWYnWSibhKRMNiaTTWxt6QdwYsH7YJU5ndhUqn0w/640?wx_fmt=jpeg",
       { active: true, insert: true, setParent: true }
     );
   }
@@ -385,6 +385,14 @@
     });
   };
 
+  const closeBtn = ()=>{
+    let closeBtn = $("#app-container > div > div > div.close");
+    if (closeBtn){
+      closeBtn.click();
+      return true;
+    }
+  };
+
   const doShare = () => {
     console.log("[B站小助手]: 开始分享!");
     // let shareBtn = getElement(siteConfig.shareBtnList);
@@ -397,11 +405,19 @@
       return delayExecute(doShare);
     }
     trendBtn.click();
-    document.body.lastChild.remove();
+    let tryTimes = 0;
+    let interval = setInterval(() =>{
+      // console.log(tryTimes);
+      if (closeBtn() || tryTimes > 30){
+        clearInterval(interval);
+        console.log("[B站小助手]: 分享完成!");
+        return;
+      }
+      tryTimes++;
+    },10);
     // shareBtn?.dispatchEvent(new MouseEvent("mouseout"));
     bili2sConf.shareDate = new Date().toLocaleDateString();
     GM_setValue("bili2sConf", bili2sConf);
-    console.log("[B站小助手]: 分享完成!");
     Toast("小助手: 今日分享任务达成");
   };
 
@@ -561,7 +577,7 @@
     console.log("[B站小助手]:", err.name, err.message);
     if (confirm(`【B站小助手】: 请截图(到 我的 - 客服 处)反馈 ${err}`)) {
       window.GM_openInTab(
-        "https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/TW-TamperMonkey.png",
+        "https://mmbiz.qpic.cn/mmbiz_jpg/A9f425z0mvAxjZtQCEAkPgVicTUNicJMgyZZl88AibR57hgLfNgMWYnWSibhKRMNiaTTWxt6QdwYsH7YJU5ndhUqn0w/640?wx_fmt=jpeg",
         { active: true, insert: true, setParent: true }
       );
     }
@@ -629,7 +645,7 @@
     <span>解析</span>
     </div>
     `);
-    $("div.toolbar_toolbar__NJCNy").append(ele);
+    $("div.toolbar").append(ele);
     document
       .querySelector("#anjude-parse")
       .addEventListener("click", ChangeParseApi);
@@ -713,7 +729,7 @@ background: green;padding: 3px;">设置完成</button>
 </div>
 <a style="font-size: 12px; color: blue;" target="_blank" href="https://greasyfork.org/zh-CN/scripts/437941/feedback">好用的话，去给个好评咯~</a>
 <a id="badguy" style="font-size: 12px; color: red;margin-left: 10px;">烂脚本,我要差评!</a>
-<img id="miniprogram" style="display: none;" src="https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/TW-TamperMonkey.png">
+<img id="miniprogram" style="display: none;" src="https://mmbiz.qpic.cn/mmbiz_jpg/A9f425z0mvAxjZtQCEAkPgVicTUNicJMgyZZl88AibR57hgLfNgMWYnWSibhKRMNiaTTWxt6QdwYsH7YJU5ndhUqn0w/640?wx_fmt=jpeg">
 </div>
     `);
     $(document.body).append(boxHtml);
