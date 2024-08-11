@@ -5,7 +5,7 @@
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
 // @description  记录多P视频等观看进度
 // @author       豆小匠Coding
-// @match        https://*..bilibili.com/video/*
+// @match        https://*.bilibili.com/video/*
 // @grant        GM_openInTab
 // @grant        GM_setValue
 // @grant        GM_getValue
