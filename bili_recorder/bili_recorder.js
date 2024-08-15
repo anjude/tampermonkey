@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         B站视频进度记录员
+// @name         B站视频进度记录员（多P视频进度自动跳转）
 // @namespace    http://tampermonkey.net/
 // @version      0.0.1
 // @icon         https://cdn.jsdelivr.net/gh/Anjude/pubsrc@img/1.png
-// @description  记录多P视频等观看进度
+// @description  自动跳转多P视频上次观看进度
 // @author       豆小匠Coding
 // @match        https://*.bilibili.com/video/*
 // @grant        GM_openInTab
