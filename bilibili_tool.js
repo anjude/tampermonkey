@@ -375,17 +375,17 @@
       window.scrollTo(0, 50) //打开关灯模式后滚动到合适位置
     } else {
       var checkbox = document.getElementsByClassName('bui-checkbox-input')
-      var setting = document.getElementsByClassName('bilibili-player-video-btn-setting')[0]
+      var setting = document.getElementsByClassName('bpx-player-ctrl-btn bpx-player-ctrl-setting')[0]
       var event_over = document.createEvent('MouseEvent') //关灯模式为懒加载
       var event_out = document.createEvent('MouseEvent')
       event_over.initMouseEvent('mouseover', true, true)
       event_out.initMouseEvent('mouseout', true, true)
       setting.dispatchEvent(event_over)
       setting.dispatchEvent(event_out)
-      if (document.getElementsByClassName('bilibili-player-iconfont-widescreen-off').length) {
-        document.getElementsByClassName('bilibili-player-iconfont-widescreen-off')[0].click()
+      if (document.getElementsByClassName('bpx-player-ctrl-btn-icon bpx-player-ctrl-wide-enter').length) {
+        document.getElementsByClassName('bpx-player-ctrl-btn-icon bpx-player-ctrl-wide-enter')[0].click()
       } else {
-        document.getElementsByClassName('bilibili-player-iconfont-widescreen-off')[0].click()
+        document.getElementsByClassName('bpx-player-ctrl-btn-icon bpx-player-ctrl-wide-leave')[0].click()
       }
       for (var i = 0, len = checkbox.length; i < len; i++) {
         if ('关灯模式' == checkbox[i].ariaLabel) {
@@ -393,7 +393,17 @@
           break;
         }
       }
-      window.scrollTo(0, 130)
+      // 非番剧页面开启宽屏后会自动滚动，延时一下再调整位置
+      if (document.getElementsByClassName('normal-members').length) {
+        setTimeout(() => {
+          window.scrollTo(0, 180)
+        }, 10)
+      }
+      else {
+        setTimeout(() => {
+          window.scrollTo(0, 150)
+        }, 10)
+      }
     }
   }
 
